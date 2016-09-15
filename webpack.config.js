@@ -48,7 +48,6 @@ module.exports = {
             'sections': path.resolve(__dirname, './src/sections'),
             'lib': path.resolve(__dirname, './src/lib/'),
             'assets': path.resolve(__dirname, './assets/'),
-            'event-source': require.resolve('event-source-polyfill'),
             'fake': path.resolve(__dirname, './fake/fake.js'),
             'diagnostics': path.resolve(__dirname, './diagnostics/diagnostics.js'),
             '$jquery': path.resolve(__dirname, './src/lib/modules/jquery-hud.js')
@@ -65,7 +64,6 @@ module.exports = {
             DIAGNOSTICS: false,
             FAKE_SERVER: false
         }),
-        
         progressPlugin
     ],
     log: {

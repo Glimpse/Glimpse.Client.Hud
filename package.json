@@ -51,7 +51,6 @@
     "webpack": "1.12.2"
   },
   "dependencies": {
-    "event-source-polyfill": "0.0.7",
     "jquery": "2.1.4"
   }
 }
