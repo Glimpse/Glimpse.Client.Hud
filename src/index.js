@@ -34,14 +34,10 @@ repository.getData(function (details) {
     $(function () {
 
         // set a timeout to render the hud. We'll do exponential backoff on the timer until the document is ready.
-
         var timeout = 1;
 
         var onTimeout = function () {
             if (document.readyState === 'complete') {
-
-                //clearInterval(interval);
-
                 // if things were rendered but was overridden
                 if (!$('.glimpse').length) {
                     renderHolder();
