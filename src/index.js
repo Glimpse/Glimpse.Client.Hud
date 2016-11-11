@@ -38,7 +38,6 @@ repository.getData(function (details) {
         var timeout = 1;
 
         var onTimeout = function () {
-            console.log('interval:  document.readyState = ' + document.readyState);
             if (document.readyState === 'complete') {
 
                 //clearInterval(interval);
