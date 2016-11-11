@@ -19,30 +19,48 @@ var setup = state.current();
 
 // get into dom asap to trigger asset loading
 function renderHolder() {
-    var url = util.resolveClientUrl(util.currentRequestId(), true);
-    var html = '<div class="glimpse"><a class="glimpse-icon" target="_blank" href="' + url + '"><div class="glimpse-icon-text">Glimpse</div></a><div class="glimpse-hud"></div></div>'
-    $(html).appendTo('body');
+    if (document.readyState === 'complete') {
+        var url = util.resolveClientUrl(util.currentRequestId(), true);
+        var html = '<div class="glimpse"><a class="glimpse-icon" target="_blank" href="' + url + '"><div class="glimpse-icon-text">Glimpse</div></a><div class="glimpse-hud"></div></div>'
+        var body = $('body');
+        var htmlElement
+        $(html).appendTo('body');
+    }
 }
 $(renderHolder);
 
 // only load things when we have the data ready to go
-repository.getData(function(details) {
-    $(function() { setTimeout(function() {
-        // if things were rendered but was overridden
-        if (!$('.glimpse').length) {
-            renderHolder();
+repository.getData(function (details) {
+    $(function () {
+
+        // set a timeout to render the hud. We'll do exponential backoff on the timer until the document is ready.
+        var timeout = 1;
+
+        var onTimeout = function () {
+            if (document.readyState === 'complete') {
+                // if things were rendered but was overridden
+                if (!$('.glimpse').length) {
+                    renderHolder();
+                }
+
+                // generate the html needed for the sections
+                var html = sections.render(details, setup);
+
+                // insert the html into the dom
+                var holder = $(html).appendTo('.glimpse-hud');
+
+                // force the correct state from previous load
+                state.setup(holder);
+
+                // setup events that we need to listen to
+                sections.postRender(holder, details);
+            }
+            else {
+                timeout = timeout * 2;
+                setTimeout(onTimeout, timeout);
+            }
         }
 
-        // generate the html needed for the sections
-        var html = sections.render(details, setup);
-
-        // insert the html into the dom
-        var holder = $(html).appendTo('.glimpse-hud');
-
-        // force the correct state from previous load
-        state.setup(holder);
-
-        // setup events that we need to listen to
-        sections.postRender(holder, details);
-    }, 0); });
+        setTimeout(onTimeout, 0);
+    });
 });
