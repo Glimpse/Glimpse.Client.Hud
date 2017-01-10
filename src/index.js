@@ -21,7 +21,7 @@ var setup = state.current();
 function renderHolder() {
     if (document.readyState === 'complete') {
         var url = util.resolveClientUrl(util.currentRequestId(), true);
-        var html = '<div class="glimpse"><a class="glimpse-icon" target="_blank" href="' + url + '"><div class="glimpse-icon-text">Glimpse</div></a><div class="glimpse-hud"></div></div>'
+        var html = '<div class="glimpse"><a class="glimpse-icon" target="_glimpse" href="' + url + '"><div class="glimpse-icon-text">Glimpse</div></a><div class="glimpse-hud"></div></div>'
         var body = $('body');
         var htmlElement
         $(html).appendTo('body');
