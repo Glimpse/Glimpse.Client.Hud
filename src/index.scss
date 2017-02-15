@@ -24,10 +24,40 @@
     bottom: 0;
     float: right;
     position: fixed;
-    min-width: 1370px;
     transform: translatez(0);
     z-index: 100000;
     height: 36px;
+}
+.glimpse .glimpse-link {
+    display: block;
+    height: 100%;
+    float: left;
+    line-height: 36px;
+    padding: 0 1rem;
+    background-color: #3c454f;
+    border-right: 1px solid #3399ff;
+
+    &:hover {
+        background-color: rgba(#0d5c9d, 0.85);
+
+        > .glimpse-link-text {
+            color: #f1f1f1;
+        }
+        > .glimpse-arrow {
+            color: #f1f1f1;
+        }
+    }
+}
+.glimpse .glimpse-link-text {
+    vertical-align: middle;
+    color: #3399ff;
+}
+.glimpse .glimpse-arrow {
+    width: 1rem;
+    margin-right: 1rem;
+    display: inline-block;
+    vertical-align: middle;
+    fill: #3399ff;
 }
 .glimpse td, .glimpse span, .glimpse div, .glimpse th {
     color: #fff;
@@ -59,30 +89,29 @@
     margin-top: 25px;
 }
 
-
-
 .glimpse .glimpse-hud { 
     padding: 0 5px 0 0;
-    float: right; 
+    display: inline-block;
     background-color: #3c454f;
 }
 .glimpse .glimpse-hud-section {
     float: left; 
     transition: all 0.3s ease;
-    border-left: 11px solid #71b1d1;
+    border: none;
     position: relative;
     cursor: default;
     height: 37px;
 }
 .glimpse .glimpse-hud-title { 
-    position: absolute;
-    color: white;
-    text-transform: uppercase; 
-    cursor: pointer;
-    font-weight: bold;
-    height: 100%;
-    width: 12px;
-    left: -12px;
+    display: none;
+    // position: absolute;
+    // color: white;
+    // text-transform: uppercase; 
+    // cursor: pointer;
+    // font-weight: bold;
+    // height: 100%;
+    // width: 12px;
+    // left: -12px;
 }
 .glimpse .glimpse-hud-title span { 
     position: absolute;

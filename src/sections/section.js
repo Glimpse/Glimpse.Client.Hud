@@ -28,5 +28,5 @@ module.exports = {
 
 // TODO: Need to come up with a better self registration process
 require('./section-http');
-require('./section-host');
-require('./section-ajax');
+// require('./section-host');
+// require('./section-ajax');

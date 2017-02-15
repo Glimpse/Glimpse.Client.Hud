@@ -24,7 +24,7 @@ var structure = {
         }
     },
     defaults: {
-        request: { title: 'Request', description: 'Total request time from click to dom ready', visible: true, size: 1, position: 0, align: 0, postfix: 'ms', getData: function(details) { return details.request.data.total.duration; }, id: 'glimpse-hud-data-request' },
+        request: { title: 'Total Time', description: 'Total request time from click to dom ready', visible: true, size: 1, position: 0, align: 0, postfix: 'ms', getData: function(details) { return details.request.data.total.duration; }, id: 'glimpse-hud-data-request' },
         wire: { title: 'Network', description: 'Total time on the network', visible: true, size: 2, position: 0, align: 0, postfix: 'ms', getData: function(details) { var duration = details.request.data.network.duration; return duration === null ? '...' : duration; }, id: 'glimpse-hud-data-network' },
         server: { title: 'Server', description: 'Total time on the server', visible: true, size: 2, position: 0, align: 0, postfix: 'ms', getData: function(details) { return details.request.data.server.duration; }, id: 'glimpse-hud-data-server' },
         client: { title: 'Client', description: 'Total time in browser (to load)', visible: true, size: 2, position: 0, align: 0, postfix: 'ms', getData: function(details) { var duration = details.request.data.browser.duration; return duration === null ? '...' : duration; }, id: 'glimpse-hud-data-client' }, 
@@ -34,9 +34,9 @@ var structure = {
     layout: {
         mini: {
             request: {},
-            wire: {},
-            server: {},
-            client: {}
+            // wire: {},
+            // server: {},
+            // client: {}
         },
         popup: {
             request: { title: 'Total Request Time', size: 0, position: 1, align: 1 },
