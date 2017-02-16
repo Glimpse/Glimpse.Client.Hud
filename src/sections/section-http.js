@@ -11,7 +11,7 @@ var structure = {
     title: 'HTTP',
     id: 'http',
     color: '#e2875e',
-    popup: {
+    xpopup: {
         render: function(details) {
             var requestDetails = details.request.data,
                 html = '<div class="glimpse-hud-popup-header">Browser Request</div>';

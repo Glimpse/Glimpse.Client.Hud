@@ -26,7 +26,7 @@ var section = function(structure, details, opened) {
     }
     html += '</div>';
 
-    if (!structure.popup.suppress) { html += popup(structure, details); }
+    // if (!structure.popup.suppress) { html += popup(structure, details); }
 
     return html + '</div>';
 };
