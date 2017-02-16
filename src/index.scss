@@ -9,6 +9,8 @@
          url('~/glimpse/hud/assets/selawkl.woff') format('woff');
 }
 
+$hud-height: 40px;
+
 .glimpse, .glimpse *, .glimpse a, .glimpse td, .glimpse th, .glimpse table {
     font-family: 'Segoe UI', 'Selawik', Tahoma, Geneva, Verdana, sans-serif;
     background-color: transparent;
@@ -24,10 +26,40 @@
     bottom: 0;
     float: right;
     position: fixed;
-    min-width: 1370px;
     transform: translatez(0);
     z-index: 100000;
-    height: 36px;
+    height: $hud-height;
+    background-color: rgba(black, 0.85);
+}
+.glimpse .glimpse-link {
+    display: block;
+    height: 100%;
+    float: left;
+    line-height: $hud-height;
+    padding: 0 1rem;
+    border-right: 1px solid #3399ff;
+
+    &:hover {
+        background-color: rgba(#0d5c9d, 0.85);
+
+        > .glimpse-link-text {
+            color: #f1f1f1;
+        }
+        > .glimpse-arrow {
+            fill: #f1f1f1;
+        }
+    }
+}
+.glimpse .glimpse-link-text {
+    vertical-align: middle;
+    color: #3399ff;
+}
+.glimpse .glimpse-arrow {
+    width: 1rem;
+    margin-right: 1rem;
+    display: inline-block;
+    vertical-align: middle;
+    fill: #3399ff;
 }
 .glimpse td, .glimpse span, .glimpse div, .glimpse th {
     color: #fff;
@@ -41,7 +73,6 @@
     width: 100%;
 }
 .glimpse .glimpse-icon {
-    background-color: #3c454f;
     margin: 0;
     padding: 0 8px;
     float: right;
@@ -49,40 +80,30 @@
     background-image: url(~/glimpse/hud/assets/glimpse-logo.png);
     background-repeat: no-repeat;
     background-size: 47px 37px;
-    height: 36px;
+    height: $hud-height;
 }
 .glimpse .glimpse-icon-text {
     font-size: 5px;
-    color: #3c454f;
     transform: rotate(270deg);
     margin-left: 45px;
     margin-top: 25px;
 }
 
-
-
 .glimpse .glimpse-hud { 
     padding: 0 5px 0 0;
-    float: right; 
-    background-color: #3c454f;
+    display: inline-block;
+    height: $hud-height;
 }
 .glimpse .glimpse-hud-section {
     float: left; 
     transition: all 0.3s ease;
-    border-left: 11px solid #71b1d1;
+    border: none;
     position: relative;
     cursor: default;
     height: 37px;
 }
 .glimpse .glimpse-hud-title { 
-    position: absolute;
-    color: white;
-    text-transform: uppercase; 
-    cursor: pointer;
-    font-weight: bold;
-    height: 100%;
-    width: 12px;
-    left: -12px;
+    display: none;
 }
 .glimpse .glimpse-hud-title span { 
     position: absolute;
@@ -163,35 +184,33 @@
     margin-left: 5px;
 }
 .glimpse .glimpse-hud-value {
-    font-size: 1em;
-    line-height: 100%;
-    margin-top: -3px;
+    font-size: 16px;
+    line-height: $hud-height;
+    display: inline-block;
 }
 @media screen\0 {   
     .glimpse .glimpse-hud-value { margin-top: -4px; }
     .glimpse .glimpse-hud-detail-normal .glimpse-hud-header { margin-bottom: 2px; }
 } 
 .glimpse .glimpse-hud-header { 
-    opacity: 0.6;
-    font-size: 0.7em;
+    font-size: 13px;
     line-height: 100%;
     white-space: nowrap;
+    display: inline-block;
+    color: #999;
+    margin-right: 1ch;
 }
 .glimpse .glimpse-hud-detail-extra-large .glimpse-hud-header {
     font-size: 0.5em;
 }
-.glimpse .glimpse-hud-detail-large .glimpse-hud-header {
-    font-size: 0.6em;
-}
 .glimpse .glimpse-hud-detail-normal.glimpse-hud-detail-position-top .glimpse-hud-header {
     padding-bottom: 2px;
 }
-.glimpse .glimpse-hud-prefix, .glimpse .glimpse-hud-postfix, .glimpse .glimpse-hud-spacer, .glimpse .glimpse-hud-plain { 
-    opacity: 0.4;
-    font-size: 0.9em;
-}
 .glimpse .glimpse-hud-postfix {
     padding-left: 2px;
+    color: #999;
+    font-size: 13px;
+    margin-left: 1ch;
 }
 .glimpse .glimpse-hud-prefix {
     padding-right: 2px;
@@ -220,7 +239,6 @@
     transition: max-height 0.3s ease 0.3s;
 }
 .glimpse .glimpse-hud-popup {
-    background-color: #3c454f;
     border-left: 11px solid #71b1d1;
     position: absolute;
     left: -11px;

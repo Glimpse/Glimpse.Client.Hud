@@ -21,7 +21,8 @@ var setup = state.current();
 function renderHolder() {
     if (document.readyState === 'complete') {
         var url = util.resolveClientUrl(util.currentRequestId(), true);
-        var html = '<div class="glimpse"><a class="glimpse-icon" target="_glimpse" href="' + url + '"><div class="glimpse-icon-text">Glimpse</div></a><div class="glimpse-hud"></div></div>'
+        var arrow = '<svg class="glimpse-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048"><title>E143_GoLegacy</title><path d="M1022,2H2046V1026H1918V221L91,2047,1,1957,1827,130H1022V2Z"/></svg>';
+        var html = '<a target="_glimpse" href="' + url + '" class="glimpse"><div class="glimpse-link">' + arrow + '<span class="glimpse-link-text">View full Glimpse</span></div><div class="glimpse-hud"></div></a>'
         var body = $('body');
         var htmlElement
         $(html).appendTo('body');
