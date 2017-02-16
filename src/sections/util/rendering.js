@@ -26,6 +26,7 @@ var section = function(structure, details, opened) {
     }
     html += '</div>';
 
+    // Popups temporarily disabled
     // if (!structure.popup.suppress) { html += popup(structure, details); }
 
     return html + '</div>';
