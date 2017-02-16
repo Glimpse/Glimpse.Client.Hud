@@ -11,7 +11,7 @@ var structure = {
     title: 'HTTP',
     id: 'http',
     color: '#e2875e',
-    xpopup: {
+    popup: {
         render: function(details) {
             var requestDetails = details.request.data,
                 html = '<div class="glimpse-hud-popup-header">Browser Request</div>';
@@ -34,6 +34,8 @@ var structure = {
     layout: {
         mini: {
             request: {},
+
+            // Not visible in current design:
             // wire: {},
             // server: {},
             // client: {}

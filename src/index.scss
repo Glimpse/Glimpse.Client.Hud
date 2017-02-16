@@ -104,14 +104,6 @@ $hud-height: 40px;
 }
 .glimpse .glimpse-hud-title { 
     display: none;
-    // position: absolute;
-    // color: white;
-    // text-transform: uppercase; 
-    // cursor: pointer;
-    // font-weight: bold;
-    // height: 100%;
-    // width: 12px;
-    // left: -12px;
 }
 .glimpse .glimpse-hud-title span { 
     position: absolute;
@@ -153,7 +145,6 @@ $hud-height: 40px;
 }
 .glimpse .glimpse-hud-data {
     transition: color 0.3s ease;
-    margin-right: 1ch;
 }
 .glimpse .glimpse-hud-data-important {
     font-size: 1.2em;
