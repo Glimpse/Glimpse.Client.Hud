@@ -51,6 +51,7 @@
     "webpack": "1.12.2"
   },
   "dependencies": {
-    "jquery": "2.1.4"
+    "jquery": "2.1.4",
+    "url-template": "^2.0.8"
   }
 }

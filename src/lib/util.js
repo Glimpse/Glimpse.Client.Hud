@@ -1,6 +1,7 @@
 'use strict';
 
 var $ = require('$jquery');
+var template = require('url-template');
 
 var camelCaseRegEx = /^([A-Z])|[\s-_](\w)/g;
 var usedMessageTypes = function() {
@@ -27,13 +28,13 @@ module.exports = {
         return hudScriptElement.getAttribute('data-request-id');
     },
     resolveClientUrl: function(requestId, follow) {
-        var clientTemplate = hudScriptElement.getAttribute('data-client-template');
+        var clientTemplate = template.parse(hudScriptElement.getAttribute('data-client-template'));
 
-        var params = '&requestId=' + requestId;
-        params += '&metadataUri=' + encodeURIComponent(hudScriptElement.getAttribute('data-metadata-template')); // This happens to be fully resolved already
-        params += follow ? '&follow=true' : '';
-
-        return clientTemplate.replace('{&requestId,follow,metadataUri}', params); // TODO: This should probably be resolved with a URI Template library
+        return clientTemplate.expand({
+            requestId: requestId,
+            follow: !!follow,
+            metadataUri: encodeURIComponent(hudScriptElement.getAttribute('data-metadata-template')),
+        });
     },
     resolveContextUrl: function(requestId) {
         var contextTemplate = hudScriptElement.getAttribute('data-context-template');
