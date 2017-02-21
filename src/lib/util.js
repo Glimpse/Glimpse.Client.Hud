@@ -1,6 +1,7 @@
 'use strict';
 
 var $ = require('$jquery');
+var UriTemplate = require('uri-templates');
 
 var camelCaseRegEx = /^([A-Z])|[\s-_](\w)/g;
 var usedMessageTypes = function() {
@@ -27,13 +28,13 @@ module.exports = {
         return hudScriptElement.getAttribute('data-request-id');
     },
     resolveClientUrl: function(requestId, follow) {
-        var clientTemplate = hudScriptElement.getAttribute('data-client-template');
+        var clientTemplate = new UriTemplate(hudScriptElement.getAttribute('data-client-template'));
 
-        var params = '&requestId=' + requestId;
-        params += '&metadataUri=' + encodeURIComponent(hudScriptElement.getAttribute('data-metadata-template')); // This happens to be fully resolved already
-        params += follow ? '&follow=true' : '';
-
-        return clientTemplate.replace('{&requestId,follow,metadataUri}', params); // TODO: This should probably be resolved with a URI Template library
+        return clientTemplate.fill({
+            requestId: requestId,
+            follow: follow,
+            metadataUri: encodeURIComponent(hudScriptElement.getAttribute('data-metadata-template')),
+        });
     },
     resolveContextUrl: function(requestId) {
         var contextTemplate = hudScriptElement.getAttribute('data-context-template');
@@ -48,6 +49,6 @@ module.exports = {
                 (uri.substring(uri.indexOf('//') + 2, uri.length) + '/').indexOf(window.location.host + '/') == 0);
     },
     htmlEncode: function (value) {
-        return !(value == null) ? value.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;') : '';
+        return (value != null) ? value.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;') : '';
     }
 };
