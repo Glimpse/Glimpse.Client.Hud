@@ -32,7 +32,7 @@ module.exports = {
 
         return clientTemplate.fill({
             requestId: requestId,
-            follow: !!follow,
+            follow: follow,
             metadataUri: encodeURIComponent(hudScriptElement.getAttribute('data-metadata-template')),
         });
     },
