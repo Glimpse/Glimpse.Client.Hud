@@ -1,7 +1,7 @@
 'use strict';
 
 var $ = require('$jquery');
-var template = require('url-template');
+var UriTemplate = require('uri-templates');
 
 var camelCaseRegEx = /^([A-Z])|[\s-_](\w)/g;
 var usedMessageTypes = function() {
@@ -28,9 +28,9 @@ module.exports = {
         return hudScriptElement.getAttribute('data-request-id');
     },
     resolveClientUrl: function(requestId, follow) {
-        var clientTemplate = template.parse(hudScriptElement.getAttribute('data-client-template'));
+        var clientTemplate = new UriTemplate(hudScriptElement.getAttribute('data-client-template'));
 
-        return clientTemplate.expand({
+        return clientTemplate.fill({
             requestId: requestId,
             follow: !!follow,
             metadataUri: encodeURIComponent(hudScriptElement.getAttribute('data-metadata-template')),
