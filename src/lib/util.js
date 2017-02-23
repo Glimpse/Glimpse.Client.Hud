@@ -33,7 +33,7 @@ module.exports = {
         return clientTemplate.fill({
             requestId: requestId,
             follow: follow,
-            metadataUri: encodeURIComponent(hudScriptElement.getAttribute('data-metadata-template')),
+            metadataUri: hudScriptElement.getAttribute('data-metadata-template'),
         });
     },
     resolveContextUrl: function(requestId) {
