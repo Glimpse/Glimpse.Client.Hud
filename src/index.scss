@@ -90,7 +90,6 @@ $hud-height: 40px;
 }
 
 .glimpse .glimpse-hud { 
-    padding: 0 5px 0 0;
     display: inline-block;
     height: $hud-height;
 }
@@ -135,13 +134,7 @@ $hud-height: 40px;
 }
 .glimpse .glimpse-hud-detail {
     display: inline-block;
-    padding: 1px 10px 0;
-}
-.glimpse .glimpse-hud-section-inner .glimpse-hud-detail:first-child { 
-    padding-left: 15px;
-}
-.glimpse .glimpse-hud-section-inner .glimpse-hud-detail:last-child { 
-    padding-right: 20px;
+    padding: 1px 1rem 0;
 }
 .glimpse .glimpse-hud-data {
     transition: color 0.3s ease;
@@ -198,7 +191,7 @@ $hud-height: 40px;
     white-space: nowrap;
     display: inline-block;
     color: #999;
-    margin-right: 1ch;
+    margin-right: 5px;
 }
 .glimpse .glimpse-hud-detail-extra-large .glimpse-hud-header {
     font-size: 0.5em;
@@ -207,10 +200,9 @@ $hud-height: 40px;
     padding-bottom: 2px;
 }
 .glimpse .glimpse-hud-postfix {
-    padding-left: 2px;
+    padding-left: 5px;
     color: #999;
     font-size: 13px;
-    margin-left: 1ch;
 }
 .glimpse .glimpse-hud-prefix {
     padding-right: 2px;
