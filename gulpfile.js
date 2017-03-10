@@ -15,7 +15,7 @@ var zip = require('gulp-zip');
 
 var settings = {
     index: __dirname + '/src/index.html',
-    entry: __dirname + '/src/index.js',
+    entry: __dirname + '/src/bootstrap.js',
     output: __dirname + '/dist',
     server: __dirname + '/dist',
     assets: __dirname + '/assets/**/*'
