@@ -38,16 +38,18 @@ function getBundleConfig() {
 
     if (RELEASE) {
         config.plugins = config.plugins.concat(
-            new webpack.optimize.UglifyJsPlugin(),
-            new webpack.optimize.OccurenceOrderPlugin()
+            new webpack.optimize.UglifyJsPlugin({
+                sourceMap: true
+            }),
+            new webpack.optimize.OccurrenceOrderPlugin()
         );
     } else {
         config.output.pathinfo = true;
     }
 
-    if (!RELEASE || DEBUG) {
-        config.devtool = '#inline-source-map';
-    }
+    config.devtool = (RELEASE)
+                        ? 'source-map'
+                        : 'cheap-module-eval-source-map';
 
     return config;
 }

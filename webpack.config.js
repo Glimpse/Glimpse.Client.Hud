@@ -42,8 +42,8 @@ module.exports = {
         chunkFilename: './[id].chunk.js'
     },
     resolve: {
-        extensions: ['', '.js', '.jsx', '.json'],
-        modulesDirectories: ['node_modules'],
+        extensions: ['.js', '.jsx', '.json'],
+        modules: ['node_modules'],
         alias: {
             'sections': path.resolve(__dirname, './src/sections'),
             'lib': path.resolve(__dirname, './src/lib/'),
@@ -52,10 +52,28 @@ module.exports = {
             'diagnostics': path.resolve(__dirname, './diagnostics/diagnostics.js'),
             '$jquery': path.resolve(__dirname, './src/lib/modules/jquery-hud.js')
          }
-     },
+    },
     module: {
-        loaders: [
-            { test: /\.scss$/, loader: 'style!css!autoprefixer?browsers=last 2 version!sass?includePaths[]=' + (path.resolve(__dirname, './node_modules/bootstrap-sass/assets/stylesheets/')) },
+        rules: [
+            {
+                test: /\.scss$/,
+                use: [
+                  { loader: 'style-loader' },
+                  { loader: 'css-loader' },
+                  {
+                      loader: 'autoprefixer-loader',
+                      query: {
+                          browsers: "last 2 version"
+                      }
+                  },
+                  {
+                      loader: 'sass-loader',
+                      query: {
+                          includePaths: [ path.resolve(__dirname, './node_modules/bootstrap-sass/assets/stylesheets/') ]
+                      }
+                  }
+                ]
+              },
             { test: /event-source/, loader: 'imports?this=>window!exports?EventSource=EventSource'}
         ]
     },
@@ -66,11 +84,5 @@ module.exports = {
         }),
         progressPlugin
     ],
-    log: {
-        colors: true,
-        hash: true,
-        timings: true,
-        assets: true,
-        chunkModules: false
-    }
+    stats: "normal"
 };
