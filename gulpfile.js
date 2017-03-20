@@ -47,9 +47,7 @@ function getBundleConfig() {
         config.output.pathinfo = true;
     }
 
-    config.devtool = (RELEASE)
-                        ? 'source-map'
-                        : 'cheap-module-eval-source-map';
+    config.devtool = (RELEASE) ? 'source-map' : 'cheap-module-eval-source-map';
 
     return config;
 }
