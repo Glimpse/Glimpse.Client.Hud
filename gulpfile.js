@@ -12,12 +12,17 @@ var gif = require('gulp-if');
 // var filelog = require('gulp-filelog');  // NOTE: Used for debug
 var runSequence = require('run-sequence');
 var zip = require('gulp-zip');
+var gulpRename = require('gulp-rename');
 
 var settings = {
     index: __dirname + '/src/index.html',
     entry: __dirname + '/src/bootstrap.js',
-    output: __dirname + '/dist',
-    server: __dirname + '/dist',
+    output: __dirname + '/.dist',
+    outputDev: __dirname + '/.dist/dev',
+    outputProd: __dirname + '/.dist/prod',
+    archive: __dirname + '/.archive',
+    archiveDev: __dirname + '/.archive/dev',
+    archiveProd: __dirname + '/.archive/prod',
     assets: __dirname + '/assets/**/*'
 };
 
@@ -25,11 +30,20 @@ var WATCH = !!argv.watch;
 var RELEASE = !!argv.release;
 var DEBUG = !!argv.debug;
 
+function getOutputDirectory() {
+    if (RELEASE) {
+        return settings.outputProd;
+    }
+    else {
+        return settings.outputDev
+    }
+}
+
 function getBundleConfig() {
     var config = _.defaultsDeep({}, require('./webpack.config'));
 
     config.entry = settings.entry;
-    config.output.path = settings.output;
+    config.output.path = getOutputDirectory();
 
     if (WATCH) {
         // config.chunkModules = false;
@@ -80,18 +94,24 @@ gulp.task('bundle', function (cb) {
 gulp.task('pages', function () {
     return gulp.src(settings.index)
         .pipe(gif(RELEASE, htmlcompress()))
-        .pipe(gulp.dest(settings.output))
+        .pipe(gulp.dest(getOutputDirectory()))
         .pipe(gif(WATCH, browserSync.reload({ stream: true })));
 });
 
 gulp.task('assets', function () {
     return gulp.src(settings.assets)
-        .pipe(gulp.dest(settings.output + '/assets'))
+        .pipe(gulp.dest(getOutputDirectory() + '/assets'))
         .pipe(gif(WATCH, browserSync.reload({ stream: true })));
 });
 
-gulp.task('clean', function () {
-    return del(settings.server + '/**');
+gulp.task('clean', ['clean-dist', 'clean-archive']);
+
+gulp.task('clean-archive', function () {
+    return del(settings.archive + '/**');
+});
+
+gulp.task('clean-dist', function () {
+    return del(settings.output + '/**');
 });
 
 // NOTE: was running in parallel but don't like the output
@@ -102,26 +122,18 @@ gulp.task('build', function (cb) {
 
 gulp.task('build-dev', function (cb) {
     RELEASE = false;
-
     runSequence('build', cb);
 });
 
 gulp.task('build-prod', function (cb) {
     RELEASE = true;
-
-    runSequence('build', cb);
-});
-
-gulp.task('build-ci', ['clean'], function (cb) {
-    RELEASE = false;
-
     runSequence('build', cb);
 });
 
 gulp.task('server', function (cb) {
     browserSync({
         server: {
-            baseDir: [settings.server]
+            baseDir: [settings.output]
         }
     });
 
@@ -140,10 +152,18 @@ gulp.task('prod', function (cb) {
     runSequence('build-prod', 'server', cb);
 });
 
-gulp.task('ci', ['build-ci'], function () {
-    return gulp.src(['dist/**', '!dist/hud.zip'])
+gulp.task('archive-dev', ['build-dev'], function () {
+    return gulp.src(['.dist/dev/**'])
         .pipe(zip('hud.zip'))
-        .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest('.archive/dev'))
+        .pipe(gulpRename('hud-dev.zip'))
+        .pipe(gulp.dest('.archive/dev'));
+});
+
+gulp.task('archive-prod', ['build-prod'], function () {
+    return gulp.src(['.dist/prod/**'])
+        .pipe(zip('hud.zip'))
+        .pipe(gulp.dest('.archive/prod'));
 });
 
 gulp.task('default', ['dev']);
