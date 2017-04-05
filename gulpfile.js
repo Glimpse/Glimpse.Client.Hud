@@ -149,7 +149,9 @@ gulp.task('prod', function (cb) {
     runSequence('build-prod', 'server', cb);
 });
 
-gulp.task('archive', ['build-prod', 'build-dev'], function () {
+// Note there's a race condition if we have build-dev & build-prod run as dependent tasks of archive.
+// those need to be run as seperate steps.
+gulp.task('archive', function () {
     return gulp.src(['.dist/**'])
         .pipe(zip('hud.zip'))
         .pipe(gulp.dest('.archive'));
