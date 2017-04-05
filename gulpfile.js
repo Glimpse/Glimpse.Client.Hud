@@ -12,7 +12,6 @@ var gif = require('gulp-if');
 // var filelog = require('gulp-filelog');  // NOTE: Used for debug
 var runSequence = require('run-sequence');
 var zip = require('gulp-zip');
-var gulpRename = require('gulp-rename');
 
 var settings = {
     index: __dirname + '/src/index.html',
