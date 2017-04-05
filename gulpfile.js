@@ -21,8 +21,6 @@ var settings = {
     outputDev: __dirname + '/.dist/dev',
     outputProd: __dirname + '/.dist/prod',
     archive: __dirname + '/.archive',
-    archiveDev: __dirname + '/.archive/dev',
-    archiveProd: __dirname + '/.archive/prod',
     assets: __dirname + '/assets/**/*'
 };
 
@@ -152,18 +150,10 @@ gulp.task('prod', function (cb) {
     runSequence('build-prod', 'server', cb);
 });
 
-gulp.task('archive-dev', ['build-dev'], function () {
-    return gulp.src(['.dist/dev/**'])
+gulp.task('archive', ['build-prod', 'build-dev'], function () {
+    return gulp.src(['.dist/**'])
         .pipe(zip('hud.zip'))
-        .pipe(gulp.dest('.archive/dev'))
-        .pipe(gulpRename('hud-dev.zip'))
-        .pipe(gulp.dest('.archive/dev'));
-});
-
-gulp.task('archive-prod', ['build-prod'], function () {
-    return gulp.src(['.dist/prod/**'])
-        .pipe(zip('hud.zip'))
-        .pipe(gulp.dest('.archive/prod'));
+        .pipe(gulp.dest('.archive'));
 });
 
 gulp.task('default', ['dev']);
