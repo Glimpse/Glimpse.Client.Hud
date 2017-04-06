@@ -12,7 +12,6 @@ var gif = require('gulp-if');
 // var filelog = require('gulp-filelog');  // NOTE: Used for debug
 var runSequence = require('run-sequence');
 var zip = require('gulp-zip');
-var gulpRename = require('gulp-rename');
 
 var settings = {
     index: __dirname + '/src/index.html',
@@ -21,8 +20,6 @@ var settings = {
     outputDev: __dirname + '/.dist/dev',
     outputProd: __dirname + '/.dist/prod',
     archive: __dirname + '/.archive',
-    archiveDev: __dirname + '/.archive/dev',
-    archiveProd: __dirname + '/.archive/prod',
     assets: __dirname + '/assets/**/*'
 };
 
@@ -152,18 +149,12 @@ gulp.task('prod', function (cb) {
     runSequence('build-prod', 'server', cb);
 });
 
-gulp.task('archive-dev', ['build-dev'], function () {
-    return gulp.src(['.dist/dev/**'])
+// Note there's a race condition if we have build-dev & build-prod run as dependent tasks of archive.
+// those need to be run as seperate steps.
+gulp.task('archive', function () {
+    return gulp.src(['.dist/**'])
         .pipe(zip('hud.zip'))
-        .pipe(gulp.dest('.archive/dev'))
-        .pipe(gulpRename('hud-dev.zip'))
-        .pipe(gulp.dest('.archive/dev'));
-});
-
-gulp.task('archive-prod', ['build-prod'], function () {
-    return gulp.src(['.dist/prod/**'])
-        .pipe(zip('hud.zip'))
-        .pipe(gulp.dest('.archive/prod'));
+        .pipe(gulp.dest('.archive'));
 });
 
 gulp.task('default', ['dev']);
