@@ -10,6 +10,7 @@
 }
 
 $hud-height: 40px;
+$hud-highlight: rgba(#0d5c9d, 0.85);
 
 .glimpse, .glimpse *, .glimpse a, .glimpse td, .glimpse th, .glimpse table {
     font-family: 'Segoe UI', 'Selawik', Tahoma, Geneva, Verdana, sans-serif;
@@ -38,16 +39,15 @@ $hud-height: 40px;
     line-height: $hud-height;
     padding: 0 1rem;
     border-right: 1px solid #3399ff;
+}
+.glimpse:hover .glimpse-link {
+    background-color: $hud-highlight;
 
-    &:hover {
-        background-color: rgba(#0d5c9d, 0.85);
-
-        > .glimpse-link-text {
-            color: #f1f1f1;
-        }
-        > .glimpse-arrow {
-            fill: #f1f1f1;
-        }
+    > .glimpse-link-text {
+        color: #f1f1f1;
+    }
+    > .glimpse-arrow {
+        fill: #f1f1f1;
     }
 }
 .glimpse .glimpse-link-text {
@@ -92,6 +92,9 @@ $hud-height: 40px;
 .glimpse .glimpse-hud { 
     display: inline-block;
     height: $hud-height;
+}
+.glimpse:hover .glimpse-hud { 
+    background-color: $hud-highlight;
 }
 .glimpse .glimpse-hud-section {
     float: left; 
