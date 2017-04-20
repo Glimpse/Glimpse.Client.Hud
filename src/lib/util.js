@@ -1,6 +1,5 @@
 'use strict';
 
-var $ = require('$jquery');
 var UriTemplate = require('uri-templates');
 
 var camelCaseRegEx = /^([A-Z])|[\s-_](\w)/g;

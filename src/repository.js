@@ -1,6 +1,5 @@
 'use strict';
 
-var $ = require('$jquery');
 var util = require('lib/util');
 var messageProcessor = require('./util/request-message-processor');
 
@@ -182,10 +181,24 @@ var process = (function() {
     };
 })();
 
-var getData = function(callback) {
-    $.getJSON(util.resolveContextUrl(util.currentRequestId()), null, function(data) {
-        var model = process(data);
-        callback(model);
+var getData = function() {
+    return new Promise((resolve, reject) => {
+        const request = new XMLHttpRequest();
+        request.open('GET', util.resolveContextUrl(util.currentRequestId()), true);
+
+        request.onload = function() {
+            if (request.status >= 200 && request.status < 400) {
+                resolve(process(JSON.parse(request.responseText)));
+            } else {
+                // TODO: handle error
+            }
+        };
+
+        request.onerror = function() {
+            // TODO: handle connection error
+        };
+
+        request.send();
     });
 }
 

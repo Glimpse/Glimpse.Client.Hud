@@ -8,60 +8,92 @@ if (FAKE_SERVER) {
 
 require('./index.scss');
 
-var $ = require('$jquery');
 var util = require('lib/util');
-var state = require('./state');
 var repository = require('./repository');
-var sections = require('./sections/section');
 
-//var details = args.newData.hud;
-var setup = state.current();
+function renderHud(pageLoadTime) {
+    var url = util.resolveClientUrl(util.currentRequestId(), true);
+    var arrow = `
+        <svg class="glimpse-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048">
+            <path class="glimpse-arrow-path" d="M1022,2H2046V1026H1918V221L91,2047,1,1957,1827,130H1022V2Z"/>
+        </svg>
+    `;
 
-// get into dom asap to trigger asset loading
-function renderHolder() {
-    if (document.readyState === 'complete') {
-        var url = util.resolveClientUrl(util.currentRequestId(), true);
-        var arrow = '<svg class="glimpse-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048"><title>E143_GoLegacy</title><path d="M1022,2H2046V1026H1918V221L91,2047,1,1957,1827,130H1022V2Z"/></svg>';
-        var html = '<a target="_glimpse" href="' + url + '" class="glimpse"><div class="glimpse-link">' + arrow + '<span class="glimpse-link-text">Open in Glimpse</span></div><div class="glimpse-hud"></div></a>'
-        var body = $('body');
-        var htmlElement
-        $(html).appendTo('body');
-    }
+    return `
+        <div class="glimpse-hud">
+            <a target="_glimpse" href="${url}" class="glimpse-link">
+                ${arrow}
+                <span>Open in Glimpse</span>
+            </a>
+            <div class="glimpse-timing">
+                <span class="glimpse-timing-label">
+                    Page load time
+                </span>
+                <span class="glimpse-timing-duration">
+                    ${pageLoadTime}
+                </span>
+                <span class="glimpse-timing-suffix">
+                    ms
+                </span>
+            </div>
+        </div>
+    `;
 }
-$(renderHolder);
+
+const timingsRaw = (window.performance
+    || window.mozPerformanceperformance
+    || window.msPerformanceperformance
+    || window.webkitPerformanceperformance
+    || {}).timing;
+let timingIncomplete = false;
+
+function calculateTimings(timingsRaw, startIndex, finishIndex) { 
+    return timingsRaw[finishIndex] - timingsRaw[startIndex];
+};
+
+function getTimings(details, timingsRaw) {
+    var network = calculateTimings(timingsRaw, 'responseStart', 'responseEnd') + calculateTimings(timingsRaw, 'navigationStart', 'requestStart'),
+        server = calculateTimings(timingsRaw, 'requestStart', 'responseEnd'),
+        browser = calculateTimings(timingsRaw, 'responseStart', 'loadEventEnd'),
+        total = calculateTimings(timingsRaw, 'navigationStart', 'loadEventEnd');
+
+    // trying to avoid negitive values showing up
+    if (server <= 0) {
+        server = parseInt(details.request.data.responseDuration);
+    }
+    if (network < 0 || browser < 0) {
+        if (network < 0) {
+            network = 0;
+        }
+        if (browser < 0) {
+            browser = 0;
+        }
+        timingIncomplete = true;
+    }
+    else {
+        timingIncomplete = false;
+    }
+
+    return { network: network, server: server, browser: browser, total: total };
+};
 
 // only load things when we have the data ready to go
-repository.getData(function (details) {
-    $(function () {
+repository.getData().then(function (details) {
+    // set a timeout to render the hud. We'll do exponential backoff on the timer until the document is ready.
+    let timeout = 1;
 
-        // set a timeout to render the hud. We'll do exponential backoff on the timer until the document is ready.
-        var timeout = 1;
-
-        var onTimeout = function () {
-            if (document.readyState === 'complete') {
-                // if things were rendered but was overridden
-                if (!$('.glimpse').length) {
-                    renderHolder();
-                }
-
-                // generate the html needed for the sections
-                var html = sections.render(details, setup);
-
-                // insert the html into the dom
-                var holder = $(html).appendTo('.glimpse-hud');
-
-                // force the correct state from previous load
-                state.setup(holder);
-
-                // setup events that we need to listen to
-                sections.postRender(holder, details);
-            }
-            else {
-                timeout = timeout * 2;
-                setTimeout(onTimeout, timeout);
-            }
+    const onTimeout = () => {
+        if (document.readyState === 'complete') {
+            const timings = getTimings(details, timingsRaw);
+            const container = document.createElement('div');
+            container.innerHTML = renderHud(timings.total);
+            document.body.appendChild(container);
         }
+        else {
+            timeout *= 2;
+            setTimeout(onTimeout, timeout);
+        }
+    }
 
-        setTimeout(onTimeout, 0);
-    });
+    setTimeout(onTimeout, 0);
 });
