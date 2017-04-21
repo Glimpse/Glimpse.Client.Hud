@@ -43,8 +43,7 @@
     background-color: rgba(0, 0, 0, 0.85);
     transition: .3s ease;
     transition-property: background-color, color;
-    
-    &:hover {
+    .glimpse-link:hover {
         background-color: rgba(13, 92, 157, 0.85);
         color: inherit;
     }
