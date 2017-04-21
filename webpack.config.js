@@ -73,8 +73,17 @@ module.exports = {
                       }
                   }
                 ]
-              },
-            { test: /event-source/, loader: 'imports?this=>window!exports?EventSource=EventSource'}
+            },
+            {
+                test: /\.jsx?$/,
+                loaders: ['babel-loader?cacheDirectory'],
+                exclude: /node_modules/,
+                include: __dirname
+            },
+            {
+                test: /event-source/,
+                loader: 'imports?this=>window!exports?EventSource=EventSource'
+            }
         ]
     },
     plugins: [
