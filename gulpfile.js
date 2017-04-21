@@ -50,7 +50,7 @@ function getBundleConfig() {
     if (RELEASE) {
         config.plugins = config.plugins.concat(
             new webpack.optimize.UglifyJsPlugin({
-                sourceMap: true
+                sourceMap: false
             }),
             new webpack.optimize.OccurrenceOrderPlugin()
         );
