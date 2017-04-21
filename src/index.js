@@ -9,7 +9,6 @@ if (FAKE_SERVER) {
 require('./index.scss');
 
 var util = require('lib/util');
-var repository = require('./repository');
 
 function renderHud(pageLoadTime) {
     var url = util.resolveClientUrl(util.currentRequestId(), true);
@@ -48,52 +47,35 @@ const timingsRaw = (window.performance
 let timingIncomplete = false;
 
 function calculateTimings(timingsRaw, startIndex, finishIndex) { 
-    return timingsRaw[finishIndex] - timingsRaw[startIndex];
+    // avoid negative values
+    return Math.max(0, timingsRaw[finishIndex] - timingsRaw[startIndex]);
 };
 
-function getTimings(details, timingsRaw) {
-    var network = calculateTimings(timingsRaw, 'responseStart', 'responseEnd') + calculateTimings(timingsRaw, 'navigationStart', 'requestStart'),
-        server = calculateTimings(timingsRaw, 'requestStart', 'responseEnd'),
-        browser = calculateTimings(timingsRaw, 'responseStart', 'loadEventEnd'),
-        total = calculateTimings(timingsRaw, 'navigationStart', 'loadEventEnd');
+function getTimings(timingsRaw) {
+    let network = calculateTimings(timingsRaw, 'responseStart', 'responseEnd') + calculateTimings(timingsRaw, 'navigationStart', 'requestStart');
+    let server = calculateTimings(timingsRaw, 'requestStart', 'responseEnd');
+    let browser = calculateTimings(timingsRaw, 'responseStart', 'loadEventEnd');
+    let total = calculateTimings(timingsRaw, 'navigationStart', 'loadEventEnd');
 
-    // trying to avoid negitive values showing up
-    if (server <= 0) {
-        server = parseInt(details.request.data.responseDuration);
-    }
-    if (network < 0 || browser < 0) {
-        if (network < 0) {
-            network = 0;
-        }
-        if (browser < 0) {
-            browser = 0;
-        }
-        timingIncomplete = true;
+    return {
+        network,
+        server,
+        browser,
+        total
+    };
+};
+
+let timeout = 1;
+const onTimeout = () => {
+    if (document.readyState === 'complete') {
+        const timings = getTimings(timingsRaw);
+        const container = document.createElement('div');
+        container.innerHTML = renderHud(timings.total);
+        document.body.appendChild(container);
     }
     else {
-        timingIncomplete = false;
+        setTimeout(onTimeout, timeout *= 2);
     }
+}
 
-    return { network: network, server: server, browser: browser, total: total };
-};
-
-// only load things when we have the data ready to go
-repository.getData().then(function (details) {
-    // set a timeout to render the hud. We'll do exponential backoff on the timer until the document is ready.
-    let timeout = 1;
-
-    const onTimeout = () => {
-        if (document.readyState === 'complete') {
-            const timings = getTimings(details, timingsRaw);
-            const container = document.createElement('div');
-            container.innerHTML = renderHud(timings.total);
-            document.body.appendChild(container);
-        }
-        else {
-            timeout *= 2;
-            setTimeout(onTimeout, timeout);
-        }
-    }
-
-    setTimeout(onTimeout, 0);
-});
+setTimeout(onTimeout);
