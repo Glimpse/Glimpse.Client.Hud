@@ -15,7 +15,7 @@ var zip = require('gulp-zip');
 
 var settings = {
     index: __dirname + '/src/index.html',
-    entry: __dirname + '/src/bootstrap.js',
+    entry: __dirname + '/src/index.js',
     output: __dirname + '/.dist',
     outputDev: __dirname + '/.dist/dev',
     outputProd: __dirname + '/.dist/prod',
@@ -50,7 +50,7 @@ function getBundleConfig() {
     if (RELEASE) {
         config.plugins = config.plugins.concat(
             new webpack.optimize.UglifyJsPlugin({
-                sourceMap: true
+                sourceMap: false
             }),
             new webpack.optimize.OccurrenceOrderPlugin()
         );

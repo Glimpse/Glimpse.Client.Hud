@@ -3,432 +3,65 @@
     src: url('~/glimpse/hud/assets/selawk.woff2') format('woff2'),
          url('~/glimpse/hud/assets/selawk.woff') format('woff');
 }
-@font-face {
-    font-family: 'Selawik Light';
-    src: url('~/glimpse/hud/assets/selawkl.woff2') format('woff2'),
-         url('~/glimpse/hud/assets/selawkl.woff') format('woff');
-}
 
-$hud-height: 40px;
-$hud-highlight-background: rgba(#0d5c9d, 0.85);
-$hud-highlight-foreground: #f1f1f1;
-
-.glimpse, .glimpse *, .glimpse a, .glimpse td, .glimpse th, .glimpse table {
-    font-family: 'Segoe UI', 'Selawik', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: transparent;
-    border: 0px;
-    text-align: left;
-    padding: 0;
-    margin: 0;
-    box-sizing: content-box;
-    direction: ltr;
+.glimpse-hud {
+    display: flex !important;
+    height: 40px !important;
+    width: auto !important;
+    flex-direction: row !important;
+    align-items: stretch !important;
+    color: white !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    right: 0 !important;
+    color: #f1f1f1 !important;
+    font-size: 15px !important;
+    font-family: 'Selawik', sans-serif !important;
+    font-weight: 300 !important;
 }
-.glimpse {
-    right: 0;
-    bottom: 0;
-    float: right;
-    position: fixed;
-    transform: translatez(0);
-    z-index: 100000;
-    height: $hud-height;
-    background-color: rgba(black, 0.85);
+.glimpse-arrow {
+    height: 15px !important;
+    width: 15px !important;
+    display: inline-block !important;
+    margin-right: 10px !important;
 }
-.glimpse .glimpse-link {
-    display: block;
-    height: 100%;
-    float: left;
-    line-height: $hud-height;
-    padding: 0 1rem;
-    border-right: 1px solid #3399ff;
+.glimpse-arrow-path {
+    fill: currentColor !important;
 }
-.glimpse:hover .glimpse-link {
-    background-color: $hud-highlight-background;
-
-    > .glimpse-link-text {
-        color: $hud-highlight-foreground;
-    }
-    > .glimpse-arrow {
-        fill: $hud-highlight-foreground;
+.glimpse-link {
+    color: #3399ff !important;
+    border-right: 1px solid #3399ff !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    height: 100% !important;
+    padding: 0 15px !important;
+    text-decoration: none !important;
+    background-color: rgba(0, 0, 0, 0.85) !important;
+    transition: .3s ease !important;
+    transition-property: background-color, color !important;
+    
+    &:hover {
+        background-color: rgba(13, 92, 157, 0.85) !important;
+        color: inherit !important;
     }
 }
-.glimpse .glimpse-link-text {
-    vertical-align: middle;
-    line-height: $hud-height;
-    color: #3399ff;
+.glimpse-timing {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    padding: 0 15px !important;
+    background-color: rgba(0, 0, 0, 0.85) !important;
+}
+.glimpse-timing-duration {
+    position: relative !important;
+    font-size: 20px !important;
+    margin-left: 5px !important;
+    margin-right: 1px !important;
+    top: -2px !important;
+    font-weight: 600 !important;
+}
+.glimpse-timing-label,
+.glimpse-timing-suffix {
+    color: #999 !important;
 }
-.glimpse .glimpse-arrow {
-    width: 1rem;
-    margin-right: 1rem;
-    display: inline-block;
-    vertical-align: middle;
-    fill: #3399ff;
-}
-.glimpse td, .glimpse span, .glimpse div, .glimpse th {
-    color: #fff;
-    font-size: 13px;
-}
-.glimpse table {
-    min-width: 0;
-    border-collapse: collapse;
-    border-spacing: 0;
-    width: 100%;
-}
-.glimpse .glimpse-icon {
-    margin: 0;
-    padding: 0 8px;
-    float: right;
-    width: 39px;
-    background-image: url(~/glimpse/hud/assets/glimpse-logo.png);
-    background-repeat: no-repeat;
-    background-size: 47px 37px;
-    height: $hud-height;
-}
-.glimpse .glimpse-icon-text {
-    font-size: 5px;
-    transform: rotate(270deg);
-    margin-left: 45px;
-    margin-top: 25px;
-}
-
-.glimpse .glimpse-hud { 
-    display: inline-block;
-    height: $hud-height;
-}
-.glimpse:hover .glimpse-hud { 
-    background-color: $hud-highlight-background;
-}
-.glimpse:hover .glimpse-hud-header, .glimpse:hover .glimpse-hud-postfix { 
-    color: $hud-highlight-foreground;
-}
-.glimpse .glimpse-hud-section {
-    float: left; 
-    transition: all 0.3s ease;
-    border: none;
-    position: relative;
-    height: 37px;
-}
-.glimpse .glimpse-hud-title { 
-    display: none;
-}
-.glimpse .glimpse-hud-title span { 
-    position: absolute;
-    line-height: 100%;
-    font-size: 9px;
-    top: 5px;
-    transform-origin: 15px 13px;
-    transform: rotate(270deg);
-}
-.glimpse .glimpse-hud-section-inner {  
-    transition: all 0.3s ease;
-    max-width: 999px;
-    min-width: 0px;
-    margin-top: -1px;
-    overflow: hidden;
-    height: 37px;
-}
-.glimpse .glimpse-hud-section-input {
-    display: none !important;
-    font-size: 12px;
-}
-.glimpse .glimpse-hud-section-input:checked ~ .glimpse-hud-section-inner, .glimpse .glimpse-hud-section-input:checked ~ .glimpse-hud-popup-expander {
-    max-width: 0px;
-    overflow: hidden;
-}
-.glimpse .glimpse-hud-section-input:checked ~ .glimpse-hud-popup {
-    max-height: 0px;
-    overflow: hidden;
-}
-.glimpse .glimpse-hud-detail {
-    display: inline-block;
-    padding: 1px 1rem 0;
-}
-.glimpse .glimpse-hud-data {
-    transition: color 0.3s ease;
-}
-.glimpse .glimpse-hud-data-important {
-    font-size: 1.2em;
-    font-weight: bold;
-}
-.glimpse .glimpse-hud-value-update {
-    color: #71b1d1;
-}
-.glimpse .glimpse-hud-detail-align-right .glimpse-hud-header {
-    text-align: right;
-} 
-.glimpse .glimpse-hud-detail-extra-large, .glimpse-hud-detail-extra-large span {
-    font-size: 2em;
-    line-height: 100%;
-}
-.glimpse .glimpse-hud-detail-large, .glimpse-hud-detail-large span {
-    font-size: 1.45em;
-    line-height: 100%;
-}
-.glimpse .glimpse-hud-detail-normal, .glimpse-hud-detail-normal span, .glimpse-hud-detail-normal div {
-    font-size: 1.2em;
-    line-height: 100%;
-}
-.glimpse .glimpse-hud-detail-small, .glimpse-hud-detail-small span, .glimpse-hud-detail-small div {
-    font-size: 1.1em;
-} 
-.glimpse .glimpse-hud-detail-extra-small, .glimpse-hud-detail-extra-small span, .glimpse-hud-detail-extra-small div {
-    font-size: 1em;
-} 
-.glimpse .glimpse-hud-detail-position-left .glimpse-hud-value, .glimpse .glimpse-hud-detail-position-left div, .glimpse .glimpse-hud-detail-position-right div {
-    display: inline-block;
-}
-.glimpse .glimpse-hud-detail-position-left .glimpse-hud-header {
-    margin-right: 5px;
-}
-.glimpse .glimpse-hud-detail-position-right .glimpse-hud-header {
-    margin-left: 5px;
-}
-.glimpse .glimpse-hud-value {
-    font-size: 16px;
-    line-height: $hud-height;
-    display: inline-block;
-}
-@media screen\0 {   
-    .glimpse .glimpse-hud-value { margin-top: -4px; }
-    .glimpse .glimpse-hud-detail-normal .glimpse-hud-header { margin-bottom: 2px; }
-} 
-.glimpse .glimpse-hud-header { 
-    font-size: 13px;
-    line-height: $hud-height;
-    white-space: nowrap;
-    display: inline-block;
-    color: #999;
-    margin-right: 5px;
-}
-.glimpse .glimpse-hud-detail-extra-large .glimpse-hud-header {
-    font-size: 0.5em;
-}
-.glimpse .glimpse-hud-detail-normal.glimpse-hud-detail-position-top .glimpse-hud-header {
-    padding-bottom: 2px;
-}
-.glimpse .glimpse-hud-postfix {
-    padding-left: 5px;
-    color: #999;
-    font-size: 13px;
-}
-.glimpse .glimpse-hud-prefix {
-    padding-right: 2px;
-}
-.glimpse .glimpse-hud-prefix-super {
-    font-size: 0.4em;
-    font-weight: normal;
-    opacity: 0.4;
-    position: relative;
-    top: -0.5em;
-}
-.glimpse .glimpse-hud-spacer {
-    padding: 0 10px;
-}
-.glimpse .glimpse-hud-quite, .glimpse .glimpse-hud-quite * {
-    opacity: 0.6;
-}
-.glimpse .glimpse-hud-error, .glimpse .glimpse-hud-error * {
-    color: #FF8C80;
-}
-.glimpse .glimpse-data-trivial {
-    display: none;    
-}
-.glimpse .glimpse-hud-section-inner:hover ~ .glimpse-hud-popup, .glimpse .glimpse-hud-popup:hover {
-    max-height: 999px;
-    transition: max-height 0.3s ease 0.3s;
-}
-.glimpse .glimpse-hud-popup {
-    border-left: 11px solid #71b1d1;
-    position: absolute;
-    left: -11px;
-    right: 0;
-    z-index: 1;
-    bottom: 0px;
-    max-height: 0px;
-    transition: max-height 0.3s ease 0.2s;
-} 
-.glimpse .glimpse-hud-popup-expander {
-    min-width: 0px;
-    height: 1px; 
-    transition: min-width 0.1s ease 0.5s;
-} 
-.glimpse .glimpse-hud-section-inner:hover ~ .glimpse-hud-popup-expander, .glimpse .glimpse-hud-popup:hover ~ .glimpse-hud-popup-expander {
-    transition: min-width 0.1s ease 0.2s;
-} 
-.glimpse .glimpse-hud-section-http .glimpse-hud-section-inner:hover ~ .glimpse-hud-popup-expander, .glimpse .glimpse-hud-section-http .glimpse-hud-popup:hover ~ .glimpse-hud-popup-expander {
-    min-width: 400px;
-} 
-.glimpse .glimpse-hud-section-host .glimpse-hud-section-inner:hover ~ .glimpse-hud-popup-expander, .glimpse .glimpse-hud-section-host .glimpse-hud-popup:hover ~ .glimpse-hud-popup-expander {
-    min-width: 600px;
-} 
-.glimpse .glimpse-hud-section-ajax .glimpse-hud-section-inner:hover ~ .glimpse-hud-popup-expander, .glimpse .glimpse-hud-section-ajax .glimpse-hud-popup:hover ~ .glimpse-hud-popup-expander {
-    min-width: 450px;
-} 
-.glimpse .glimpse-hud-popup-clear {
-    clear: both;
-}
-.glimpse .glimpse-hud-popup-header {
-    margin-bottom: 5px;
-}
-.glimpse .glimpse-hud-popup .glimpse-hud-detail-extra-large {
-    margin-left: -2px;
-}
-.glimpse .glimpse-hud-popup-inner {
-    padding: 10px 15px;
-} 
-.glimpse .glimpse-hud-popup .glimpse-hud-detail {
-    padding: 0;
-}  
- .glimpse .glimpse-hud-bar {
-    height: 12px;
-    width:100%; 
-    margin: 5px 0 10px;
-}
-.glimpse .glimpse-hud-bar > div {
-    position: relative;
-} 
-.glimpse .glimpse-hud-bar-item {
-    position: absolute;  
-    height: 12px;
-    min-width: 1px;
-} 
-.glimpse .glimpse-hud-summary {
-    width: auto;
-} 
-.glimpse .glimpse-hud-summary-left {
-    float: left;
-} 
-.glimpse .glimpse-hud-summary-right {
-    float: right;
-} 
-.glimpse .glimpse-hud-summary tr {
-    vertical-align: bottom;
-}
-.glimpse .glimpse-hud-summary-space tr:first-child {
-    height: 65px;
-}
-.glimpse .glimpse-hud-summary tr {
-    height: 27px;
-}
-.glimpse .glimpse-hud-summary tr:last-child {
-    height: 35px;
-}
-.glimpse .glimpse-hud-summary-space tr:last-child {
-    height: 46px;
-}
-.glimpse .glimpse-hud-summary th {
-    font-weight: normal;
-}
-.glimpse .glimpse-hud-summary td .glimpse-hud-detail {
-    float: right;
-} 
-.glimpse table.glimpse-hud-listing {
-    max-width: 100%;
-    width: 100%;
-} 
-.glimpse .glimpse-hud-popup .glimpse-hud-listing { 
-    margin-top: 10px;
-} 
-.glimpse .glimpse-hud-listing td {
-    font-size: 1.025em;
-    line-height: 100%;
-    padding-top: 3px;
-} 
-.glimpse .glimpse-hud-listing-row {
-    padding: 2px 0;
-} 
-.glimpse .glimpse-hud-listing-row > div {
-    display: inline-block;
-} 
-.glimpse .glimpse-hud-listing tr:first-child td {
-    padding-top: 1px;
-}
-.glimpse .glimpse-hud-listing td {
-    padding-bottom: 1px;
-}
-.glimpse .glimpse-hud-listing thead th {
-    white-space: nowrap;
-    opacity: 0.6;
-    font-weight: normal;
-    color: white;
-    line-height: 100%;
-    padding-bottom: 5px;
-} 
-.glimpse .glimpse-hud-listing-overflow {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-} 
-.glimpse td.glimpse-hud-listing-value, .glimpse th.glimpse-hud-listing-value {
-    text-align: right; 
-} 
-.glimpse td.glimpse-hud-listing-value, .glimpse span.glimpse-hud-listing-value { 
-    font-family: Consolas, monospace, serif;
-    opacity: 0.85;
-}  
-.glimpse .glimpse-hud .glimpse-data-childless-duration, .glimpse .glimpse-hud .glimpse-data-duration, .glimpse .glimpse-hud .glimpse-data-content-type {
-    width:90px;
-}
-.glimpse .glimpse-hud .glimpse-data-size {
-    width:60px;
-}
-.glimpse .glimpse-hud .glimpse-data-content-method {
-    width:40px;
-}
-.glimpse .glimpse-hud .glimpse-data-content-type, .glimpse .glimpse-hud .glimpse-data-content-time {
-    text-align: right;
-}
-.glimpse .glimpse-hud .glimpse-data-childless-start-point {
-    width:100px;
-}
-.glimpse .glimpse-hud .glimpse-data-request-parts {
-    margin-top:15px;
-}
-.glimpse .glimpse-hud .glimpse-data-wire-part {
-    width:33%;
-}
-.glimpse .glimpse-hud .glimpse-data-server-part {
-    width:34%;
-    text-align: center;
-}
-.glimpse .glimpse-hud .glimpse-data-client-part {
-    text-align:right;
-    width:33%
-}
-.glimpse .glimpse-hud .glimpse-data-ajax-method {
-    width: 30px;
-    text-align: right;
-}
-.glimpse .glimpse-hud .glimpse-data-ajax-uri {
-    max-width: 230px;
-    padding: 0 20px;
-} 
-.glimpse .glimpse-hud .glimpse-data-query-summary .glimpse-hud-listing-value {
-    color: #e2875e;
-}
-.glimpse .glimpse-hud .glimpse-hud-section-ajax .glimpse-hud-listing-row { 
-    position: relative;
-    top: -20px;
-    opacity: 0;
-    transition: all 0.6s ease;
-}
-.glimpse .glimpse-hud .glimpse-hud-section-ajax .glimpse-hud-listing-row.added {
-    top: 0px;
-    opacity: 1;
-}
-.glimpse .glimpse-hud .glimpse-data-ajax-detail tbody tr:first-child td {
-    padding-top: 10px; 
-}
-.glimpse .glimpse-hud-controls {
-    text-align: right;  
-    font-size: 1.2em;
-    margin-top: 7px;
-}
-.glimpse .glimpse-hud-controls span {
-    font-weight: bold;
-    color: #71b1d1;
-    cursor: pointer;
-}
-.glimpse .glimpse-data-ajax-detail a {
-    color:inherit;  
-}
-
