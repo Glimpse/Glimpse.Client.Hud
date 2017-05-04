@@ -1,7 +1,6 @@
 #!/bin/bash
 
 personalAccessToken=$1
-echo personallAccessToken is $personalAccessToken
 
 if [ -z "$personalAccessToken" ]; then
   echo "usage:  runOSPOMagic.sh <personal-access-token>"
