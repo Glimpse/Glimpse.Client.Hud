@@ -24,7 +24,3 @@ fs.readFile(pkg, 'utf8', (err, data) => {
     const output = JSON.stringify({ components } , undefined, '  ');
     process.stdout.write(output);
 });
-
-
-
-
