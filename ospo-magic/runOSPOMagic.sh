@@ -1,5 +1,13 @@
 #!/bin/bash
 
+personalAccessToken=$1
+echo personallAccessToken is $personalAccessToken
+
+if [ -z "$personalAccessToken" ]; then
+  echo "usage:  runOSPOMagic.sh <personal-access-token>"
+  exit 1
+fi
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 pushd $DIR
 projectDir=$DIR/..
@@ -23,5 +31,5 @@ fi
 cd $DIR/ospo-witness-clients/npm
 npm install
 echo "running ospo-witness-clients command..."
-node index.js register -i $projectDir -o ./ospo.out --url https://witness.azurewebsites.net/ -t Iwfr7h4amgd2rdk2755iqjykm2ovcqm5h2an5ohopa7ak5fmla3q
+node index.js register -i $projectDir -o ./ospo.out --url https://witness.azurewebsites.net/ -t $personalAccessToken
 popd
