@@ -27,6 +27,6 @@ if not exist %~dp0\ospo-witness-clients (
 cd ospo-witness-clients\npm
 call npm install
 echo "running ospo-witness-clients command..."
-node index.js register -i %projectDir% -o .\ospo.out --url https://witness.azurewebsites.net/ -t %personalAccessToken%
+node index.js register -i %projectDir% -o .\ospo.out --url https://witnesstest.azurewebsites.net/ -t %personalAccessToken%
 popd
 goto :EOF

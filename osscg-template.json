@@ -1,5 +1,9 @@
 {
   "user": "mkaufman",
   "ms.group": "C+E - Developer Division",
-  "ms.project": "Project Glimpse: Node Edition"
+  "ms.project": "Project Glimpse: Node Edition - HUD",
+  "usageDetails": "Component used in Project Glimpse: Node Edition",
+  "integrationApproach": "Other",
+  "modernUI": "No",
+  "modified": false
 }

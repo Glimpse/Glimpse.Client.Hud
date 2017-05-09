@@ -10,7 +10,7 @@ fs.readFile(pkg, 'utf8', (err, data) => {
     const deps = p['dependencies'];
     for (d in deps) {
         if (deps.hasOwnProperty(d)) {
-            components.push({
+            const x = {
                 component: {
                     "npmjs.org": {
                         name: d
@@ -18,9 +18,17 @@ fs.readFile(pkg, 'utf8', (err, data) => {
                 },
                 "ms.transmitted": true,
                 "ms.modified": false
-            });
+            };
+
+            if (d === 'emojione') {
+                x.license = 'MultipleLicenses';
+            }
+            else if (d === 'uri-templates') {
+                x.license = 'PublicDomain';
+            }
+            components.push(x);
         }
     }
-    const output = JSON.stringify({ components } , undefined, '  ');
+    const output = JSON.stringify({ components }, undefined, '  ');
     process.stdout.write(output);
 });
