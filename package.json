@@ -1,6 +1,6 @@
 {
   "name": "glimpse.client.hud",
-  "version": "0.19.14",
+  "version": "0.20.8",
   "description": "The Javascript client that acts as an in browser viewer for the various Glimpse server backends",
   "main": "dist/hud.js",
   "scripts": {
@@ -23,6 +23,10 @@
   "homepage": "https://github.com/Glimpse/Glimpse.Client#readme",
   "devDependencies": {
     "autoprefixer-loader": "3.2.0",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^6.4.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
     "browser-sync": "2.18.8",
     "chance": "^1.0.6",
     "css-loader": "0.27.3",
