@@ -74,8 +74,10 @@
     border-right: 1px solid #3399ff !important;
 
     > svg {
-        height: 20px !important;
-        width: 20px !important;
+        position: relative !important;
+        left: 2px !important;
+        height: 25px !important;
+        width: 25px !important;
     }
 
     &:hover {
