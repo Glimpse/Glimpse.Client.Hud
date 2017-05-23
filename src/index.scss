@@ -65,3 +65,20 @@
 .glimpse-timing-suffix {
     color: #999 !important;
 }
+.glimpse-icon {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    background-color: rgba(0, 0, 0, 0.85) !important;
+    padding: 0 15px !important;
+    border-right: 1px solid #3399ff !important;
+
+    > svg {
+        height: 20px !important;
+        width: 20px !important;
+    }
+
+    &:hover {
+        background-color: rgba(13, 92, 157, 0.85) !important;
+    }
+}
