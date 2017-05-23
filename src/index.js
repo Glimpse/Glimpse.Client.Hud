@@ -39,7 +39,7 @@ function renderHud(pageLoadTime) {
     }
 
     const newVersionIcon = newVersion
-        ? `<a class="glimpse-icon" title="New version available: ${newVersion}" href="#">${icon}</a>`
+        ? `<a class="glimpse-icon" title="New version available: ${newVersion}" href="https://www.npmjs.com/package/@glimpse/glimpse" target="_blank">${icon}</a>`
         : '';
 
     return `
