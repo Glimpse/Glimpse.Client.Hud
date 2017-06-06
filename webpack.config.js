@@ -53,7 +53,7 @@ module.exports = {
     plugins: [
         new webpack.DefinePlugin({
             DIAGNOSTICS: false,
-            FAKE_SERVER: true
+            FAKE_SERVER: false
         })
     ],
     stats: "normal"
