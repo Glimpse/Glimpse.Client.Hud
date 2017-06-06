@@ -1,5 +1,3 @@
-'use strict';
-
 // DEV TIME CODE
 if (FAKE_SERVER) {
     require('fake');
@@ -11,27 +9,36 @@ require('./index.scss');
 var versionView = require('./views/version');
 var openView = require('./views/open');
 var timingView = require('./views/timing');
+var ajaxView = require('./views/ajax');
 
-function renderHud(pageLoadTime) {
-    const versionIcon = versionView.render();
-    const openIcon = openView.render();
+function render() {
+    const versionComponent = versionView.render();
+    const openComponent = openView.render();
     const timingComponent = timingView.render();
+    const ajaxComponent = ajaxView.render();
 
     return `
         <div class="glimpse-hud">
-            ${versionIcon}
-            ${openIcon}
+            ${versionComponent}
+            ${openComponent}
             ${timingComponent}
+            ${ajaxComponent}
         </div>
     `;
+}
+
+function postRender() {
+    ajaxView.postRender();
 }
 
 let timeout = 1;
 const onTimeout = () => {
     if (document.readyState === 'complete') {
         const container = document.createElement('div');
-        container.innerHTML = renderHud();
+        container.innerHTML = render();
         document.body.appendChild(container);
+
+        postRender();
     }
     else {
         setTimeout(onTimeout, timeout *= 2);
