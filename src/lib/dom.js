@@ -8,7 +8,7 @@ module.exports = {
         if (el.classList) {
             el.classList.add(className);
         }
-        else if (!hasClass(el, className)) {
+        else if (!module.exports.hasClass(el, className)) {
             el.className += ' ' + className;
         }
     },
@@ -19,5 +19,10 @@ module.exports = {
         else {
             el.className = el.className.replace(new RegExp('\\b' + className + '\\b', 'g'), '');
         }
+    },
+    createElement: function(html) {
+        var div = document.createElement('div');
+        div.innerHTML = html.trim();
+        return div.firstChild;
     }
 }
