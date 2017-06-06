@@ -29,12 +29,7 @@ module.exports = {
                 use: [
                   { loader: 'style-loader' },
                   { loader: 'css-loader' },
-                  {
-                      loader: 'autoprefixer-loader',
-                      query: {
-                          browsers: "last 2 versions"
-                      }
-                  },
+                  { loader: 'autoprefixer-loader?browsers=last 2 version' },
                   {
                       loader: 'sass-loader',
                       query: {
