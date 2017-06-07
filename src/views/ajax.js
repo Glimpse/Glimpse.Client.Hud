@@ -11,7 +11,6 @@ const state = {
     summaryStack: []
 };
 
-
 function rowTemplate(details) {
     return `
         <div class="glimpse-ajax-row">
