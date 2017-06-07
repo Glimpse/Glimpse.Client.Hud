@@ -3,11 +3,14 @@ const dom = require('../lib/dom');
 
 const ajaxProxy = require('../proxy/ajax');
 
-let count = 0;
-let ready = false;
-let preRenderCache = [];
-let currentTimout = undefined;
-const summaryStack = [];
+const state = {
+    count: 0,
+    ready: false,
+    preRenderCache: [],
+    currentTimeout: undefined,
+    summaryStack: []
+};
+
 
 function rowTemplate(details) {
     return `
@@ -23,25 +26,25 @@ function rowTemplate(details) {
 }
 
 function update(details) {
-    count++;
+    state.count++;
 
     //manage counter value
     var counter = document.getElementById('glimpse-ajax-count');
-    counter.innerText = count;
+    counter.innerText = state.count;
     dom.addClass(counter, 'glimpse-section-value--update');
-    if (currentTimout) {
-        clearTimeout(currentTimout);
+    if (state.currentTimout) {
+        clearTimeout(state.currentTimout);
     }
-    currentTimout = setTimeout(function() {
+    state.currentTimout = setTimeout(function() {
         dom.removeClass(counter, 'glimpse-section-value--update');
     }, 2000);
 
     //manage row values
-    if (summaryStack.length === 0) {
+    if (state.summaryStack.length === 0) {
         var section = document.getElementById('glimpse-ajax');
         section.insertAdjacentHTML('beforeend', '<div class="glimpse-ajax-rows" id="glimpse-ajax-rows"></div>');
     }
-    recordItem(rowTemplate(details), document.getElementById('glimpse-ajax-rows'), summaryStack, 2);
+    recordItem(rowTemplate(details), document.getElementById('glimpse-ajax-rows'), state.summaryStack, 2);
 }
 var recordItem = function(html, container, stack, length) {
     //add row to container
@@ -61,11 +64,11 @@ var recordItem = function(html, container, stack, length) {
 
 ajaxProxy.registerListener(function(details) {
     // if we can render the data do so, otherwise save for later
-    if (ready) {
+    if (state.ready) {
         update(details);
     }
     else {
-        preRenderCache.push(function() {
+        state.preRenderCache.push(function() {
             update(details);
         });
     }
@@ -79,7 +82,7 @@ module.exports = {
                     Ajax requests
                 </span>
                 <span class="glimpse-section-duration glimpse-section-value" id="glimpse-ajax-count">
-                    ${count}
+                    ${state.count}
                 </span>
                 <span class="glimpse-section-suffix glimpse-section-suffix--text">
                     found
@@ -88,12 +91,12 @@ module.exports = {
         `;
     },
     postRender: function() {
-        ready = true;
+        state.ready = true;
 
-        preRenderCache.forEach(function(task) {
+        state.preRenderCache.forEach(function(task) {
             task();
         });
 
-        preRenderCache = undefined;
+        state.preRenderCache = undefined;
     }
 };
