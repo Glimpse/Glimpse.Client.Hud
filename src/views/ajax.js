@@ -1,26 +1,28 @@
 const util = require('../lib/util');
 const dom = require('../lib/dom');
 
+const ajaxProxy = require('../proxy/ajax');
+
 let count = 0;
 let ready = false;
 let preRenderCache = [];
 let currentTimout = undefined;
 const summaryStack = [];
 
-function rowTemplate(method, uri, duration) {
+function rowTemplate(details) {
     return `
         <div class="glimpse-ajax-row">
-            <span class="glimpse-section-label">${method}</span>
-            <span class="glimpse-ajax-uri" title="${uri}">${uri}</span>
+            <span class="glimpse-section-label">${details.method}</span>
+            <span class="glimpse-ajax-uri" title="${details.uri}">${details.uri}</span>
             <span>
-                <span>${duration}</span>
+                <span>${details.duration}</span>
                 <span class="glimpse-section-label">ms</span>
             </span>
         </div>
     `;
 }
 
-function update(method, uri, duration, size, status, statusText, time, contentType, requestId) {
+function update(details) {
     count++;
 
     //manage counter value
@@ -39,10 +41,10 @@ function update(method, uri, duration, size, status, statusText, time, contentTy
         var section = document.getElementById('glimpse-ajax');
         section.insertAdjacentHTML('beforeend', '<div class="glimpse-ajax-rows" id="glimpse-ajax-rows"></div>');
     }
-    recordItem(rowTemplate(method, uri, duration), document.getElementById('glimpse-ajax-rows'), summaryStack, 2);
+    recordItem(rowTemplate(details), document.getElementById('glimpse-ajax-rows'), summaryStack, 2);
 }
 var recordItem = function(html, container, stack, length) {
-    //set row
+    //add row to container
     const newRow = dom.createElement(html);
     container.insertBefore(newRow, container.childNodes[0]);
     setTimeout(function() {
@@ -57,32 +59,17 @@ var recordItem = function(html, container, stack, length) {
     stack.push(newRow);
 };
 
-const open = XMLHttpRequest.prototype.open;
-XMLHttpRequest.prototype.open = function(method, uri) {
-    if (util.isLocalUri(uri) && uri.indexOf('/glimpse/') == -1) {
-        const startTime = new Date().getTime();
-        this.addEventListener('readystatechange', function() {
-            if (this.readyState == 4 && this.getResponseHeader('X-Glimpse-ContextId')) {
-                // if we can render the data do so, otherwise save for later
-                if (ready) {
-                    listenerNotification(method, uri, startTime, this);
-                }
-                else {
-                    const xhrObj = this;
-                    preRenderCache.push(function() {
-                        listenerNotification(method, uri, startTime, xhrObj);
-                    });
-                }
-            }
-        }, false);
+ajaxProxy.registerListener(function(details) {
+    // if we can render the data do so, otherwise save for later
+    if (ready) {
+        update(details);
     }
-
-    open.apply(this, arguments);
-};
-
-function listenerNotification(method, uri, startTime, xhrObj) {
-    update(method, uri, new Date().getTime() - startTime, xhrObj.getResponseHeader('Content-Length'), xhrObj.status, xhrObj.statusText, new Date(), xhrObj.getResponseHeader('Content-Type'), xhrObj.getResponseHeader('X-Glimpse-ContextId'));
-}
+    else {
+        preRenderCache.push(function() {
+            update(details);
+        });
+    }
+});
 
 module.exports = {
     render: function() {
