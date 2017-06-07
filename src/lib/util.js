@@ -1,5 +1,3 @@
-'use strict';
-
 var UriTemplate = require('uri-templates');
 var usedMessageTypes = function() {
     return 'environment,user-identification,web-response,web-request,after-action-invoked,after-action-view-invoked,before-execute-command,after-execute-command,after-view-component';
@@ -34,5 +32,9 @@ module.exports = {
 
         var uri = contextTemplate.replace('{contextId}{&types}', params); // TODO: This should probably be resolved with a URI Template library
         return encodeURI(uri);
+    },
+    isLocalUri: function(uri) {
+        return uri && (!(uri.indexOf('http://') == 0 || uri.indexOf('https://') == 0 || uri.indexOf('//') == 0) ||
+                (uri.substring(uri.indexOf('//') + 2, uri.length) + '/').indexOf(window.location.host + '/') == 0);
     }
 };

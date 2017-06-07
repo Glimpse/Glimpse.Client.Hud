@@ -1,4 +1,4 @@
-var util = require('../lib/util');
+const util = require('../lib/util');
 
 const icon = `
     <svg class="glimpse-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048">

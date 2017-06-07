@@ -46,14 +46,20 @@
         color: inherit !important;
     }
 }
-.glimpse-timing {
+.glimpse-section {
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
     padding: 0 15px !important;
     background-color: rgba(0, 0, 0, 0.85) !important;
+    border-left: 1px solid #999 !important;
+
+    &:first-child, // NOTE: this should work but isn't
+    &.glimpse-section--first {
+        border-left: none !important;
+    }
 }
-.glimpse-timing-duration {
+.glimpse-section-duration {
     position: relative !important;
     font-size: 20px !important;
     margin-left: 5px !important;
@@ -61,9 +67,20 @@
     top: -2px !important;
     font-weight: 600 !important;
 }
-.glimpse-timing-label,
-.glimpse-timing-suffix {
+.glimpse-section-label,
+.glimpse-section-suffix {
     color: #999 !important;
+
+    &.glimpse-section-suffix--text {
+        padding-left: 2px !important;
+    }
+}
+.glimpse-section-value {
+    transition: color 0.5s ease-in-out;
+
+    &.glimpse-section-value--update {
+        color: #39f !important;
+    }
 }
 .glimpse-icon {
     display: flex !important;
@@ -83,4 +100,28 @@
     &:hover {
         background-color: rgba(13, 92, 157, 0.85) !important;
     }
+}
+
+.glimpse-ajax-rows {
+    font-size: 13px !important;
+    padding-left: 20px !important;
+    margin-top: 1px !important;
+}
+.glimpse-ajax-row {
+    top: -20px !important;
+    opacity: 0 !important;
+    transition: all 0.6s ease !important;
+    position: relative !important;
+
+    &.glimpse-ajax-row--added {
+        top: 0px !important;
+        opacity: 1 !important;
+    }
+}
+.glimpse-ajax-uri {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    padding: 0 20px !important;
+    max-width: 230px !important;
 }
