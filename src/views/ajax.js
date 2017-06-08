@@ -88,6 +88,14 @@ module.exports = {
                         found
                     </span>
                 </div>
+                <div class="glimpse-section-detail">
+                    test<br />
+                    test<br />
+                    test<br />
+                    test<br />
+                    test<br />
+                    test
+                </div>
             </div>
         `;
     },
