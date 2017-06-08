@@ -38,28 +38,14 @@ function update(details) {
         dom.removeClass(counter, 'glimpse-section-value--update');
     }, 2000);
 
-    state.summaryStack.push(details);
+    state.summaryStack = state.summaryStack
+        .slice(-1)
+        .concat(details);
 
     document.getElementById('glimpse-ajax-rows').innerHTML = state.summaryStack
-        .slice(-2)
         .map(rowTemplate)
         .join('\n');
 }
-function recordItem(html, container, stack, length) {
-    //add row to container
-    const newRow = dom.createElement(html);
-    container.insertBefore(newRow, container.childNodes[0]);
-    setTimeout(function() {
-        dom.addClass(newRow, 'glimpse-ajax-row--added');
-    }, 1);
-
-    //track state of the details
-    if (stack.length >= length) {
-        const oldRow = stack.shift()
-        oldRow.parentNode.removeChild(oldRow);
-    }
-    stack.push(newRow);
-};
 
 ajaxProxy.registerListener(function(details) {
     // if we can render the data do so, otherwise save for later
