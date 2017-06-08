@@ -43,6 +43,7 @@
     background-color: rgba(0, 0, 0, 0.85) !important;
     transition: .3s ease !important;
     transition-property: background-color, color !important;
+    border-left-color: #3399ff !important;
 
     &:hover {
         background-color: rgba(13, 92, 157, 0.85) !important;
