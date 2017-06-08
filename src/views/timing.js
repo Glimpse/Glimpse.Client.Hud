@@ -11,7 +11,7 @@ module.exports = {
                         Page load time
                     </span>
                     <span class="glimpse-section-duration glimpse-section-value">
-                        ${timings.total}
+                        ${timings.pageLoad}
                     </span>
                     <span class="glimpse-section-suffix">
                         ms

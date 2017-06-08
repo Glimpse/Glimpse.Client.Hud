@@ -5,25 +5,25 @@ const timingsRaw = (window.performance ||
     {}).timing;
 let timingIncomplete = false;
 
-function calculateTimings(timingsRaw, startIndex, finishIndex) {
+function normalizeTotal(value) {
     // avoid negative values
-    return Math.max(0, timingsRaw[finishIndex] - timingsRaw[startIndex]);
+    return Math.max(0, value);
 }
 
 module.exports = {
     getTimings: function(callback) {
-        let network =
-            calculateTimings(timingsRaw, 'responseStart', 'responseEnd') +
-            calculateTimings(timingsRaw, 'navigationStart', 'requestStart');
-        let server = calculateTimings(timingsRaw, 'requestStart', 'responseEnd');
-        let browser = calculateTimings(timingsRaw, 'responseStart', 'loadEventEnd');
-        let total = calculateTimings(timingsRaw, 'navigationStart', 'loadEventEnd');
+        const pageLoad = normalizeTotal(timingsRaw.loadEventEnd - timingsRaw.navigationStart);
+        const networkConnection = normalizeTotal(timingsRaw.connectEnd - (timingsRaw.redirectStart || timingsRaw.fetchStart));
+        const sendingRequest = normalizeTotal(timingsRaw.responseStart - timingsRaw.requestStart);
+        const receivingResponse = normalizeTotal(timingsRaw.responseEnd - timingsRaw.responseStart);
+        const browserProcessing = normalizeTotal(timingsRaw.loadEventEnd - timingsRaw.domLoading);
 
         return {
-            network,
-            server,
-            browser,
-            total
+            pageLoad,
+            networkConnection,
+            sendingRequest,
+            receivingResponse,
+            browserProcessing
         };
     }
 };
