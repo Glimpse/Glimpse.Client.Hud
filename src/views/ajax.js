@@ -13,14 +13,14 @@ const state = {
 
 function rowTemplate(details) {
     return `
-        <div class="glimpse-ajax-row">
-            <span class="glimpse-section-label">${details.method}</span>
-            <span class="glimpse-ajax-uri" title="${details.uri}">${details.uri}</span>
-            <span>
+        <tr class="glimpse-ajax-row">
+            <td class="glimpse-ajax-cell glimpse-section-label">${details.method}</td>
+            <td class="glimpse-ajax-cell glimpse-ajax-uri" title="${details.uri}">${details.uri}</td>
+            <td class="glimpse-ajax-cell">
                 <span>${details.duration}</span>
                 <span class="glimpse-section-label">ms</span>
-            </span>
-        </div>
+            </td>
+        </tr>
     `;
 }
 
@@ -38,28 +38,14 @@ function update(details) {
         dom.removeClass(counter, 'glimpse-section-value--update');
     }, 2000);
 
-    //manage row values
-    if (state.summaryStack.length === 0) {
-        var section = document.getElementById('glimpse-ajax-summary');
-        section.insertAdjacentHTML('beforeend', '<div class="glimpse-ajax-rows" id="glimpse-ajax-rows"></div>');
-    }
-    recordItem(rowTemplate(details), document.getElementById('glimpse-ajax-rows'), state.summaryStack, 2);
-}
-var recordItem = function(html, container, stack, length) {
-    //add row to container
-    const newRow = dom.createElement(html);
-    container.insertBefore(newRow, container.childNodes[0]);
-    setTimeout(function() {
-        dom.addClass(newRow, 'glimpse-ajax-row--added');
-    }, 1);
+    state.summaryStack = state.summaryStack
+        .slice(-1)
+        .concat(details);
 
-    //track state of the details
-    if (stack.length >= length) {
-        const oldRow = stack.shift()
-        oldRow.parentNode.removeChild(oldRow);
-    }
-    stack.push(newRow);
-};
+    document.getElementById('glimpse-ajax-rows').innerHTML = state.summaryStack
+        .map(rowTemplate)
+        .join('\n');
+}
 
 ajaxProxy.registerListener(function(details) {
     // if we can render the data do so, otherwise save for later
@@ -81,12 +67,10 @@ module.exports = {
                     <span class="glimpse-section-label">
                         Ajax requests
                     </span>
-                    <span class="glimpse-section-duration glimpse-section-value" id="glimpse-ajax-count">
+                    <span class="glimpse-section-value" id="glimpse-ajax-count">
                         ${state.count}
                     </span>
-                    <span class="glimpse-section-suffix glimpse-section-suffix--text">
-                        found
-                    </span>
+                    <table class="glimpse-ajax-rows" id="glimpse-ajax-rows"></table>
                 </div>
                 <div class="glimpse-section-detail">
                     test<br />
