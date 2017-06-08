@@ -40,7 +40,7 @@ function update(details) {
 
     //manage row values
     if (state.summaryStack.length === 0) {
-        var section = document.getElementById('glimpse-ajax');
+        var section = document.getElementById('glimpse-ajax-summary');
         section.insertAdjacentHTML('beforeend', '<div class="glimpse-ajax-rows" id="glimpse-ajax-rows"></div>');
     }
     recordItem(rowTemplate(details), document.getElementById('glimpse-ajax-rows'), state.summaryStack, 2);
@@ -77,15 +77,25 @@ module.exports = {
     render: function() {
         return `
             <div class="glimpse-section glimpse-ajax" id="glimpse-ajax">
-                <span class="glimpse-section-label">
-                    Ajax requests
-                </span>
-                <span class="glimpse-section-duration glimpse-section-value" id="glimpse-ajax-count">
-                    ${state.count}
-                </span>
-                <span class="glimpse-section-suffix glimpse-section-suffix--text">
-                    found
-                </span>
+                <div class="glimpse-section-summary" id="glimpse-ajax-summary">
+                    <span class="glimpse-section-label">
+                        Ajax requests
+                    </span>
+                    <span class="glimpse-section-duration glimpse-section-value" id="glimpse-ajax-count">
+                        ${state.count}
+                    </span>
+                    <span class="glimpse-section-suffix glimpse-section-suffix--text">
+                        found
+                    </span>
+                </div>
+                <div class="glimpse-section-detail">
+                    test<br />
+                    test<br />
+                    test<br />
+                    test<br />
+                    test<br />
+                    test
+                </div>
             </div>
         `;
     },
