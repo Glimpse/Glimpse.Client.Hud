@@ -29,7 +29,7 @@ function update(details) {
 
     //manage counter value
     var counter = document.getElementById('glimpse-ajax-count');
-    counter.innerText = `(${state.count})`;
+    counter.innerText = state.count;
     dom.addClass(counter, 'glimpse-section-value--update');
     if (state.currentTimout) {
         clearTimeout(state.currentTimout);
@@ -68,7 +68,7 @@ module.exports = {
                         Ajax requests
                     </span>
                     <span class="glimpse-section-value" id="glimpse-ajax-count">
-                        (${state.count})
+                        ${state.count}
                     </span>
                     <table class="glimpse-ajax-rows" id="glimpse-ajax-rows"></table>
                 </div>

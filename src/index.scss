@@ -76,7 +76,8 @@
     max-height: 0 !important;
     overflow: hidden !important;
 }
-.glimpse-section-duration {
+.glimpse-section-duration,
+.glimpse-section-value {
     position: relative !important;
     font-size: 20px !important;
     margin-left: 5px !important;
@@ -93,7 +94,6 @@
     }
 }
 .glimpse-section-value {
-    margin-left: 5px !important;
     transition: color 0.5s ease-in-out;
 
     &.glimpse-section-value--update {
@@ -123,7 +123,7 @@
 .glimpse-ajax-rows {
     font-size: 13px !important;
     margin-left: 20px !important;
-    width: 220px !important;
+    max-width: 220px !important;
 
     &:empty {
         display: none !important;
