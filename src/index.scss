@@ -9,7 +9,7 @@
     height: 40px !important;
     width: auto !important;
     flex-direction: row !important;
-    align-items: stretch !important;
+    align-items: flex-end !important;
     color: white !important;
     position: fixed !important;
     bottom: 0 !important;
@@ -47,16 +47,37 @@
     }
 }
 .glimpse-section {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
     padding: 0 15px !important;
     background-color: rgba(0, 0, 0, 0.85) !important;
     border-left: 1px solid #999 !important;
+    min-height: 40px !important;
+
+    .glimpse-section-summary {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        height: 40px !important;
+    }
+
+    .glimpse-section-detail {
+        max-height: 0 !important;
+        overflow: hidden !important;
+    }
 
     &:first-child, // NOTE: this should work but isn't
     &.glimpse-section--first {
         border-left: none !important;
+    }
+
+    &:hover {
+        .glimpse-section-summary {
+            height: 1px !important;
+            overflow: hidden !important;
+            visibility: hidden !important;
+        }
+        .glimpse-section-detail {
+            max-height: 999px !important;
+        }
     }
 }
 .glimpse-section-duration {
