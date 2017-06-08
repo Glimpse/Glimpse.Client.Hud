@@ -92,6 +92,7 @@
     }
 }
 .glimpse-section-value {
+    margin-left: 5px !important;
     transition: color 0.5s ease-in-out;
 
     &.glimpse-section-value--update {
@@ -122,6 +123,10 @@
     font-size: 13px !important;
     margin-left: 20px !important;
     width: 220px !important;
+
+    &:empty {
+        display: none !important;
+    }
 }
 .glimpse-ajax-row {
     animation: glimpse-ajax-row-enter .3s ease-out !important;
