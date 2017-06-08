@@ -18,6 +18,10 @@
     font-size: 15px !important;
     font-family: 'Selawik', sans-serif !important;
     font-weight: 300 !important;
+
+    > * + * {
+        border-left: 1px solid #999 !important;
+    }
 }
 .glimpse-arrow {
     height: 15px !important;
@@ -30,7 +34,6 @@
 }
 .glimpse-link {
     color: #3399ff !important;
-    border-right: 1px solid #3399ff !important;
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
@@ -49,36 +52,28 @@
 .glimpse-section {
     padding: 0 15px !important;
     background-color: rgba(0, 0, 0, 0.85) !important;
-    border-left: 1px solid #999 !important;
     min-height: 40px !important;
 
-    .glimpse-section-summary {
-        display: flex !important;
-        flex-direction: row !important;
-        align-items: center !important;
-        height: 40px !important;
-    }
-
-    .glimpse-section-detail {
-        max-height: 0 !important;
-        overflow: hidden !important;
-    }
-
-    &:first-child, // NOTE: this should work but isn't
-    &.glimpse-section--first {
-        border-left: none !important;
-    }
-
     &:hover {
-        .glimpse-section-summary {
+        > .glimpse-section-summary {
             height: 1px !important;
             overflow: hidden !important;
             visibility: hidden !important;
         }
-        .glimpse-section-detail {
+        > .glimpse-section-detail {
             max-height: 999px !important;
         }
     }
+}
+.glimpse-section-summary {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    height: 40px !important;
+}
+.glimpse-section-detail {
+    max-height: 0 !important;
+    overflow: hidden !important;
 }
 .glimpse-section-duration {
     position: relative !important;
@@ -125,24 +120,34 @@
 
 .glimpse-ajax-rows {
     font-size: 13px !important;
-    padding-left: 20px !important;
-    margin-top: 1px !important;
+    margin-left: 20px !important;
+    width: 220px !important;
 }
 .glimpse-ajax-row {
-    top: -20px !important;
-    opacity: 0 !important;
-    transition: all 0.6s ease !important;
+    animation: glimpse-ajax-row-enter .3s ease-out !important;
+    white-space: nowrap !important;
     position: relative !important;
 
-    &.glimpse-ajax-row--added {
-        top: 0px !important;
-        opacity: 1 !important;
+    @keyframes glimpse-ajax-row-enter {
+        from {
+            transform: translateY(100%);
+        }
+        to {
+            transform: translateY(0);
+        }
+    }
+}
+.glimpse-ajax-cell {
+    &:last-child {
+        text-align: right !important;
     }
 }
 .glimpse-ajax-uri {
+    text-overflow: ellipsis !important;
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
     padding: 0 20px !important;
-    max-width: 230px !important;
+    width: auto;
+    max-width: 100px !important;
 }

@@ -5,7 +5,7 @@ module.exports = {
         const timings = timingProxy.getTimings();
 
         return `
-            <div class="glimpse-section glimpse-section--first glimpse-timing">
+            <div class="glimpse-section glimpse-timing">
                 <div class="glimpse-section-summary">
                     <span class="glimpse-section-label">
                         Page load time

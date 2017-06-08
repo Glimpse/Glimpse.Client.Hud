@@ -13,14 +13,14 @@ const state = {
 
 function rowTemplate(details) {
     return `
-        <div class="glimpse-ajax-row">
-            <span class="glimpse-section-label">${details.method}</span>
-            <span class="glimpse-ajax-uri" title="${details.uri}">${details.uri}</span>
-            <span>
+        <tr class="glimpse-ajax-row">
+            <td class="glimpse-ajax-cell glimpse-section-label">${details.method}</td>
+            <td class="glimpse-ajax-cell glimpse-ajax-uri" title="${details.uri}">${details.uri}</td>
+            <td class="glimpse-ajax-cell">
                 <span>${details.duration}</span>
                 <span class="glimpse-section-label">ms</span>
-            </span>
-        </div>
+            </td>
+        </tr>
     `;
 }
 
@@ -38,14 +38,14 @@ function update(details) {
         dom.removeClass(counter, 'glimpse-section-value--update');
     }, 2000);
 
-    //manage row values
-    if (state.summaryStack.length === 0) {
-        var section = document.getElementById('glimpse-ajax-summary');
-        section.insertAdjacentHTML('beforeend', '<div class="glimpse-ajax-rows" id="glimpse-ajax-rows"></div>');
-    }
-    recordItem(rowTemplate(details), document.getElementById('glimpse-ajax-rows'), state.summaryStack, 2);
+    state.summaryStack.push(details);
+
+    document.getElementById('glimpse-ajax-rows').innerHTML = state.summaryStack
+        .slice(-2)
+        .map(rowTemplate)
+        .join('\n');
 }
-var recordItem = function(html, container, stack, length) {
+function recordItem(html, container, stack, length) {
     //add row to container
     const newRow = dom.createElement(html);
     container.insertBefore(newRow, container.childNodes[0]);
@@ -87,6 +87,7 @@ module.exports = {
                     <span class="glimpse-section-suffix glimpse-section-suffix--text">
                         found
                     </span>
+                    <table class="glimpse-ajax-rows" id="glimpse-ajax-rows"></table>
                 </div>
                 <div class="glimpse-section-detail">
                     test<br />

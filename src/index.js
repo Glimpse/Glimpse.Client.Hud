@@ -20,9 +20,9 @@ function render() {
     return `
         <div class="glimpse-hud">
             ${versionComponent}
-            ${openComponent}
             ${timingComponent}
             ${ajaxComponent}
+            ${openComponent}
         </div>
     `;
 }
