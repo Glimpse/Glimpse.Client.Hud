@@ -3,7 +3,9 @@ const timingsRaw = (window.performance ||
     window.msPerformanceperformance ||
     window.webkitPerformanceperformance ||
     {}).timing;
-let timingIncomplete = false;
+
+// cache so we only work out the once
+let timings = undefined;
 
 function normalizeTotal(value) {
     // avoid negative values
@@ -12,18 +14,22 @@ function normalizeTotal(value) {
 
 module.exports = {
     getTimings: function(callback) {
-        const pageLoad = normalizeTotal(timingsRaw.loadEventEnd - timingsRaw.navigationStart);
-        const networkConnection = normalizeTotal(timingsRaw.connectEnd - (timingsRaw.redirectStart || timingsRaw.fetchStart));
-        const sendingRequest = normalizeTotal(timingsRaw.responseStart - timingsRaw.requestStart);
-        const receivingResponse = normalizeTotal(timingsRaw.responseEnd - timingsRaw.responseStart);
-        const browserProcessing = normalizeTotal(timingsRaw.loadEventEnd - timingsRaw.domLoading);
+        if (!timings) {
+            const pageLoad = normalizeTotal(timingsRaw.loadEventEnd - timingsRaw.navigationStart);
+            const networkConnection = normalizeTotal(timingsRaw.connectEnd - (timingsRaw.redirectStart || timingsRaw.fetchStart));
+            const sendingRequest = normalizeTotal(timingsRaw.responseStart - timingsRaw.requestStart);
+            const receivingResponse = normalizeTotal(timingsRaw.responseEnd - timingsRaw.responseStart);
+            const browserProcessing = normalizeTotal(timingsRaw.loadEventEnd - timingsRaw.domLoading);
 
-        return {
-            pageLoad,
-            networkConnection,
-            sendingRequest,
-            receivingResponse,
-            browserProcessing
-        };
+            timings = {
+                pageLoad,
+                networkConnection,
+                sendingRequest,
+                receivingResponse,
+                browserProcessing
+            };
+        }
+
+        return timings;
     }
 };

@@ -12,17 +12,16 @@ var timingView = require('./views/timing');
 var ajaxView = require('./views/ajax');
 
 function render() {
-    const versionComponent = versionView.render();
-    const openComponent = openView.render();
-    const timingComponent = timingView.render();
-    const ajaxComponent = ajaxView.render();
-
     return `
         <div class="glimpse-hud">
-            ${versionComponent}
-            ${timingComponent}
-            ${ajaxComponent}
-            ${openComponent}
+            ${versionView.render()}
+            ${timingView.render()}
+            ${ajaxView.render()}
+            ${openView.render()}
+        </div>
+        <div class="glimpse-hud-popup">
+            ${timingView.renderPopup()}
+            ${ajaxView.renderPopup()}
         </div>
     `;
 }

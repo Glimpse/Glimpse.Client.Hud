@@ -27,5 +27,35 @@ module.exports = {
                 </div>
             </div>
         `;
+    },
+    renderPopup: function() {
+        const timings = timingProxy.getTimings();
+
+        return `
+            <div>
+                <div>
+                    <div>Load time</div>
+                    <div>${timings.pageLoad}</div>
+                </div>
+                <div>
+                    <div>
+                        <div>Network connection</div>
+                        <div>${timings.networkConnection}</div>
+                    </div>
+                    <div>
+                        <div>Sending request</div>
+                        <div>${timings.sendingRequest}</div>
+                    </div>
+                    <div>
+                        <div>Receiving response</div>
+                        <div>${timings.receivingResponse}</div>
+                    </div>
+                    <div>
+                        <div>Browser processing</div>
+                        <div>${timings.browserProcessing}</div>
+                    </div>
+                </div>
+            </div>
+        `;
     }
 };
