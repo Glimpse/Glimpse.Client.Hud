@@ -1,7 +1,11 @@
+$hud-height: 40px;
+$max-ajax-rows: 7;
+
 @font-face {
     font-family: 'Selawik';
     src: url('~/glimpse/hud/assets/selawk.woff2') format('woff2'),
          url('~/glimpse/hud/assets/selawk.woff') format('woff');
+}
 
 .glimpse-hud-popup {
     color: white !important;
@@ -9,11 +13,22 @@
     font-family: 'Selawik', sans-serif !important;
     font-weight: 300 !important;
     background-color: rgba(0, 0, 0, 0.85) !important;
+    position: absolute !important;
+    width: 100% !important;
+    bottom: 0 !important;
+    transform: translateY(calc(100% - #{$hud-height})) !important;
+    transition: transform .3s ease-out !important;
+    z-index: 0;
+
+    > * {
+        opacity: 0 !important;
+        transition: opacity 0.3s !important;
+    }
 }
 
 .glimpse-hud {
     display: flex !important;
-    height: 40px !important;
+    height: $hud-height !important;
     width: auto !important;
     flex-direction: row !important;
     align-items: flex-end !important;
@@ -28,6 +43,35 @@
 
     > * + * {
         border-left: 1px solid #999 !important;
+    }
+}
+.glimpse-hud-data {
+    display: flex !important;
+    flex-direction: row !important;
+    position: relative !important;
+
+    > :not(.glimpse-hud-popup) {
+        z-index: 1 !important;
+        transition: opacity 0.3s !important;
+    }
+
+    > .glimpse-section {
+        background-color: transparent !important;
+    }
+
+    &:hover {
+        > :not(.glimpse-hud-popup) {
+            opacity: 0 !important;
+        }
+    }
+
+    &:hover > .glimpse-hud-popup {
+        transform: translateY(0) !important;
+        z-index: 2 !important;
+
+        > * {
+            opacity: 1 !important;
+        }
     }
 }
 .glimpse-arrow {
@@ -60,7 +104,11 @@
 .glimpse-section {
     padding: 0 15px !important;
     background-color: rgba(0, 0, 0, 0.85) !important;
-    min-height: 40px !important;
+    min-height: $hud-height !important;
+
+    & + & {
+        border-left: 1px solid #999 !important;
+    }
 
     &:hover {
         > .glimpse-section-summary {
@@ -77,7 +125,7 @@
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
-    height: 40px !important;
+    height: $hud-height !important;
 }
 .glimpse-section-detail {
     max-height: 0 !important;
@@ -93,11 +141,27 @@
     font-weight: 600 !important;
 }
 .glimpse-section-label,
+.glimpse-label,
 .glimpse-section-suffix {
     color: #999 !important;
 
-    &.glimpse-section-suffix--text {
-        padding-left: 2px !important;
+}
+.glimpse-time-ms,
+.glimpse-size-kb {
+    &:after {
+        margin-left: 2px !important;
+    }
+}
+.glimpse-time-ms {
+    &:after {
+        content: 'ms';
+        color: #999 !important;
+    }
+}
+.glimpse-size-kb {
+    &:after {
+        content: 'kb';
+        color: #999 !important;
     }
 }
 .glimpse-section-value {
@@ -126,29 +190,83 @@
         background-color: rgba(13, 92, 157, 0.85) !important;
     }
 }
-
 .glimpse-ajax-rows {
     font-size: 13px !important;
-    margin-left: 20px !important;
-    max-width: 220px !important;
+}
+.glimpse-section-summary {
+    .glimpse-ajax-rows {
+        margin-left: 20px !important;
+        max-width: 220px !important;
+        flex-grow: 1 !important;
 
-    &:empty {
-        display: none !important;
+        &:empty {
+            display: none !important;
+        }
+    }
+    .glimpse-ajax-row {
+        &:last-child {
+            animation: glimpse-ajax-row-enter .3s .3s ease-out both !important;
+        }
+        &:not(:last-child) {
+            animation: glimpse-ajax-row-move .3s ease-out both !important;
+        }
+
+        @keyframes glimpse-ajax-row-enter {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes glimpse-ajax-row-move {
+            from {
+                transform: translateY(100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+    }
+}
+.glimpse-hud-popup-section {
+    .glimpse-ajax-rows {
+        width: 100% !important;
+    }
+    .glimpse-ajax-row {
+        &:nth-last-child(#{$max-ajax-rows * 2}):first-child {
+            &, & ~ * {
+                animation: glimpse-popup-ajax-row-move .3s ease-out both !important;
+            }
+        }
+
+        &:last-child, &:nth-last-child(2) {
+            animation: glimpse-popup-ajax-row-enter .3s .3s ease-out both !important;
+        }
+
+        @keyframes glimpse-popup-ajax-row-enter {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes glimpse-popup-ajax-row-move {
+            from {
+                transform: translateY(200%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
     }
 }
 .glimpse-ajax-row {
-    animation: glimpse-ajax-row-enter .3s ease-out !important;
     white-space: nowrap !important;
     position: relative !important;
-
-    @keyframes glimpse-ajax-row-enter {
-        from {
-            transform: translateY(100%);
-        }
-        to {
-            transform: translateY(0);
-        }
-    }
 }
 .glimpse-ajax-cell {
     &:last-child {
@@ -163,4 +281,33 @@
     padding: 0 20px !important;
     width: auto;
     max-width: 100px !important;
+}
+
+.glimpse-hud-popup {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    align-items: stretch !important;
+}
+
+.glimpse-hud-popup-section {
+    padding: 10px !important;
+
+    ~ * {
+        border-left: 1px solid #999 !important;
+    }
+
+    &.-ajax {
+        flex-grow: 1 !important;
+    }
+}
+
+.glimpse-hud-field {
+    margin-bottom: 10px !important;
+}
+
+.glimpse-hud-field-label {
+    font-size: 12px !important;
+    color: rgba(white, 0.5) !important;
+    margin-bottom: 5px !important;
 }
