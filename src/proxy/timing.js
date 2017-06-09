@@ -3,6 +3,8 @@ const timingsRaw = (window.performance ||
     window.msPerformanceperformance ||
     window.webkitPerformanceperformance ||
     {}).timing;
+
+// cache so we only work out the once
 let timings = undefined;
 
 function normalizeTotal(value) {

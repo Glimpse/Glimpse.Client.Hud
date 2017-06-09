@@ -44,7 +44,6 @@ function rowTemplate(request) {
         </tr>
     `;
 }
-
 function rowPopupTemplate(request) {
     return `
         <tbody>
@@ -66,16 +65,15 @@ function rowPopupTemplate(request) {
 function update(request) {
     state.count++;
 
-    updateCounter(state.summary);
-    updateCounter(state.popup);
+    updateCounter(state.summary, state.count);
+    updateCounter(state.popup, state.count);
 
     updateView(state.summary, request);
     updateView(state.popup, request);
 }
-
-function updateCounter(details) {
+function updateCounter(details, count) {
     var counter = document.getElementById(details.countId);
-    counter.innerText = state.count;
+    counter.innerText = count;
     dom.addClass(counter, 'glimpse-section-value--update');
     if (details.timeout) {
         clearTimeout(details.timeout);
