@@ -1,5 +1,5 @@
 $hud-height: 40px;
-$max-ajax-rows: 6;
+$max-ajax-rows: 7;
 
 @font-face {
     font-family: 'Selawik';
@@ -236,7 +236,7 @@ $max-ajax-rows: 6;
     }
     .glimpse-ajax-row {
         &:nth-last-child(#{$max-ajax-rows * 2}):first-child {
-            & ~ * {
+            &, & ~ * {
                 animation: glimpse-popup-ajax-row-move .3s ease-out both !important;
             }
         }
