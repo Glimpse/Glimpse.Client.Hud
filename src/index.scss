@@ -2,6 +2,13 @@
     font-family: 'Selawik';
     src: url('~/glimpse/hud/assets/selawk.woff2') format('woff2'),
          url('~/glimpse/hud/assets/selawk.woff') format('woff');
+
+.glimpse-hud-popup {
+    color: white !important;
+    font-size: 15px !important;
+    font-family: 'Selawik', sans-serif !important;
+    font-weight: 300 !important;
+    background-color: rgba(0, 0, 0, 0.85) !important;
 }
 
 .glimpse-hud {

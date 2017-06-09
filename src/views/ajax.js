@@ -7,43 +7,89 @@ const state = {
     count: 0,
     ready: false,
     preRenderCache: [],
-    currentTimeout: undefined,
-    summaryStack: []
+    summary: {
+        countId: 'glimpse-ajax-count',
+        rowsId: 'glimpse-ajax-rows',
+        timeout: undefined,
+        stack: [],
+        template: rowTemplate,
+        length: -1
+    },
+    popup: {
+        countId: 'glimpse-ajax-popup-count',
+        rowsId: 'glimpse-ajax-popup-rows',
+        timeout: undefined,
+        stack: [],
+        template: rowPopupTemplate,
+        length: -6
+    }
 };
 
-function rowTemplate(details) {
+function processContentType(type) {
+    return type ? type.substring(0, type.indexOf(';')) : '--';
+};
+function processSize(size) {
+    return size ? (Math.round((size / 1024) * 10) / 10) : '--';
+}
+
+function rowTemplate(request) {
     return `
         <tr class="glimpse-ajax-row">
-            <td class="glimpse-ajax-cell glimpse-section-label">${details.method}</td>
-            <td class="glimpse-ajax-cell glimpse-ajax-uri" title="${details.uri}">${details.uri}</td>
+            <td class="glimpse-ajax-cell glimpse-section-label">${request.method}</td>
+            <td class="glimpse-ajax-cell glimpse-ajax-uri" title="${request.uri}">${request.uri}</td>
             <td class="glimpse-ajax-cell">
-                <span>${details.duration}</span>
+                <span>${request.duration}</span>
                 <span class="glimpse-section-label">ms</span>
             </td>
         </tr>
     `;
 }
 
-function update(details) {
+function rowPopupTemplate(request) {
+    return `
+        <tbody>
+            <tr>
+                <td title="${request.uri}" colspan="2">${request.uri}</td>
+                <td>${request.duration}</td>
+                <td>${processSize(request.size)}</td>
+            </tr>
+            <tr>
+                <td>${request.method}</td>
+                <td>${request.status} - ${request.statusText}</td>
+                <td title="${request.contentType}">${processContentType(request.contentType)}</td>
+                <td>${request.time.toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, '$1')}</td>
+            </tr>
+        </tbody>
+    `;
+}
+
+function update(request) {
     state.count++;
 
-    //manage counter value
-    var counter = document.getElementById('glimpse-ajax-count');
+    updateCounter(state.summary);
+    updateCounter(state.popup);
+
+    updateView(state.summary, request);
+    updateView(state.popup, request);
+}
+
+function updateCounter(details) {
+    var counter = document.getElementById(details.countId);
     counter.innerText = state.count;
     dom.addClass(counter, 'glimpse-section-value--update');
-    if (state.currentTimout) {
-        clearTimeout(state.currentTimout);
+    if (details.timeout) {
+        clearTimeout(details.timeout);
     }
-    state.currentTimout = setTimeout(function() {
+    details.timeout = setTimeout(function() {
         dom.removeClass(counter, 'glimpse-section-value--update');
     }, 2000);
-
-    state.summaryStack = state.summaryStack
-        .slice(-1)
-        .concat(details);
-
-    document.getElementById('glimpse-ajax-rows').innerHTML = state.summaryStack
-        .map(rowTemplate)
+}
+function updateView(details, request) {
+    details.stack = details.stack
+        .slice(details.length)
+        .concat(request);
+    document.getElementById(details.rowsId).innerHTML = details.stack
+        .map(details.template)
         .join('\n');
 }
 
@@ -91,5 +137,18 @@ module.exports = {
         });
 
         state.preRenderCache = undefined;
+    },
+    renderPopup: function() {
+        return `
+            <div>
+                <span>
+                    Ajax requests
+                </span>
+                <span id="glimpse-ajax-popup-count">
+                    ${state.count}
+                </span>
+                <table id="glimpse-ajax-popup-rows"></table>
+            </div>
+        `;
     }
 };
