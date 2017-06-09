@@ -35,30 +35,31 @@ function processSize(size) {
 function rowTemplate(request) {
     return `
         <tr class="glimpse-ajax-row">
-            <td class="glimpse-ajax-cell glimpse-section-label">${request.method}</td>
-            <td class="glimpse-ajax-cell glimpse-ajax-uri" title="${request.uri}">${request.uri}</td>
+            <td class="glimpse-ajax-cell glimpse-section-label">
+                ${request.method}
+            </td>
+            <td class="glimpse-ajax-cell glimpse-ajax-uri" title="${request.uri}">
+                ${request.uri}
+            </td>
             <td class="glimpse-ajax-cell">
-                <span>${request.duration}</span>
-                <span class="glimpse-section-label">ms</span>
+                <span class="glimpse-time-ms">${request.duration}</span>
             </td>
         </tr>
     `;
 }
 function rowPopupTemplate(request) {
     return `
-        <tbody>
-            <tr>
-                <td title="${request.uri}" colspan="2">${request.uri}</td>
-                <td>${request.duration}</td>
-                <td>${processSize(request.size)}</td>
-            </tr>
-            <tr>
-                <td>${request.method}</td>
-                <td>${request.status} - ${request.statusText}</td>
-                <td title="${request.contentType}">${processContentType(request.contentType)}</td>
-                <td>${request.time.toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, '$1')}</td>
-            </tr>
-        </tbody>
+        <tr class="glimpse-ajax-row">
+            <td title="${request.uri}" colspan="2">${request.uri}</td>
+            <td class="glimpse-time-ms">${request.duration}</td>
+            <td class="glimpse-size-kb">${processSize(request.size)}</td>
+        </tr>
+        <tr class="glimpse-ajax-row">
+            <td class="glimpse-label">${request.method}</td>
+            <td>${request.status} - ${request.statusText}</td>
+            <td title="${request.contentType}">${processContentType(request.contentType)}</td>
+            <td>${request.time.toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, '$1')}</td>
+        </tr>
     `;
 }
 
@@ -108,7 +109,7 @@ module.exports = {
         return `
             <div class="glimpse-section glimpse-ajax" id="glimpse-ajax">
                 <div class="glimpse-section-summary" id="glimpse-ajax-summary">
-                    <span class="glimpse-section-label">
+                    <span class="glimpse-label">
                         Ajax requests
                     </span>
                     <span class="glimpse-section-value" id="glimpse-ajax-count">
@@ -130,14 +131,17 @@ module.exports = {
     },
     renderPopup: function() {
         return `
-            <div>
-                <span>
-                    Ajax requests
-                </span>
-                <span id="glimpse-ajax-popup-count">
-                    ${state.count}
-                </span>
-                <table id="glimpse-ajax-popup-rows"></table>
+            <div class="glimpse-hud-popup-section -ajax">
+                <div class="glimpse-hud-popup-field">
+                    <div class="glimpse-hud-field-label">
+                        AJAX requests
+                    </div>
+                    <div class="glimpse-hud-field-value" id="glimpse-ajax-popup-count">
+                        ${state.count}
+                    </div>
+                </div>
+                <table class="glimpse-ajax-rows" id="glimpse-ajax-popup-rows">
+                </table>
             </div>
         `;
     }

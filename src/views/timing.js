@@ -32,28 +32,26 @@ module.exports = {
         const timings = timingProxy.getTimings();
 
         return `
-            <div>
-                <div>
-                    <div>Load time</div>
-                    <div>${timings.pageLoad}</div>
+            <div class="glimpse-hud-popup-section">
+                <div class="glimpse-hud-field">
+                    <div class="glimpse-hud-field-label">Load time</div>
+                    <div class="glimpse-hud-field-value">${timings.pageLoad}</div>
                 </div>
-                <div>
-                    <div>
-                        <div>Network connection</div>
-                        <div>${timings.networkConnection}</div>
-                    </div>
-                    <div>
-                        <div>Sending request</div>
-                        <div>${timings.sendingRequest}</div>
-                    </div>
-                    <div>
-                        <div>Receiving response</div>
-                        <div>${timings.receivingResponse}</div>
-                    </div>
-                    <div>
-                        <div>Browser processing</div>
-                        <div>${timings.browserProcessing}</div>
-                    </div>
+                <div class="glimpse-hud-field">
+                    <div class="glimpse-hud-field-label">Network connection</div>
+                    <div class="glimpse-hud-field-value">${timings.networkConnection}</div>
+                </div>
+                <div class="glimpse-hud-field">
+                    <div class="glimpse-hud-field-label">Sending request</div>
+                    <div class="glimpse-hud-field-value">${timings.sendingRequest}</div>
+                </div>
+                <div class="glimpse-hud-field">
+                    <div class="glimpse-hud-field-label">Receiving response</div>
+                    <div class="glimpse-hud-field-value">${timings.receivingResponse}</div>
+                </div>
+                <div class="glimpse-hud-field">
+                    <div class="glimpse-hud-field-label">Browser processing</div>
+                    <div class="glimpse-hud-field-value">${timings.browserProcessing}</div>
                 </div>
             </div>
         `;
