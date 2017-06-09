@@ -14,14 +14,16 @@ var ajaxView = require('./views/ajax');
 function render() {
     return `
         <div class="glimpse-hud">
-            ${versionView.render()}
-            ${timingView.render()}
-            ${ajaxView.render()}
+            <div class="glimpse-hud-data">
+                ${versionView.render()}
+                ${timingView.render()}
+                ${ajaxView.render()}
+                <div class="glimpse-hud-popup">
+                    ${timingView.renderPopup()}
+                    ${ajaxView.renderPopup()}
+                </div>
+            </div>
             ${openView.render()}
-        </div>
-        <div class="glimpse-hud-popup">
-            ${timingView.renderPopup()}
-            ${ajaxView.renderPopup()}
         </div>
     `;
 }

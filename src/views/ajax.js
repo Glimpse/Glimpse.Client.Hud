@@ -116,14 +116,6 @@ module.exports = {
                     </span>
                     <table class="glimpse-ajax-rows" id="glimpse-ajax-rows"></table>
                 </div>
-                <div class="glimpse-section-detail">
-                    test<br />
-                    test<br />
-                    test<br />
-                    test<br />
-                    test<br />
-                    test
-                </div>
             </div>
         `;
     },

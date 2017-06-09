@@ -1,7 +1,10 @@
+$hud-height: 40px;
+
 @font-face {
     font-family: 'Selawik';
     src: url('~/glimpse/hud/assets/selawk.woff2') format('woff2'),
          url('~/glimpse/hud/assets/selawk.woff') format('woff');
+}
 
 .glimpse-hud-popup {
     color: white !important;
@@ -9,11 +12,22 @@
     font-family: 'Selawik', sans-serif !important;
     font-weight: 300 !important;
     background-color: rgba(0, 0, 0, 0.85) !important;
+    position: absolute !important;
+    width: 100% !important;
+    bottom: 0 !important;
+    transform: translateY(calc(100% - #{$hud-height})) !important;
+    transition: transform .3s ease-out !important;
+    z-index: 0;
+
+    > * {
+        opacity: 0 !important;
+        transition: opacity 0.3s !important;
+    }
 }
 
 .glimpse-hud {
     display: flex !important;
-    height: 40px !important;
+    height: $hud-height !important;
     width: auto !important;
     flex-direction: row !important;
     align-items: flex-end !important;
@@ -28,6 +42,37 @@
 
     > * + * {
         border-left: 1px solid #999 !important;
+    }
+}
+.glimpse-hud-data {
+    display: flex !important;
+    flex-direction: row !important;
+    position: relative !important;
+    width: 50vw !important;
+
+    > :not(.glimpse-hud-popup) {
+        z-index: 1 !important;
+        transition: transform 0.3s, opacity 0.3s !important;
+    }
+
+    > .glimpse-section {
+        background-color: transparent !important;
+    }
+
+    &:hover {
+        > :not(.glimpse-hud-popup) {
+            opacity: 0 !important;
+            transform: translateY(-100%) !important;
+        }
+    }
+
+    &:hover > .glimpse-hud-popup {
+        transform: translateY(0) !important;
+        z-index: 2 !important;
+
+        > * {
+            opacity: 1 !important;
+        }
     }
 }
 .glimpse-arrow {
@@ -60,7 +105,7 @@
 .glimpse-section {
     padding: 0 15px !important;
     background-color: rgba(0, 0, 0, 0.85) !important;
-    min-height: 40px !important;
+    min-height: $hud-height !important;
 
     &:hover {
         > .glimpse-section-summary {
@@ -77,7 +122,7 @@
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
-    height: 40px !important;
+    height: $hud-height !important;
 }
 .glimpse-section-detail {
     max-height: 0 !important;
@@ -131,6 +176,7 @@
     font-size: 13px !important;
     margin-left: 20px !important;
     max-width: 220px !important;
+    flex-grow: 1 !important;
 
     &:empty {
         display: none !important;
