@@ -132,7 +132,7 @@ module.exports = {
     renderPopup: function() {
         return `
             <div class="glimpse-hud-popup-section -ajax">
-                <div class="glimpse-hud-popup-field">
+                <div class="glimpse-hud-field">
                     <div class="glimpse-hud-field-label">
                         AJAX requests
                     </div>

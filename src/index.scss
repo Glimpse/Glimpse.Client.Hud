@@ -1,4 +1,5 @@
 $hud-height: 40px;
+$max-ajax-rows: 6;
 
 @font-face {
     font-family: 'Selawik';
@@ -48,7 +49,6 @@ $hud-height: 40px;
     display: flex !important;
     flex-direction: row !important;
     position: relative !important;
-    width: 50vw !important;
 
     > :not(.glimpse-hud-popup) {
         z-index: 1 !important;
@@ -146,8 +146,11 @@ $hud-height: 40px;
     color: #999 !important;
 
 }
-.glimpse-section-suffix--text {
-    padding-left: 2px !important;
+.glimpse-time-ms,
+.glimpse-size-kb {
+    &:after {
+        margin-left: 2px !important;
+    }
 }
 .glimpse-time-ms {
     &:after {
@@ -189,7 +192,6 @@ $hud-height: 40px;
 }
 .glimpse-ajax-rows {
     font-size: 13px !important;
-    width: 100% !important;
 }
 .glimpse-section-summary {
     .glimpse-ajax-rows {
@@ -229,8 +231,15 @@ $hud-height: 40px;
     }
 }
 .glimpse-hud-popup-section {
+    .glimpse-ajax-rows {
+        width: 100% !important;
+    }
     .glimpse-ajax-row {
-        animation: glimpse-popup-ajax-row-move .3s ease-out both !important;
+        &:nth-last-child(#{$max-ajax-rows * 2}):first-child {
+            & ~ * {
+                animation: glimpse-popup-ajax-row-move .3s ease-out both !important;
+            }
+        }
 
         &:last-child, &:nth-last-child(2) {
             animation: glimpse-popup-ajax-row-enter .3s .3s ease-out both !important;
@@ -278,11 +287,15 @@ $hud-height: 40px;
     display: flex !important;
     flex-direction: row !important;
     justify-content: flex-start !important;
-    align-items: flex-start !important;
+    align-items: stretch !important;
 }
 
 .glimpse-hud-popup-section {
     padding: 10px !important;
+
+    ~ * {
+        border-left: 1px solid #999 !important;
+    }
 
     &.-ajax {
         flex-grow: 1 !important;
@@ -290,11 +303,11 @@ $hud-height: 40px;
 }
 
 .glimpse-hud-field {
-    margin-bottom: 5px !important;
+    margin-bottom: 10px !important;
 }
 
 .glimpse-hud-field-label {
-    font-size: 10px !important;
+    font-size: 12px !important;
     color: rgba(white, 0.5) !important;
     margin-bottom: 5px !important;
 }
