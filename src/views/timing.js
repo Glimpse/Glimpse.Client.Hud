@@ -6,24 +6,13 @@ module.exports = {
 
         return `
             <div class="glimpse-section glimpse-timing">
-                <div class="glimpse-section-summary">
-                    <span class="glimpse-section-label">
+                <div class="glimpse-hud-field">
+                    <div class="glimpse-hud-field-label">
                         Page load time
-                    </span>
-                    <span class="glimpse-section-duration glimpse-section-value">
+                    </div>
+                    <div class="glimpse-hud-field-value glimpse-time-ms">
                         ${timings.pageLoad}
-                    </span>
-                    <span class="glimpse-section-suffix">
-                        ms
-                    </span>
-                </div>
-                <div class="glimpse-section-detail">
-                    test<br />
-                    test<br />
-                    test<br />
-                    test<br />
-                    test<br />
-                    test
+                    </div>
                 </div>
             </div>
         `;
