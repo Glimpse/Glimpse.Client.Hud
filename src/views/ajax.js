@@ -109,12 +109,14 @@ module.exports = {
         return `
             <div class="glimpse-section glimpse-ajax" id="glimpse-ajax">
                 <div class="glimpse-section-summary" id="glimpse-ajax-summary">
-                    <span class="glimpse-label">
-                        Ajax requests
-                    </span>
-                    <span class="glimpse-section-value" id="glimpse-ajax-count">
-                        ${state.count}
-                    </span>
+                    <div class="glimpse-hud-field">
+                        <div class="glimpse-hud-field-label">
+                            Ajax requests
+                        </div>
+                        <div class="glimpse-hud-field-value" id="glimpse-ajax-count">
+                            ${state.count}
+                        </div>
+                    </div>
                     <table class="glimpse-ajax-rows" id="glimpse-ajax-rows"></table>
                 </div>
             </div>
