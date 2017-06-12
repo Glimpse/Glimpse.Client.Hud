@@ -60,6 +60,28 @@ $border-height: 3px;
         transition: opacity 0.3s !important;
     }
 }
+.glimpse-hud-popup,
+.glimpse-link {
+    border-top: 3px solid $color-primary;
+}
+.glimpse-hud-popup {
+    color: white !important;
+    font-size: type-scale(0) !important;
+    font-family: 'Selawik', sans-serif !important;
+    font-weight: 300 !important;
+    background-color: rgba(0, 0, 0, 0.85) !important;
+    position: absolute !important;
+    width: 100% !important;
+    bottom: 0 !important;
+    transform: translateY(calc(100% - #{$hud-height + $border-height})) !important;
+    transition: transform .3s ease-out !important;
+    z-index: 0;
+
+    > * {
+        opacity: 0 !important;
+        transition: opacity 0.3s !important;
+    }
+}
 .glimpse-hud-data {
     display: flex !important;
     flex-direction: row !important;
