@@ -41,7 +41,7 @@ function rowTemplate(request) {
             <td class="glimpse-ajax-cell glimpse-ajax-uri" title="${request.uri}">
                 ${request.uri}
             </td>
-            <td class="glimpse-ajax-cell">
+            <td class="glimpse-ajax-cell" data-glimpse-type="duration">
                 <span class="glimpse-time-ms">${request.duration}</span>
             </td>
         </tr>
@@ -50,15 +50,19 @@ function rowTemplate(request) {
 function rowPopupTemplate(request) {
     return `
         <tr class="glimpse-ajax-row">
-            <td title="${request.uri}" colspan="2">${request.uri}</td>
-            <td class="glimpse-time-ms">${request.duration}</td>
-            <td class="glimpse-size-kb">${processSize(request.size)}</td>
+            <td class="glimpse-ajax-cell" title="${request.uri}" colspan="2">${request.uri}</td>
+            <td class="glimpse-ajax-cell glimpse-time-ms" data-glimpse-type="duration">
+                ${request.duration}
+            </td>
+            <td class="glimpse-ajax-cell glimpse-size-kb" data-glimpse-type="size">
+                ${processSize(request.size)}
+            </td>
         </tr>
         <tr class="glimpse-ajax-row">
-            <td class="glimpse-label">${request.method}</td>
-            <td>${request.status} - ${request.statusText}</td>
-            <td title="${request.contentType}">${processContentType(request.contentType)}</td>
-            <td>${request.time.toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, '$1')}</td>
+            <td class="glimpse-ajax-cell glimpse-label">${request.method}</td>
+            <td class="glimpse-ajax-cell">${request.status} - ${request.statusText}</td>
+            <td class="glimpse-ajax-cell" title="${request.contentType}">${processContentType(request.contentType)}</td>
+            <td class="glimpse-ajax-cell">${request.time.toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, '$1')}</td>
         </tr>
     `;
 }
@@ -142,7 +146,21 @@ module.exports = {
                         ${state.count}
                     </div>
                 </div>
-                <table class="glimpse-ajax-rows" id="glimpse-ajax-popup-rows">
+                <table class="glimpse-ajax-rows">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th class="glimpse-ajax-cell-heading" data-glimpse-type="duration">
+                                Duration
+                            </th>
+                            <th class="glimpse-ajax-cell-heading" data-glimpse-type="size">
+                                Size
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="glimpse-ajax-popup-rows">
+                    </tbody>
                 </table>
             </div>
         `;
