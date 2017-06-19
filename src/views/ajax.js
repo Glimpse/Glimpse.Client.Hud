@@ -48,9 +48,13 @@ function rowTemplate(request) {
     `;
 }
 function rowPopupTemplate(request) {
+    const url = util.resolveClientUrl(request.requestId, false);
+
     return `
         <tr class="glimpse-ajax-row">
-            <td class="glimpse-ajax-cell" title="${request.uri}" colspan="2">${request.uri}</td>
+            <td class="glimpse-ajax-cell" title="${request.uri}" colspan="2">
+                <a href="${url}" target="_glimpse">${request.uri}</a>
+            </td>
             <td class="glimpse-ajax-cell glimpse-time-ms" data-glimpse-type="duration">
                 ${request.duration}
             </td>
