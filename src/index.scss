@@ -8,6 +8,7 @@ $type-scales: (
     1: 18px,
 );
 $border-height: 3px;
+$popup-delay: 1s;
 
 @function type-scale($level) {
     @return map-get($type-scales, $level);
@@ -74,7 +75,9 @@ $border-height: 3px;
     width: 100% !important;
     bottom: 0 !important;
     transform: translateY(calc(100% - #{$hud-height + $border-height})) !important;
-    transition: transform .3s ease-out !important;
+    transition:
+        transform .3s ease-out,
+        z-index 0s step-end !important;
     z-index: 0;
 
     > * {
@@ -90,7 +93,7 @@ $border-height: 3px;
 
     > :not(.glimpse-hud-popup) {
         z-index: 1 !important;
-        transition: opacity 0.3s !important;
+        transition: all 0.3s !important;
     }
 
     > .glimpse-section {
@@ -98,18 +101,22 @@ $border-height: 3px;
     }
 
     &:hover {
+        transition-delay: $popup-delay !important;
         border-color: transparent;
 
         > :not(.glimpse-hud-popup) {
+            transition-delay: $popup-delay !important;
             opacity: 0 !important;
         }
     }
 
     &:hover > .glimpse-hud-popup {
+        transition-delay: $popup-delay !important;
         transform: translateY(0) !important;
         z-index: 2 !important;
 
         > * {
+            transition-delay: $popup-delay !important;
             opacity: 1 !important;
         }
     }
@@ -277,6 +284,13 @@ $border-height: 3px;
             animation: glimpse-popup-ajax-row-enter .3s .3s ease-out both !important;
         }
 
+        &:nth-child(2n - 1) > .glimpse-ajax-cell {
+            padding-top: 4px !important;
+        }
+        &:nth-child(2n) > .glimpse-ajax-cell {
+            padding-bottom: 4px !important;
+        }
+
         @keyframes glimpse-popup-ajax-row-enter {
             from {
                 opacity: 0;
@@ -303,12 +317,21 @@ $border-height: 3px;
             text-align: right !important;
         }
     }
+
+    .glimpse-ajax-cell {
+        &[data-glimpse-type="content-type"] {
+            text-align: right !important;
+        }
+    }
 }
 .glimpse-ajax-row {
     white-space: nowrap !important;
     position: relative !important;
 }
 .glimpse-ajax-cell {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    
     &:last-child {
         text-align: right !important;
     }
@@ -388,4 +411,8 @@ $border-height: 3px;
 .glimpse-hud-field-value {
     font-size: type-scale(0) !important;
     font-weight: bold !important;
+}
+.glimpse-anchor {
+    color: $color-primary !important;
+    text-decoration: none !important;
 }
