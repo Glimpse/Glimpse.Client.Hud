@@ -1,6 +1,7 @@
 $hud-height: 40px;
 $max-ajax-rows: 7;
 $color-primary: #3399ff;
+$color-border: #999;
 $type-scales: (
     -1: 11px,
     0: 14px,
@@ -34,7 +35,29 @@ $border-height: 3px;
     font-weight: 300 !important;
 
     > * + * {
-        border-left: 1px solid #999 !important;
+        border-left: 1px solid $color-border !important;
+    }
+}
+.glimpse-hud-popup,
+.glimpse-link {
+    border-top: 3px solid $color-primary;
+}
+.glimpse-hud-popup {
+    color: white !important;
+    font-size: type-scale(0) !important;
+    font-family: 'Selawik', sans-serif !important;
+    font-weight: 300 !important;
+    background-color: rgba(0, 0, 0, 0.85) !important;
+    position: absolute !important;
+    width: 100% !important;
+    bottom: 0 !important;
+    transform: translateY(calc(100% - #{$hud-height + $border-height})) !important;
+    transition: transform .3s ease-out !important;
+    z-index: 0;
+
+    > * {
+        opacity: 0 !important;
+        transition: opacity 0.3s !important;
     }
 }
 .glimpse-hud-popup,
@@ -124,18 +147,7 @@ $border-height: 3px;
     min-height: $hud-height !important;
 
     & + & {
-        border-left: 1px solid #999 !important;
-    }
-
-    &:hover {
-        > .glimpse-section-summary {
-            height: 1px !important;
-            overflow: hidden !important;
-            visibility: hidden !important;
-        }
-        > .glimpse-section-detail {
-            max-height: 999px !important;
-        }
+        border-left: 1px solid $color-border !important;
     }
 }
 .glimpse-section-summary {
@@ -213,7 +225,7 @@ $border-height: 3px;
 .glimpse-section-summary {
     .glimpse-ajax-rows {
         margin-left: 20px !important;
-        max-width: 220px !important;
+        width: 180px !important;
         flex-grow: 1 !important;
 
         &:empty {
@@ -283,6 +295,14 @@ $border-height: 3px;
             }
         }
     }
+
+    .glimpse-ajax-cell,
+    .glimpse-ajax-cell-heading {
+        &[data-glimpse-type="duration"],
+        &[data-glimpse-type="size"] {
+            text-align: right !important;
+        }
+    }
 }
 .glimpse-ajax-row {
     white-space: nowrap !important;
@@ -322,10 +342,48 @@ $border-height: 3px;
     }
 }
 
+.glimpse-hud-field {
+    > .glimpse-hud-field {
+        margin: 0 !important;
+        padding: 5px 0 0 10px !important;
+        position: relative !important;
+
+        &:before {
+            content: '';
+            position: absolute;
+            bottom: 8px;
+            left: 3px;
+            height: calc(100% - 8px);
+            width: 1px;
+            background-color: $color-border !important;
+        }
+
+        + .glimpse-hud-field:before {
+            height: 100% !important;
+        }
+
+        > .glimpse-hud-field-value {
+            position: relative !important;
+
+            &:before {
+                content: '';
+                position: absolute;
+                height: 1px;
+                bottom: 8px;
+                left: -7px;
+                width: 4px;
+                background-color: $color-border !important;
+            }
+        }
+    }
+}
+
 .glimpse-hud-field-label {
     font-size: type-scale(-1) !important;
     color: rgba(white, 0.5) !important;
     margin-bottom: 2px !important;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .glimpse-hud-field-value {
     font-size: type-scale(0) !important;
