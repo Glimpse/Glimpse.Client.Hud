@@ -26,7 +26,7 @@ const state = {
 };
 
 function processContentType(type) {
-    return type ? type.substring(0, type.indexOf(';')) : '--';
+    return type || '--';
 };
 function processSize(size) {
     return size ? (Math.round((size / 1024) * 10) / 10) : '--';
@@ -53,7 +53,7 @@ function rowPopupTemplate(request) {
     return `
         <tr class="glimpse-ajax-row">
             <td class="glimpse-ajax-cell" title="${request.uri}" colspan="2">
-                <a href="${url}" target="_glimpse">${request.uri}</a>
+                <a class="glimpse-anchor" href="${url}" target="_glimpse">${request.uri}</a>
             </td>
             <td class="glimpse-ajax-cell glimpse-time-ms" data-glimpse-type="duration">
                 ${request.duration}
@@ -63,10 +63,10 @@ function rowPopupTemplate(request) {
             </td>
         </tr>
         <tr class="glimpse-ajax-row">
-            <td class="glimpse-ajax-cell glimpse-label">${request.method}</td>
-            <td class="glimpse-ajax-cell">${request.status} - ${request.statusText}</td>
-            <td class="glimpse-ajax-cell" title="${request.contentType}">${processContentType(request.contentType)}</td>
-            <td class="glimpse-ajax-cell">${request.time.toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, '$1')}</td>
+            <td class="glimpse-ajax-cell glimpse-label" data-glimpse-type="method">${request.method}</td>
+            <td class="glimpse-ajax-cell" data-glimpse-type="status">${request.status} - ${request.statusText}</td>
+            <td class="glimpse-ajax-cell" title="${request.contentType}" data-glimpse-type="content-type">${processContentType(request.contentType)}</td>
+            <td class="glimpse-ajax-cell" data-glimpse-type="time">${request.time.toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, '$1')}</td>
         </tr>
     `;
 }
@@ -153,8 +153,8 @@ module.exports = {
                 <table class="glimpse-ajax-rows">
                     <thead>
                         <tr>
-                            <th></th>
-                            <th></th>
+                            <th class="glimpse-ajax-cell-heading" data-glimpse-type="method"></th>
+                            <th class="glimpse-ajax-cell-heading" data-glimpse-type="status"></th>
                             <th class="glimpse-ajax-cell-heading" data-glimpse-type="duration">
                                 Duration
                             </th>
