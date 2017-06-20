@@ -153,8 +153,8 @@ module.exports = {
                 <table class="glimpse-ajax-rows">
                     <thead>
                         <tr>
-                            <th></th>
-                            <th></th>
+                            <th class="glimpse-ajax-cell-heading" data-glimpse-type="method"></th>
+                            <th class="glimpse-ajax-cell-heading" data-glimpse-type="status"></th>
                             <th class="glimpse-ajax-cell-heading" data-glimpse-type="duration">
                                 Duration
                             </th>

@@ -261,6 +261,9 @@ $popup-delay: .3s;
             }
         }
     }
+    .glimpse-hud-field-value {
+        font-size: type-scale(1) !important;
+    }
 }
 .glimpse-hud-popup-section {
     .glimpse-hud-field + * {
@@ -312,6 +315,12 @@ $popup-delay: .3s;
         &[data-glimpse-type="duration"],
         &[data-glimpse-type="size"] {
             text-align: right !important;
+        }
+    }
+
+    .glimpse-ajax-cell-heading {
+        &[data-glimpse-type="method"] {
+            width: 8ch !important;
         }
     }
 
@@ -408,7 +417,6 @@ $popup-delay: .3s;
     text-overflow: ellipsis;
 }
 .glimpse-hud-field-value {
-    font-size: type-scale(1) !important;
     font-weight: bold !important;
 }
 .glimpse-anchor {
