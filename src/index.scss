@@ -76,13 +76,13 @@ $popup-delay: .3s;
     bottom: 0 !important;
     transform: translateY(calc(100% - #{$hud-height + $border-height})) !important;
     transition:
-        transform .3s ease-out,
-        z-index 0s step-end !important;
+        transform .3s $popup-delay ease-out,
+        z-index 0s $popup-delay step-end !important;
     z-index: 0;
 
     > * {
         opacity: 0 !important;
-        transition: opacity 0.3s !important;
+        transition: opacity 0.3s $popup-delay !important;
     }
 }
 .glimpse-hud-data {
@@ -93,7 +93,7 @@ $popup-delay: .3s;
 
     > :not(.glimpse-hud-popup) {
         z-index: 1 !important;
-        transition: all 0.3s !important;
+        transition: all 0.3s $popup-delay !important;
     }
 
     > .glimpse-section {
@@ -101,22 +101,18 @@ $popup-delay: .3s;
     }
 
     &:hover {
-        transition-delay: $popup-delay !important;
         border-color: transparent;
 
         > :not(.glimpse-hud-popup) {
-            transition-delay: $popup-delay !important;
             opacity: 0 !important;
         }
     }
 
     &:hover > .glimpse-hud-popup {
-        transition-delay: $popup-delay !important;
         transform: translateY(0) !important;
         z-index: 2 !important;
 
         > * {
-            transition-delay: $popup-delay !important;
             opacity: 1 !important;
         }
     }
