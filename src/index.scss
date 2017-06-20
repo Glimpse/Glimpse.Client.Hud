@@ -5,10 +5,10 @@ $color-border: #999;
 $type-scales: (
     -1: 11px,
     0: 14px,
-    1: 18px,
+    1: 17px,
 );
 $border-height: 3px;
-$popup-delay: 1s;
+$popup-delay: .3s;
 
 @function type-scale($level) {
     @return map-get($type-scales, $level);
@@ -185,7 +185,7 @@ $popup-delay: 1s;
 .glimpse-time-ms,
 .glimpse-size-kb {
     &:after {
-        margin-left: 2px !important;
+        font-weight: normal !important;
     }
 }
 .glimpse-time-ms {
@@ -272,6 +272,7 @@ $popup-delay: 1s;
     }
     .glimpse-ajax-rows {
         width: 100% !important;
+        table-layout: fixed !important;
     }
     .glimpse-ajax-row {
         &:nth-last-child(#{$max-ajax-rows * 2}):first-child {
@@ -329,8 +330,9 @@ $popup-delay: 1s;
     position: relative !important;
 }
 .glimpse-ajax-cell {
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    white-space: nowrap !important;
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
     
     &:last-child {
         text-align: right !important;
@@ -358,6 +360,7 @@ $popup-delay: 1s;
 
     ~ * {
         border-left: 1px solid #999 !important;
+        margin-left: 5px !important;
     }
 
     &.-ajax {
@@ -409,7 +412,7 @@ $popup-delay: 1s;
     text-overflow: ellipsis;
 }
 .glimpse-hud-field-value {
-    font-size: type-scale(0) !important;
+    font-size: type-scale(1) !important;
     font-weight: bold !important;
 }
 .glimpse-anchor {
