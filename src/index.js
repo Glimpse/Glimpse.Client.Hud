@@ -40,17 +40,23 @@ function preInit(initPromise) {
 }
 
 const init = new Promise(function(resolve, reject) {
+    // allow components hook before any other hud logic running
     preInit(init);
 
     let timeout = 1;
     const onTimeout = () => {
         if (document.readyState === 'complete') {
+            // allow components to provide content which they want to be shown in initial render
+            const content = render(init);
+
             const container = document.createElement('div');
-            container.innerHTML = render(init);
+            container.innerHTML = content;
             document.body.appendChild(container);
 
+            // allow components hook post HUD being inserted into the dom
             postRender(init);
 
+            // resolves the promise and pass through the container for future usage
             resolve(container);
         }
         else {

@@ -9,7 +9,7 @@ function processType(type, indexedMessages) {
     if (messages && messages.length) {
         messages.forEach(function(message) {
             result.total++;
-            result.time = parseInt(message.payload.duration);
+            result.time += parseInt(message.payload.duration);
         });
     }
     return result;
