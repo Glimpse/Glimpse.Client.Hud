@@ -21,7 +21,7 @@ const state = {
         timeout: undefined,
         stack: [],
         template: rowPopupTemplate,
-        length: -6
+        length: -3
     }
 };
 
@@ -119,7 +119,7 @@ module.exports = {
                 <div class="glimpse-section-summary" id="glimpse-ajax-summary">
                     <div class="glimpse-hud-field">
                         <div class="glimpse-hud-field-label">
-                            Ajax requests
+                            Browser calls
                         </div>
                         <div class="glimpse-hud-field-value" id="glimpse-ajax-count">
                             ${state.count}
@@ -143,8 +143,8 @@ module.exports = {
         return `
             <div class="glimpse-hud-popup-section -ajax">
                 <div class="glimpse-hud-field">
-                    <div class="glimpse-hud-field-label">
-                        AJAX requests
+                    <div class="glimpse-hud-field-label" title="Browser service calls (fetch/ajax)">
+                        Browser calls
                     </div>
                     <div class="glimpse-hud-field-value" id="glimpse-ajax-popup-count">
                         ${state.count}

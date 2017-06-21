@@ -1,6 +1,6 @@
 var UriTemplate = require('uri-templates');
 var usedMessageTypes = function() {
-    return 'environment,user-identification,web-response,web-request,after-action-invoked,after-action-view-invoked,before-execute-command,after-execute-command,after-view-component';
+    return 'data-http-response,data-store-end';
 }
 var hudScriptElement = document.getElementById('__glimpse_hud');
 
