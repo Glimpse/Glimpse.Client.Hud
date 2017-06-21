@@ -269,6 +269,9 @@ $popup-delay: .3s;
     .glimpse-hud-field + * {
         margin-top: 5px !important;
     }
+    > .glimpse-hud-field > .glimpse-hud-field-value {
+        font-size: type-scale(1) !important;
+    }
     .glimpse-ajax-rows {
         width: 100% !important;
         table-layout: fixed !important;
@@ -374,6 +377,9 @@ $popup-delay: .3s;
 }
 
 .glimpse-hud-field {
+    .glimpse-hud-field-value {
+        white-space: nowrap !important;
+    }
     > .glimpse-hud-field {
         margin: 0 !important;
         padding: 5px 0 0 10px !important;
