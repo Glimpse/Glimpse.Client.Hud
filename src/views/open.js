@@ -7,6 +7,7 @@ const icon = `
 `;
 
 module.exports = {
+    arrowIcon: icon,
     render: function() {
         const url = util.resolveClientUrl(util.currentRequestId(), true);
 

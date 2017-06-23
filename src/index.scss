@@ -116,6 +116,11 @@ $popup-delay: .3s;
             opacity: 1 !important;
         }
     }
+    .glimpse-arrow {
+        margin-right: 5px !important;
+        height: 8px !important;
+        width: 8px !important;
+    }
 }
 .glimpse-arrow {
     height: 15px !important;
@@ -186,7 +191,7 @@ $popup-delay: .3s;
 }
 .glimpse-time-ms {
     &:after {
-        content: 'ms';
+        content: ' ms';
         color: #999 !important;
     }
 }
@@ -275,6 +280,9 @@ $popup-delay: .3s;
     .glimpse-ajax-rows {
         width: 100% !important;
         table-layout: fixed !important;
+        &.glimpse-ajax-rows--hidden {
+            display: none;
+        }
     }
     .glimpse-ajax-row {
         &:nth-last-child(#{$max-ajax-rows * 2}):first-child {
