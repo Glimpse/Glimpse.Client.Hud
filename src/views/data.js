@@ -65,7 +65,7 @@ module.exports = {
                 <div class="glimpse-section-summary">
                     <div class="glimpse-hud-field">
                         <div class="glimpse-hud-field-label">
-                            I/O Calls
+                            Server calls
                         </div>
                         <div class="glimpse-hud-field-value" id="glimpse-data-summary-value">
                             --
@@ -79,18 +79,18 @@ module.exports = {
         return `
             <div class="glimpse-hud-popup-section">
                 <div class="glimpse-hud-field">
-                    <div class="glimpse-hud-field-label">I/O Calls</div>
+                    <div class="glimpse-hud-field-label">Server calls</div>
                     <div class="glimpse-hud-field-value" id="glimpse-data-popup-summary-value">
                         --
                     </div>
                     <div class="glimpse-hud-field">
-                        <div class="glimpse-hud-field-label">Http Client</div>
+                        <div class="glimpse-hud-field-label">Web services</div>
                         <div class="glimpse-hud-field-value" id="glimpse-data-popup-httpClient-value">
                             --
                         </div>
                     </div>
                     <div class="glimpse-hud-field">
-                        <div class="glimpse-hud-field-label">Data Store</div>
+                        <div class="glimpse-hud-field-label">Data acces</div>
                         <div class="glimpse-hud-field-value" id="glimpse-data-popup-dataStore-value">
                             --
                         </div>
