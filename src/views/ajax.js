@@ -74,6 +74,8 @@ function rowPopupTemplate(request) {
 function update(request) {
     state.count++;
 
+    document.getElementById('glimpse-ajax-popup-list').style.display = 'table';
+
     updateCounter(state.summary, state.count);
     updateCounter(state.popup, state.count);
 
@@ -150,7 +152,7 @@ module.exports = {
                         ${state.count}
                     </div>
                 </div>
-                <table class="glimpse-ajax-rows">
+                <table class="glimpse-ajax-rows" id="glimpse-ajax-popup-list">
                     <thead>
                         <tr>
                             <th class="glimpse-ajax-cell-heading" data-glimpse-type="method"></th>

@@ -186,7 +186,7 @@ $popup-delay: .3s;
 }
 .glimpse-time-ms {
     &:after {
-        content: 'ms';
+        content: ' ms';
         color: #999 !important;
     }
 }
@@ -273,6 +273,7 @@ $popup-delay: .3s;
         font-size: type-scale(1) !important;
     }
     .glimpse-ajax-rows {
+        display: none;
         width: 100% !important;
         table-layout: fixed !important;
     }

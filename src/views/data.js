@@ -1,7 +1,6 @@
 const util = require('../lib/util');
+const dom = require('../lib/dom');
 const messagesUtil = require('../lib/messages');
-
-const defaultSummary = { total: '--', time: '--' }
 
 function processType(type, indexedMessages) {
     const messages = indexedMessages[type];
@@ -32,7 +31,15 @@ function update(data) {
     updateValue('glimpse-data-popup-dataStore-value', data.dataStore);
 }
 function updateValue(target, data) {
-    document.getElementById(target).innerHTML = data.total + ' / ' + data.time;
+    const element = document.getElementById(target);
+
+    let content = data.total;
+    if (data.total > 0) {
+        dom.addClass(element, 'glimpse-time-ms');
+
+        content += ' / ' + data.time;
+    }
+    element.innerHTML = content;
 }
 
 module.exports = {
@@ -53,8 +60,6 @@ module.exports = {
         });
     },
     render: function() {
-        const timings = { summary: defaultSummary };
-
         return `
             <div class="glimpse-section glimpse-data">
                 <div class="glimpse-section-summary">
@@ -62,8 +67,8 @@ module.exports = {
                         <div class="glimpse-hud-field-label">
                             I/O Calls
                         </div>
-                        <div class="glimpse-hud-field-value glimpse-time-ms" id="glimpse-data-summary-value">
-                            ${timings.summary.total} / ${timings.summary.time}
+                        <div class="glimpse-hud-field-value" id="glimpse-data-summary-value">
+                            --
                         </div>
                     </div>
                 </div>
@@ -71,25 +76,23 @@ module.exports = {
         `;
     },
     renderPopup: function() {
-        const timings = { summary: defaultSummary, httpClient: defaultSummary, dataStore: defaultSummary };
-
         return `
             <div class="glimpse-hud-popup-section">
                 <div class="glimpse-hud-field">
                     <div class="glimpse-hud-field-label">I/O Calls</div>
-                    <div class="glimpse-hud-field-value glimpse-time-ms" id="glimpse-data-popup-summary-value">
-                        ${timings.summary.total} / ${timings.summary.time}
+                    <div class="glimpse-hud-field-value" id="glimpse-data-popup-summary-value">
+                        --
                     </div>
                     <div class="glimpse-hud-field">
                         <div class="glimpse-hud-field-label">Http Client</div>
-                        <div class="glimpse-hud-field-value glimpse-time-ms" id="glimpse-data-popup-httpClient-value">
-                            ${timings.httpClient.total} / ${timings.httpClient.time}
+                        <div class="glimpse-hud-field-value" id="glimpse-data-popup-httpClient-value">
+                            --
                         </div>
                     </div>
                     <div class="glimpse-hud-field">
                         <div class="glimpse-hud-field-label">Data Store</div>
-                        <div class="glimpse-hud-field-value glimpse-time-ms" id="glimpse-data-popup-dataStore-value">
-                            ${timings.dataStore.total} / ${timings.dataStore.time}
+                        <div class="glimpse-hud-field-value" id="glimpse-data-popup-dataStore-value">
+                            --
                         </div>
                     </div>
                 </div>
