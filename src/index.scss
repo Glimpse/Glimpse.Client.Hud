@@ -278,9 +278,11 @@ $popup-delay: .3s;
         font-size: type-scale(1) !important;
     }
     .glimpse-ajax-rows {
-        display: none;
         width: 100% !important;
         table-layout: fixed !important;
+        &.glimpse-ajax-rows--hidden {
+            display: none;
+        }
     }
     .glimpse-ajax-row {
         &:nth-last-child(#{$max-ajax-rows * 2}):first-child {
