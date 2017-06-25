@@ -1,2 +1,2 @@
 require('./fake-ajax');
-require('./fake-data');
+require('./fake-summary');

@@ -6,6 +6,7 @@ if (FAKE_SERVER) {
 
 require('./index.scss');
 
+var summaryRepository = require('./repository/summary');
 var versionView = require('./views/version');
 var openView = require('./views/open');
 var timingView = require('./views/timing');
