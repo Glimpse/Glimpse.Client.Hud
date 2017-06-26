@@ -445,8 +445,34 @@ $popup-delay: 0s;
     color: $color-primary !important;
     text-decoration: none !important;
 }
+
 .glimpse-agent-type-icon {
     display: inline-block !important;
     height: type-scale(-1) !important;
     margin-right: 2px !important;
+}
+
+.glimpse-logs {
+    svg {
+        height: 10px !important;
+        width: 10px !important;
+        fill: rgba(white, 0.5) !important;
+    }
+    &.glimpse-hud-popup {
+        svg {
+            height: 8px !important;
+            width: 8px !important;
+        }
+    }
+    .has-value {
+        .icon-error {
+            fill: #b03b00 !important;
+        }
+        .icon-warn {
+            fill: #f8a800 !important;
+        }
+        .icon-info {
+            fill: #1ba1e2 !important;
+        }
+    }
 }

@@ -56,12 +56,16 @@ function updateSummary() {
     updateView(summaryData, 'glimpse-logs-popup-summary-value');
 }
 function updateView(data, target) {
-    // TODO: this needs to be update to use icons
-    let content = data.error + ' / '
-        + data.warn + ' / '
-        + data.info;
+    const content = `
+        <span${iconSectionHasValueClass(data.error)}>${icons.error} ${data.error}</span>
+        <span${iconSectionHasValueClass(data.warn)}>${icons.warn} ${data.warn}</span>
+        <span${iconSectionHasValueClass(data.info)}>${icons.info} ${data.info}</span>
+    `;
 
     document.getElementById(target).innerHTML = content;
+}
+function iconSectionHasValueClass(total) {
+    return total > 0 ? ' class="has-value"' : '';
 }
 
 consoleProxy.registerListener(function(details) {
@@ -97,6 +101,7 @@ module.exports = {
         state.ready = true;
 
         // run through the browser logs if we have any
+        updateView(state.data.browser, 'glimpse-logs-popup-browser-value');
         state.preRenderCache.forEach(function(doTask) {
             doTask();
         });
@@ -109,7 +114,7 @@ module.exports = {
     },
     renderPopup: function() {
         return `
-            <div class="glimpse-hud-popup-section">
+            <div class="glimpse-hud-popup-section glimpse-logs">
                 <div class="glimpse-hud-field">
                     <div class="glimpse-hud-field-label">
                         Logs
@@ -132,7 +137,7 @@ module.exports = {
                             Browser logs
                         </div>
                         <div class="glimpse-hud-field-value" id="glimpse-logs-popup-browser-value">
-                            0 / 0 / 0
+                            --
                         </div>
                     </div>
                 </div>

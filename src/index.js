@@ -24,14 +24,14 @@ function render(state) {
             <div class="glimpse-hud-data" data-glimpse-expanded="${state.expanded}">
                 ${versionView.render()}
                 ${timingView.render()}
+                ${logsView.render()}
                 ${dataView.render()}
                 ${ajaxView.render()}
-                ${logsView.render()}
                 <div class="glimpse-hud-popup">
                     ${timingView.renderPopup()}
+                    ${logsView.renderPopup()}
                     ${dataView.renderPopup()}
                     ${ajaxView.renderPopup()}
-                    ${logsView.renderPopup()}
                 </div>
             </div>
             ${openView.render()}
