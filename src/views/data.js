@@ -1,5 +1,5 @@
 const dom = require('../lib/dom');
-const summary = require('../repository/summary');
+const summaryRepository = require('../repository/summary');
 
 function processType(summary) {
     return {
@@ -39,9 +39,9 @@ function updateValue(target, model) {
 module.exports = {
     preInit: function(initPromise) {
         Promise.all([
-            summary.getPromise(),
+            summaryRepository.getPromise(),
             initPromise
-        ]).then(values => {
+        ]).then(function(values) {
             const requestSummary = values[0];
             const model = process(requestSummary);
             update(model);

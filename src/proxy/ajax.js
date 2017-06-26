@@ -22,13 +22,13 @@ self.fetch = function(input, init) {
     // pass call through to caller
     const fetchPromise = oldFetch.apply(this, arguments);
     if (util.isLocalUri(uri) && uri.indexOf('/glimpse/') == -1) {
-        fetchPromise.then((response) => {
+        fetchPromise.then(function(response) {
             response = response.clone();
 
             if (response.headers.get('X-Glimpse-ContextId')) {
                 publishRequest(buildFetchModel(request, response, startTime));
             }
-        }, (error) => {
+        }, function(error) {
             // nothing we can do
         });
     }
