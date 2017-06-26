@@ -38,4 +38,4 @@ function spawnRequest() {
         spawnRequest();
     }, chance.integerRange(1000, 5000));
 }
-//spawnRequest();
+spawnRequest();
