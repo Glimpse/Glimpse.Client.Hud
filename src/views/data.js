@@ -1,5 +1,6 @@
 const dom = require('../lib/dom');
 const summaryRepository = require('../repository/summary');
+const icons = require('../assets/icons').default;
 
 function processType(summary) {
     return {
@@ -67,7 +68,10 @@ module.exports = {
         return `
             <div class="glimpse-hud-popup-section">
                 <div class="glimpse-hud-field">
-                    <div class="glimpse-hud-field-label">Server calls</div>
+                    <div class="glimpse-hud-field-label">
+                        ${icons.server}
+                        Server calls
+                    </div>
                     <div class="glimpse-hud-field-value" id="glimpse-data-popup-summary-value">
                         --
                     </div>

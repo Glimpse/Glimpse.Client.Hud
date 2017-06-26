@@ -429,6 +429,9 @@ $popup-delay: .3s;
     margin-bottom: 2px !important;
     white-space: nowrap;
     text-overflow: ellipsis;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
 }
 .glimpse-hud-field-value {
     font-weight: bold !important;
@@ -436,4 +439,9 @@ $popup-delay: .3s;
 .glimpse-anchor {
     color: $color-primary !important;
     text-decoration: none !important;
+}
+.glimpse-agent-type-icon {
+    display: inline-block !important;
+    height: type-scale(0) !important;
+    margin-right: 2px !important;
 }

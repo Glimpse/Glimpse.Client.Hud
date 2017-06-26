@@ -2,6 +2,7 @@ const util = require('../lib/util');
 const ajaxProxy = require('../proxy/ajax');
 const dom = require('../lib/dom');
 const arrowIcon = require('./open').arrowIcon;
+const icons = require('../assets/icons').default;
 
 const state = {
     count: 0,
@@ -149,6 +150,7 @@ module.exports = {
             <div class="glimpse-hud-popup-section -ajax">
                 <div class="glimpse-hud-field">
                     <div class="glimpse-hud-field-label" title="Browser service calls (fetch/ajax)">
+                        ${icons.client}
                         Browser calls
                     </div>
                     <div class="glimpse-hud-field-value" id="glimpse-ajax-popup-count">
