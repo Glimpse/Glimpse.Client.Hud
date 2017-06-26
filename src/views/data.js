@@ -1,5 +1,6 @@
 const dom = require('../lib/dom');
 const summaryRepository = require('../repository/summary');
+const icons = require('../assets/icons').default;
 
 const supportedStatusCodes = [ '200', '400', '500' ];
 const supportedOperationCategories = [ 'Create', 'Read', 'Update', 'Delete', 'Other' ];
@@ -131,7 +132,10 @@ module.exports = {
         return `
             <div class="glimpse-hud-popup-section">
                 <div class="glimpse-hud-field">
-                    <div class="glimpse-hud-field-label">Server calls</div>
+                    <div class="glimpse-hud-field-label">
+                        ${icons.server}
+                        Server calls
+                    </div>
                     <div class="glimpse-hud-field-value" id="glimpse-data-popup-summary-value">
                         --
                     </div>
@@ -143,7 +147,7 @@ module.exports = {
                         <div class="glimpse-hud-field-listing" id="glimpse-data-popup-webServices-subvalue"></div>
                     </div>
                     <div class="glimpse-hud-field">
-                        <div class="glimpse-hud-field-label">Data acces</div>
+                        <div class="glimpse-hud-field-label">Data access</div>
                         <div class="glimpse-hud-field-value" id="glimpse-data-popup-dataStore-value">
                             --
                         </div>

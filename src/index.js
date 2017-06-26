@@ -3,7 +3,6 @@ if (FAKE_SERVER) {
     require('fake');
 }
 // DEV TIME CODE
-
 require('./index.scss');
 
 var summaryRepository = require('./repository/summary');
@@ -13,11 +12,16 @@ var timingView = require('./views/timing');
 var ajaxView = require('./views/ajax');
 var dataView = require('./views/data');
 var logsView = require('./views/logs');
+var util = require('./lib/util');
 
-function render(initPromise) {
+const state = {
+    expanded: util.localGet('expanded', false)
+};
+
+function render(state) {
     return `
         <div class="glimpse-hud">
-            <div class="glimpse-hud-data">
+            <div class="glimpse-hud-data" data-glimpse-expanded="${state.expanded}">
                 ${versionView.render()}
                 ${timingView.render()}
                 ${dataView.render()}
@@ -38,6 +42,14 @@ function render(initPromise) {
 function postRender(initPromise) {
     ajaxView.postRender(initPromise);
     logsView.postRender(initPromise)
+
+    var hudData = document.querySelector('.glimpse-hud-data');
+
+    hudData.addEventListener('click', function() {
+        util.localSet(state, 'expanded', !state.expanded, function() {
+            hudData.setAttribute('data-glimpse-expanded', state.expanded);
+        });
+    });
 }
 
 function preInit(initPromise) {
@@ -52,7 +64,7 @@ const init = new Promise(function(resolve, reject) {
     const onTimeout = function() {
         if (document.readyState === 'complete') {
             // allow components to provide content which they want to be shown in initial render
-            const content = render(init);
+            const content = render(state);
 
             const container = document.createElement('div');
             container.innerHTML = content;

@@ -8,7 +8,7 @@ $type-scales: (
     1: 17px,
 );
 $border-height: 3px;
-$popup-delay: .3s;
+$popup-delay: 0s;
 
 @function type-scale($level) {
     @return map-get($type-scales, $level);
@@ -40,8 +40,9 @@ $popup-delay: .3s;
     }
 }
 .glimpse-hud-popup,
-.glimpse-link {
-    border-top: 3px solid $color-primary;
+.glimpse-link,
+.glimpse-hud-data {
+    border-top: 3px solid $color-primary !important;
 }
 .glimpse-hud-popup {
     color: white !important;
@@ -50,34 +51,15 @@ $popup-delay: .3s;
     font-weight: 300 !important;
     background-color: rgba(0, 0, 0, 0.85) !important;
     position: absolute !important;
-    width: 100% !important;
+    width: auto !important;
     bottom: 0 !important;
-    transform: translateY(calc(100% - #{$hud-height + $border-height})) !important;
-    transition: transform .3s ease-out !important;
-    z-index: 0;
-
-    > * {
-        opacity: 0 !important;
-        transition: opacity 0.3s !important;
-    }
-}
-.glimpse-hud-popup,
-.glimpse-link {
-    border-top: 3px solid $color-primary;
-}
-.glimpse-hud-popup {
-    color: white !important;
-    font-size: type-scale(0) !important;
-    font-family: 'Selawik', sans-serif !important;
-    font-weight: 300 !important;
-    background-color: rgba(0, 0, 0, 0.85) !important;
-    position: absolute !important;
-    width: 100% !important;
-    bottom: 0 !important;
+    right: 0 !important;
+    opacity: 0 !important;
     transform: translateY(calc(100% - #{$hud-height + $border-height})) !important;
     transition:
-        transform .3s $popup-delay ease-out,
-        z-index 0s $popup-delay step-end !important;
+        transform .3s ease-out,
+        z-index 0s step-end,
+        opacity 0s .3s step-end  !important;
     z-index: 0;
 
     > * {
@@ -90,32 +72,40 @@ $popup-delay: .3s;
     flex-direction: row !important;
     position: relative !important;
     height: 100% !important;
+    transition: border-color 0s 0.3s !important;
 
     > :not(.glimpse-hud-popup) {
         z-index: 1 !important;
-        transition: all 0.3s $popup-delay !important;
+        transition: opacity 0s 0.3s !important;
+        > * {
+            transition: opacity 0.3s 0.3s !important;
+        }
     }
 
-    > .glimpse-section {
-        background-color: transparent !important;
-    }
-
-    &:hover {
-        border-color: transparent;
+    &[data-glimpse-expanded="true"] {
+        border-color: transparent !important;
+        transition-delay: 0s !important;        
 
         > :not(.glimpse-hud-popup) {
+            background-color: transparent !important;
             opacity: 0 !important;
+            transition-delay: 0s !important;
         }
-    }
 
-    &:hover > .glimpse-hud-popup {
-        transform: translateY(0) !important;
-        z-index: 2 !important;
-
-        > * {
+        > .glimpse-hud-popup {
+            transform: translateY(0) !important;
             opacity: 1 !important;
+            z-index: 2 !important;
+            left: initial !important;
+            transition-delay: 0s !important;
+
+            > * {
+                opacity: 1 !important;
+                transition-delay: 0s !important;
+            }
         }
     }
+
     .glimpse-arrow {
         margin-right: 5px !important;
         height: 8px !important;
@@ -444,6 +434,9 @@ $popup-delay: .3s;
     margin-bottom: 2px !important;
     white-space: nowrap;
     text-overflow: ellipsis;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
 }
 .glimpse-hud-field-value {
     font-weight: bold !important;
@@ -451,4 +444,9 @@ $popup-delay: .3s;
 .glimpse-anchor {
     color: $color-primary !important;
     text-decoration: none !important;
+}
+.glimpse-agent-type-icon {
+    display: inline-block !important;
+    height: type-scale(-1) !important;
+    margin-right: 2px !important;
 }

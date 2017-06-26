@@ -1,6 +1,7 @@
 const dom = require('../lib/dom');
 const consoleProxy = require('../proxy/console');
 const summaryRepository = require('../repository/summary');
+const icons = require('../assets/icons').default;
 
 const supportedLevels = [ 'error', 'warn', 'info' ];
 const state = {
@@ -110,18 +111,26 @@ module.exports = {
         return `
             <div class="glimpse-hud-popup-section">
                 <div class="glimpse-hud-field">
-                    <div class="glimpse-hud-field-label">Logs</div>
+                    <div class="glimpse-hud-field-label">
+                        Logs
+                    </div>
                     <div class="glimpse-hud-field-value" id="glimpse-logs-popup-summary-value">
                         --
                     </div>
                     <div class="glimpse-hud-field">
-                        <div class="glimpse-hud-field-label">Server logs</div>
+                        <div class="glimpse-hud-field-label">
+                            ${icons.server}
+                            Server logs
+                        </div>
                         <div class="glimpse-hud-field-value" id="glimpse-logs-popup-server-value">
                             --
                         </div>
                     </div>
                     <div class="glimpse-hud-field">
-                        <div class="glimpse-hud-field-label">Browser logs</div>
+                        <div class="glimpse-hud-field-label">
+                            ${icons.client}
+                            Browser logs
+                        </div>
                         <div class="glimpse-hud-field-value" id="glimpse-logs-popup-browser-value">
                             0 / 0 / 0
                         </div>
