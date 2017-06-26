@@ -22,7 +22,7 @@ const state = {
         timeout: undefined,
         stack: [],
         template: rowPopupTemplate,
-        length: -3
+        length: 0
     }
 };
 
@@ -54,32 +54,37 @@ function rowPopupTemplate(request) {
     const url = util.resolveClientUrl(request.requestId, false);
 
     return `
-        <tr class="glimpse-ajax-row">
-            <td class="glimpse-ajax-cell" title="${request.uri}" colspan="2">
-                <a class="glimpse-anchor" href="${url}" target="_glimpse" title="Open '${request.uri}' in Glimpse">${arrowIcon}</a> ${request.uri}
-            </td>
-            <td class="glimpse-ajax-cell glimpse-time-ms" data-glimpse-type="duration">
-                ${request.duration}
-            </td>
-            <td class="glimpse-ajax-cell glimpse-size-kb" data-glimpse-type="size">
-                ${processSize(request.size)}
-            </td>
-        </tr>
-        <tr class="glimpse-ajax-row">
-            <td class="glimpse-ajax-cell glimpse-label" data-glimpse-type="method">${request.method}</td>
-            <td class="glimpse-ajax-cell" data-glimpse-type="status">${request.status} - ${request.statusText}</td>
-            <td class="glimpse-ajax-cell" title="${request.contentType}" data-glimpse-type="content-type">${processContentType(request.contentType)}</td>
-            <td class="glimpse-ajax-cell" data-glimpse-type="time">${request.time
-                .toTimeString()
-                .replace(/.*(\d{2}:\d{2}:\d{2}).*/, '$1')}</td>
-        </tr>
+        <div class="glimpse-ajax-row">
+            <div class="glimpse-ajax-row-line">
+                <span class="glimpse-ajax-text" data-glimpse-type="uri" title="${request.uri}">
+                    <a class="glimpse-anchor" href="${url}" target="_glimpse" title="Open '${request.uri}' in Glimpse">${arrowIcon}</a> ${request.uri}
+                </span>
+                <span class="glimpse-ajax-text" data-glimpse-type="time">
+                    ${request.time
+                        .toTimeString()
+                        .replace(/.*(\d{2}:\d{2}:\d{2}).*/, '$1')}
+                </span>
+            </div>
+            <div class="glimpse-ajax-row-line glimpse-ajax-row-line--secondary">
+                <span class="glimpse-ajax-text glimpse-label" data-glimpse-type="method">
+                    ${request.method}
+                </span>
+                <span class="glimpse-ajax-text" data-glimpse-type="status">
+                    ${request.status} - ${request.statusText}
+                </span>
+                <span class="glimpse-ajax-text glimpse-size-kb" data-glimpse-type="size">
+                    ${processSize(request.size)}
+                </span>
+                <span class="glimpse-ajax-text glimpse-time-ms" data-glimpse-type="duration">
+                    ${request.duration}
+                </span>
+            </div>
+        </div>
     `;
 }
 
 function update(request) {
     state.count++;
-
-    dom.removeClass(document.getElementById('glimpse-ajax-popup-list'), 'glimpse-ajax-rows--hidden');
 
     updateCounter(state.summary, state.count);
     updateCounter(state.popup, state.count);
@@ -104,6 +109,7 @@ function updateView(details, request) {
         .concat(request);
     document.getElementById(details.rowsId).innerHTML = details.stack
         .map(details.template)
+        .reverse()
         .join('\n');
 }
 
@@ -157,22 +163,8 @@ module.exports = {
                         ${state.count}
                     </div>
                 </div>
-                <table class="glimpse-ajax-rows glimpse-ajax-rows--hidden" id="glimpse-ajax-popup-list">
-                    <thead>
-                        <tr>
-                            <th class="glimpse-ajax-cell-heading" data-glimpse-type="method"></th>
-                            <th class="glimpse-ajax-cell-heading" data-glimpse-type="status"></th>
-                            <th class="glimpse-ajax-cell-heading" data-glimpse-type="duration">
-                                Duration
-                            </th>
-                            <th class="glimpse-ajax-cell-heading" data-glimpse-type="size">
-                                Size
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody id="glimpse-ajax-popup-rows">
-                    </tbody>
-                </table>
+                <div id="glimpse-ajax-popup-rows">
+                </div>
             </div>
         `;
     }
