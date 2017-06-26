@@ -124,7 +124,6 @@ module.exports = {
                     </div>
                     <div class="glimpse-hud-field">
                         <div class="glimpse-hud-field-label">
-                            ${icons.server}
                             Server logs
                         </div>
                         <div class="glimpse-hud-field-value" id="glimpse-logs-popup-server-value">
@@ -133,7 +132,6 @@ module.exports = {
                     </div>
                     <div class="glimpse-hud-field">
                         <div class="glimpse-hud-field-label">
-                            ${icons.client}
                             Browser logs
                         </div>
                         <div class="glimpse-hud-field-value" id="glimpse-logs-popup-browser-value">
