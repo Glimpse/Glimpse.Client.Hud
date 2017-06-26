@@ -269,71 +269,29 @@ $popup-delay: 0s;
     }
     .glimpse-ajax-rows {
         width: 100% !important;
-        table-layout: fixed !important;
-        &.glimpse-ajax-rows--hidden {
-            display: none;
-        }
     }
     .glimpse-ajax-row {
-        &:nth-last-child(#{$max-ajax-rows * 2}):first-child {
-            &, & ~ * {
-                animation: glimpse-popup-ajax-row-move .3s ease-out both !important;
-            }
-        }
-
-        &:last-child, &:nth-last-child(2) {
-            animation: glimpse-popup-ajax-row-enter .3s .3s ease-out both !important;
-        }
-
-        &:nth-child(2n - 1) > .glimpse-ajax-cell {
-            padding-top: 4px !important;
-        }
-        &:nth-child(2n) > .glimpse-ajax-cell {
-            padding-bottom: 4px !important;
-        }
-
-        @keyframes glimpse-popup-ajax-row-enter {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes glimpse-popup-ajax-row-move {
-            from {
-                transform: translateY(200%);
-            }
-            to {
-                transform: translateY(0);
-            }
-        }
-    }
-
-    .glimpse-ajax-cell,
-    .glimpse-ajax-cell-heading {
-        &[data-glimpse-type="duration"],
-        &[data-glimpse-type="size"] {
-            text-align: right !important;
-        }
-    }
-
-    .glimpse-ajax-cell-heading {
-        &[data-glimpse-type="method"] {
-            width: 8ch !important;
-        }
-    }
-
-    .glimpse-ajax-cell {
-        &[data-glimpse-type="content-type"] {
-            text-align: right !important;
-        }
+        margin-bottom: 5px !important;
     }
 }
 .glimpse-ajax-row {
     white-space: nowrap !important;
     position: relative !important;
+}
+.glimpse-ajax-row-line {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    height: type-scale(1) !important;
+    font-size: type-scale(0) !important;
+
+    &--secondary {
+        font-size: type-scale(-1) !important;
+    }
 }
 .glimpse-ajax-cell {
     white-space: nowrap !important;
@@ -342,6 +300,16 @@ $popup-delay: 0s;
     
     &:last-child {
         text-align: right !important;
+    }
+}
+.glimpse-ajax-text {
+    &[data-glimpse-type="uri"],
+    &[data-glimpse-type="status"] {
+        flex-grow: 1;
+    }
+
+    + .glimpse-ajax-text {
+        margin-left: 5px !important;
     }
 }
 .glimpse-ajax-uri {
@@ -475,4 +443,10 @@ $popup-delay: 0s;
             fill: #1ba1e2 !important;
         }
     }
+}
+
+#glimpse-ajax-popup-rows {
+    height: 150px !important;
+    max-height: 150px !important;
+    overflow-y: auto !important;
 }
