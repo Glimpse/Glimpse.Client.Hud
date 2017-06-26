@@ -1,62 +1,50 @@
-const util = require('../lib/util');
 const dom = require('../lib/dom');
-const messagesUtil = require('../lib/messages');
+const summaryRepository = require('../repository/summary');
 
-function processType(type, indexedMessages) {
-    const messages = indexedMessages[type];
-    const result = { total: 0, time: 0 };
-    if (messages && messages.length) {
-        messages.forEach(function(message) {
-            result.total++;
-            result.time += parseInt(message.payload.duration);
-        });
-    }
-    return result;
+function processType(summary) {
+    return {
+        total: summary.totalCount,
+        time: Math.round(summary.totalTime)
+    };
 }
-function process(indexedMessages) {
+function process(requestSummary) {
     const result = {};
-    result.httpClient = processType('data-http-response', indexedMessages);
-    result.dataStore = processType('data-store-end', indexedMessages);
+    result.webServices = processType(requestSummary.summary.server.webServices);
+    result.dataStore = processType(requestSummary.summary.server.dataStore);
     result.summary = {
-        total: result.httpClient.total + result.dataStore.total,
-        time: result.httpClient.time + result.dataStore.time
+        total: result.webServices.total + result.dataStore.total,
+        time: result.webServices.time + result.dataStore.time
     };
     return result;
 }
 
-function update(data) {
-    updateValue('glimpse-data-summary-value', data.summary);
-    updateValue('glimpse-data-popup-summary-value', data.summary);
-    updateValue('glimpse-data-popup-httpClient-value', data.httpClient);
-    updateValue('glimpse-data-popup-dataStore-value', data.dataStore);
+function update(model) {
+    updateValue('glimpse-data-summary-value', model.summary);
+    updateValue('glimpse-data-popup-summary-value', model.summary);
+    updateValue('glimpse-data-popup-webServices-value', model.webServices);
+    updateValue('glimpse-data-popup-dataStore-value', model.dataStore);
 }
-function updateValue(target, data) {
+function updateValue(target, model) {
     const element = document.getElementById(target);
 
-    let content = data.total;
-    if (data.total > 0) {
+    let content = model.total;
+    if (model.total > 0) {
         dom.addClass(element, 'glimpse-time-ms');
 
-        content += ' / ' + data.time;
+        content += ' / ' + model.time;
     }
     element.innerHTML = content;
 }
 
 module.exports = {
     preInit: function(initPromise) {
-        const contextMessagesPromise = fetch(util.resolveContextUrl(util.currentRequestId()))
-            .then(function(response) {
-                return response.json();
-            });
-
         Promise.all([
-            contextMessagesPromise,
+            summaryRepository.getPromise(),
             initPromise
-        ]).then(values => {
-            const rawMessages = values[0];
-            const indexedMessages = messagesUtil.indexMessages(rawMessages);
-            const data = process(indexedMessages);
-            update(data);
+        ]).then(function(values) {
+            const requestSummary = values[0];
+            const model = process(requestSummary);
+            update(model);
         });
     },
     render: function() {
@@ -85,7 +73,7 @@ module.exports = {
                     </div>
                     <div class="glimpse-hud-field">
                         <div class="glimpse-hud-field-label">Web services</div>
-                        <div class="glimpse-hud-field-value" id="glimpse-data-popup-httpClient-value">
+                        <div class="glimpse-hud-field-value" id="glimpse-data-popup-webServices-value">
                             --
                         </div>
                     </div>

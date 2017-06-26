@@ -6,11 +6,13 @@ if (FAKE_SERVER) {
 
 require('./index.scss');
 
+var summaryRepository = require('./repository/summary');
 var versionView = require('./views/version');
 var openView = require('./views/open');
 var timingView = require('./views/timing');
 var ajaxView = require('./views/ajax');
 var dataView = require('./views/data');
+var logsView = require('./views/logs');
 
 function render(initPromise) {
     return `
@@ -20,10 +22,12 @@ function render(initPromise) {
                 ${timingView.render()}
                 ${dataView.render()}
                 ${ajaxView.render()}
+                ${logsView.render()}
                 <div class="glimpse-hud-popup">
                     ${timingView.renderPopup()}
                     ${dataView.renderPopup()}
                     ${ajaxView.renderPopup()}
+                    ${logsView.renderPopup()}
                 </div>
             </div>
             ${openView.render()}
@@ -33,6 +37,7 @@ function render(initPromise) {
 
 function postRender(initPromise) {
     ajaxView.postRender(initPromise);
+    logsView.postRender(initPromise)
 }
 
 function preInit(initPromise) {
@@ -44,7 +49,7 @@ const init = new Promise(function(resolve, reject) {
     preInit(init);
 
     let timeout = 1;
-    const onTimeout = () => {
+    const onTimeout = function() {
         if (document.readyState === 'complete') {
             // allow components to provide content which they want to be shown in initial render
             const content = render(init);

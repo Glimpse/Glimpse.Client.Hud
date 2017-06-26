@@ -1,7 +1,5 @@
 var UriTemplate = require('uri-templates');
-var usedMessageTypes = function() {
-    return 'data-http-response,data-store-end';
-}
+
 var hudScriptElement = document.getElementById('__glimpse_hud');
 
 module.exports = {
@@ -25,12 +23,11 @@ module.exports = {
             metadataUri: hudScriptElement.getAttribute('data-metadata-template'),
         });
     },
-    resolveContextUrl: function(requestId) {
-        var contextTemplate = hudScriptElement.getAttribute('data-context-template');
+    resolveContextSummaryUrl: function(requestId) {
+        var contextTemplate = hudScriptElement.getAttribute('data-context-summary-template');
 
-        var params = requestId + '&types=' + usedMessageTypes()
+        var uri = contextTemplate.replace('{contextId}', requestId); // TODO: This should probably be resolved with a URI Template library
 
-        var uri = contextTemplate.replace('{contextId}{&types}', params); // TODO: This should probably be resolved with a URI Template library
         return encodeURI(uri);
     },
     isLocalUri: function(uri) {

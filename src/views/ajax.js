@@ -1,8 +1,7 @@
 const util = require('../lib/util');
+const ajaxProxy = require('../proxy/ajax');
 const dom = require('../lib/dom');
 const arrowIcon = require('./open').arrowIcon;
-
-const ajaxProxy = require('../proxy/ajax');
 
 const state = {
     count: 0,
@@ -140,10 +139,9 @@ module.exports = {
     postRender: function() {
         state.ready = true;
 
-        state.preRenderCache.forEach(function(task) {
-            task();
+        state.preRenderCache.forEach(function(doTask) {
+            doTask();
         });
-
         state.preRenderCache = undefined;
     },
     renderPopup: function() {
