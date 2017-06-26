@@ -79,7 +79,7 @@ function updateCoreListing(target, data, supportedRecords, postfix) {
     supportedRecords.forEach(function(record) {
         const recordLower = record.toLowerCase();
         if (data[recordLower]) {
-            content += `<span>${record}${postfix} (${data[recordLower]})</span>`;
+            content += `<span>${data[recordLower]} ${record}${postfix}</span>`;
             delete data[recordLower];
         }
     });
@@ -89,7 +89,7 @@ function updateCoreListing(target, data, supportedRecords, postfix) {
         .reduce((acc, key) => acc + data[key], 0);
 
     if (otherCount > 0) {
-        content += `<span>Others (${otherCount})</span>`;
+        content += `<span>${otherCount} Others</span>`;
     }
 
     const targetElement = document.getElementById(target);
