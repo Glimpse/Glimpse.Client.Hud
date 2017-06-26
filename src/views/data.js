@@ -82,7 +82,7 @@ module.exports = {
                         </div>
                     </div>
                     <div class="glimpse-hud-field">
-                        <div class="glimpse-hud-field-label">Data acces</div>
+                        <div class="glimpse-hud-field-label">Data access</div>
                         <div class="glimpse-hud-field-value" id="glimpse-data-popup-dataStore-value">
                             --
                         </div>

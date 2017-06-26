@@ -14,10 +14,38 @@ var ajaxView = require('./views/ajax');
 var dataView = require('./views/data');
 var logsView = require('./views/logs');
 
-function render(initPromise) {
+const state = {
+    expanded: localGet('expanded', false)
+};
+
+var LOCAL_STORAGE_KEY = 'glimpse-hud';
+
+function localGet(key, defaultValue) {
+    try {
+        var localState = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+
+        return localState[key] === undefined
+            ? defaultValue
+            : localState[key];
+    } catch (e) {
+        return defaultValue;
+    }
+}
+
+function localSet(key, value) {
+    state[key] = value;
+
+    try {
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.parse(state));
+    } catch (e) {
+        // do nothing
+    }
+}
+
+function render(state) {
     return `
         <div class="glimpse-hud">
-            <div class="glimpse-hud-data">
+            <div class="glimpse-hud-data" data-glimpse-expanded="${state.expanded}">
                 ${versionView.render()}
                 ${timingView.render()}
                 ${dataView.render()}
@@ -38,6 +66,13 @@ function render(initPromise) {
 function postRender(initPromise) {
     ajaxView.postRender(initPromise);
     logsView.postRender(initPromise)
+
+    var hudData = document.querySelector('.glimpse-hud-data');
+
+    hudData.addEventListener('click', function() {
+        localSet('expanded', !state.expanded);
+        hudData.setAttribute('data-glimpse-expanded', !state.expanded);
+    });
 }
 
 function preInit(initPromise) {
@@ -52,7 +87,7 @@ const init = new Promise(function(resolve, reject) {
     const onTimeout = function() {
         if (document.readyState === 'complete') {
             // allow components to provide content which they want to be shown in initial render
-            const content = render(init);
+            const content = render(state);
 
             const container = document.createElement('div');
             container.innerHTML = content;
