@@ -388,6 +388,21 @@ $popup-delay: .3s;
     .glimpse-hud-field-value {
         white-space: nowrap !important;
     }
+    .glimpse-hud-field-listing {
+        padding-bottom: 5px;
+        padding-top: 2px;
+        opacity: 0.5;
+        span {
+            font-size: 10px !important;
+            white-space: nowrap !important;
+            padding-right: 5px;
+            float: left;
+            padding-top: 1px;
+        }
+        div {
+            clear: both;
+        }
+    }
     > .glimpse-hud-field {
         margin: 0 !important;
         padding: 5px 0 0 10px !important;
