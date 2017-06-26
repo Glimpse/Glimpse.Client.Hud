@@ -3,7 +3,6 @@ if (FAKE_SERVER) {
     require('fake');
 }
 // DEV TIME CODE
-
 require('./index.scss');
 
 var summaryRepository = require('./repository/summary');
@@ -13,34 +12,11 @@ var timingView = require('./views/timing');
 var ajaxView = require('./views/ajax');
 var dataView = require('./views/data');
 var logsView = require('./views/logs');
+var util = require('./lib/util');
 
 const state = {
-    expanded: localGet('expanded', false)
+    expanded: util.localGet('expanded', false)
 };
-
-var LOCAL_STORAGE_KEY = 'glimpse-hud';
-
-function localGet(key, defaultValue) {
-    try {
-        var localState = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
-
-        return localState[key] === undefined
-            ? defaultValue
-            : localState[key];
-    } catch (e) {
-        return defaultValue;
-    }
-}
-
-function localSet(key, value) {
-    state[key] = value;
-
-    try {
-        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.parse(state));
-    } catch (e) {
-        // do nothing
-    }
-}
 
 function render(state) {
     return `
@@ -70,8 +46,9 @@ function postRender(initPromise) {
     var hudData = document.querySelector('.glimpse-hud-data');
 
     hudData.addEventListener('click', function() {
-        localSet('expanded', !state.expanded);
-        hudData.setAttribute('data-glimpse-expanded', !state.expanded);
+        util.localSet(state, 'expanded', !state.expanded, function() {
+            hudData.setAttribute('data-glimpse-expanded', state.expanded);
+        });
     });
 }
 

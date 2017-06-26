@@ -1,6 +1,7 @@
 var UriTemplate = require('uri-templates');
 
 var hudScriptElement = document.getElementById('__glimpse_hud');
+var LOCAL_STORAGE_KEY = 'glimpse-hud';
 
 module.exports = {
     toCamelCase: function(value) {
@@ -33,5 +34,27 @@ module.exports = {
     isLocalUri: function(uri) {
         return uri && (!(uri.indexOf('http://') == 0 || uri.indexOf('https://') == 0 || uri.indexOf('//') == 0) ||
                 (uri.substring(uri.indexOf('//') + 2, uri.length) + '/').indexOf(window.location.host + '/') == 0);
+    },
+    localGet: function(key, defaultValue) {
+        try {
+            var localState = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+
+            return localState[key] === undefined
+                ? defaultValue
+                : localState[key];
+        } catch (e) {
+            return defaultValue;
+        }
+    },
+    localSet: function(state, key, value, cb) {
+        state[key] = value;
+
+        try {
+            localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(state));
+        } catch (e) {
+            // do nothing
+        }
+
+        cb && cb();
     }
 };
