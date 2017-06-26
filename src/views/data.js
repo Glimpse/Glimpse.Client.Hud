@@ -84,10 +84,9 @@ function updateCoreListing(target, data, supportedRecords, postfix) {
     });
 
     // process the remaining items
-    let otherCount = 0;
-    Object.keys(data).forEach(function(key) {
-        otherCount += data[key];
-    });
+    const otherCount = Object.keys(data)
+        .reduce((acc, key) => acc + data[key], 0);
+
     if (otherCount > 0) {
         content += '<span>Others (' + otherCount + ')</span>';
     }
