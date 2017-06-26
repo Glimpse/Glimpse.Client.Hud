@@ -2,7 +2,7 @@ const dom = require('../lib/dom');
 const consoleProxy = require('../proxy/console');
 const summaryRepository = require('../repository/summary');
 
-const supporedLevels = [ 'error', 'warn', 'info' ];
+const supportedLevels = [ 'error', 'warn', 'info' ];
 const state = {
     data: {
         server: defaultDataState(),
@@ -33,7 +33,7 @@ function updateServer(requestDetails) {
 }
 function updateBrowser(log) {
     const level = log.method;
-    if (supporedLevels.indexOf(level) > -1) {
+    if (supportedLevels.indexOf(level) > -1) {
         const browserData = state.data.browser;
         browserData[level]++;
 
@@ -96,8 +96,8 @@ module.exports = {
         state.ready = true;
 
         // run through the browser logs if we have any
-        state.preRenderCache.forEach(function(task) {
-            task();
+        state.preRenderCache.forEach(function(doTask) {
+            doTask();
         });
         state.preRenderCache = undefined;
 
@@ -123,7 +123,7 @@ module.exports = {
                     <div class="glimpse-hud-field">
                         <div class="glimpse-hud-field-label">Browser logs</div>
                         <div class="glimpse-hud-field-value" id="glimpse-logs-popup-browser-value">
-                            --
+                            0 / 0 / 0
                         </div>
                     </div>
                 </div>

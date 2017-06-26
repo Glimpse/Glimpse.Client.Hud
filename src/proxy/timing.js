@@ -1,3 +1,5 @@
+// TODO: Switch to get data directly from the browser agent
+
 const timingsRaw = (window.performance ||
     window.mozPerformanceperformance ||
     window.msPerformanceperformance ||

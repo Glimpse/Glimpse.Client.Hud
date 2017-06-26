@@ -1,3 +1,5 @@
+// TODO: Switch to get data directly from the browser agent
+
 const methods = [
     'error',
     'info',
@@ -21,9 +23,7 @@ methods.forEach(function(methodKey) {
 });
 
 function publishLog(details) {
-    for (let i = 0; i < listeners.length; i++) {
-        listeners[i](details);
-    }
+    listeners.forEach(listener => listener(details));
 }
 
 module.exports = {

@@ -139,8 +139,8 @@ module.exports = {
     postRender: function() {
         state.ready = true;
 
-        state.preRenderCache.forEach(function(task) {
-            task();
+        state.preRenderCache.forEach(function(doTask) {
+            doTask();
         });
         state.preRenderCache = undefined;
     },

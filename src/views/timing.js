@@ -25,7 +25,7 @@ module.exports = {
         return `
             <div class="glimpse-hud-popup-section">
                 <div class="glimpse-hud-field">
-                    <div class="glimpse-hud-field-label">Load time</div>
+                    <div class="glimpse-hud-field-label">Load load time</div>
                     <div class="glimpse-hud-field-value glimpse-time-ms">${timings.pageLoad}</div>
                     <div class="glimpse-hud-field">
                         <div class="glimpse-hud-field-label">Network connection</div>

@@ -1,3 +1,5 @@
+// TODO: Switch to get data directly from the browser agent
+
 const util = require('../lib/util');
 
 const listeners = [];
