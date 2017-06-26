@@ -1,3 +1,28 @@
+const colors = {
+    error: '#b03b00',
+    informational: '#1ba1e2',
+    other: '#b5b5b5',
+    redirection: '#f8a800',
+    success: '#78b24c'
+};
+
+export function statusIcon(statusCode) {
+    let path;
+
+    if (statusCode < 200 || statusCode >= 400) {
+        var fill = statusCode < 200
+            ? colors.informational
+            : colors.error;
+        path = `<path d="M1023,512c282.7,0,512,229.3,512,512s-229.3,512-512,512s-512-229.3-512-512S740.3,512,1023,512z" fill="${fill}"></path>`;
+    } else if (statusCode < 300) {
+        path = `<path d="M511,512H1535V1536H511V512Z" fill="${colors.success}"></path>`;
+    } else if (statusCode < 400) {
+        path = `<path d="M1024,512L512,1536h1024L1024,512z" fill="${colors.redirection}"></path>`;
+    }
+
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048" class="glimpse-status-icon">${path}</svg>`;
+}
+
 const icons = {
     client: `
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048" class="glimpse-agent-type-icon">

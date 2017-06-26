@@ -414,7 +414,8 @@ $popup-delay: 0s;
     text-decoration: none !important;
 }
 
-.glimpse-agent-type-icon {
+.glimpse-agent-type-icon,
+.glimpse-status-icon {
     display: inline-block !important;
     height: type-scale(-1) !important;
     margin-right: 2px !important;
