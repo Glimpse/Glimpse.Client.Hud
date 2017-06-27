@@ -460,8 +460,9 @@ $collapseHoverColor: #353535;
 .glimpse-expand-button,
 .glimpse-hud-popup-section--arrow {
     position: relative !important;
+    padding: 0 8px !important;
 
-    $arrowSize: 5px;
+    $arrowSize: 4px;
     &::after {
         content: "" !important;
         position: absolute !important;
@@ -469,7 +470,7 @@ $collapseHoverColor: #353535;
         top: 50% !important;
         border: $arrowSize solid transparent !important;
         margin-top: -$arrowSize !important;
-        margin-left: -$arrowSize/5 !important;
+        margin-left: -$arrowSize/4 !important;
         border-left-color: white !important;
     }
 
