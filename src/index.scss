@@ -462,6 +462,7 @@ $collapseHoverColor: #353535;
 
     $iconSize: 8px;
     .icon-arrow {
+        display: block;
         width: $iconSize !important;
         height: $iconSize !important;
         margin-left: -$iconSize/2 !important;
