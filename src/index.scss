@@ -457,16 +457,18 @@ $collapseHoverColor: #353535;
     position: relative !important;
     padding: 0 8px !important;
 
-    $arrowSize: 4px;
-    &::after {
-        content: "" !important;
+    $iconSize: 8px;
+    .icon-arrow {
+        width: $iconSize !important;
+        height: $iconSize !important;
+        margin-left: -$iconSize/2 !important;
+        margin-top: -$iconSize/2 !important;
         position: absolute !important;
-        left: 50% !important;
         top: 50% !important;
-        border: $arrowSize solid transparent !important;
-        margin-top: -$arrowSize !important;
-        margin-left: -$arrowSize/4 !important;
-        border-left-color: white !important;
+        left: 50% !important;
+        display: block !important;
+        transform: rotate(180deg) !important;
+        fill: white !important;
     }
 
     &:hover {
@@ -478,8 +480,8 @@ $collapseHoverColor: #353535;
 .glimpse-hud-popup-section--arrow {
     background-color: $expandHoverColor !important;
 
-    &::after {
-        transform: rotate(45deg) translateX(-1px) !important;
+    .icon-arrow {
+        transform: rotate(0) !important;
     }
 
     &:hover {
