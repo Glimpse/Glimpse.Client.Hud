@@ -3,6 +3,7 @@ const ajaxProxy = require('../proxy/ajax');
 const dom = require('../lib/dom');
 const arrowIcon = require('./open').arrowIcon;
 const icons = require('../assets/icons').default;
+const statusIcon = require('../assets/icons').statusIcon;
 
 const state = {
     count: 0,
@@ -70,6 +71,7 @@ function rowPopupTemplate(request) {
                     ${request.method}
                 </span>
                 <span class="glimpse-ajax-text" data-glimpse-type="status">
+                    ${statusIcon(request.status)}
                     ${request.status} - ${request.statusText}
                 </span>
                 <span class="glimpse-ajax-text glimpse-size-kb" data-glimpse-type="size">

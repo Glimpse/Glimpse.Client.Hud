@@ -318,8 +318,21 @@ $popup-delay: 0s;
         flex-grow: 1;
     }
 
+    &[data-glimpse-type="status"] {
+        padding-left: 12px !important;
+        position: relative !important;
+    }
+
     + .glimpse-ajax-text {
         margin-left: 5px !important;
+    }
+
+    > .glimpse-status-icon {
+        $status-icon-height: type-scale(-1);
+        position: absolute !important;
+        left: 0 !important;
+        height: $status-icon-height !important;
+        top: calc(50% - #{$status-icon-height / 2}) !important;
     }
 }
 .glimpse-ajax-uri {
@@ -395,7 +408,8 @@ $popup-delay: 0s;
     text-decoration: none !important;
 }
 
-.glimpse-agent-type-icon {
+.glimpse-agent-type-icon,
+.glimpse-status-icon {
     display: inline-block !important;
     height: type-scale(-1) !important;
     margin-right: 2px !important;
