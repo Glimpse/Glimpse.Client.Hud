@@ -442,3 +442,9 @@ $popup-delay: 0s;
     width: 220px !important;
     overflow-y: auto !important;
 }
+
+.glimpse-hud-field-listing {
+    .glimpse-status-icon {
+        height: type-scale(-2) !important;
+    }
+}
