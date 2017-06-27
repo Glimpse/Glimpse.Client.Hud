@@ -3,12 +3,15 @@ $max-ajax-rows: 7;
 $color-primary: #3399ff;
 $color-border: #999;
 $type-scales: (
+    -2: 9px,
     -1: 11px,
     0: 14px,
     1: 17px,
 );
 $border-height: 3px;
 $popup-delay: 0s;
+$expandHoverColor: #3c3c3c;
+$collapseHoverColor: #353535;
 
 @function type-scale($level) {
     @return map-get($type-scales, $level);
@@ -297,11 +300,7 @@ $popup-delay: 0s;
     justify-content: flex-start !important;
     align-items: center !important;
     height: type-scale(1) !important;
-    font-size: type-scale(0) !important;
-
-    &--secondary {
-        font-size: type-scale(-1) !important;
-    }
+    font-size: type-scale(-1) !important;
 }
 .glimpse-ajax-cell {
     white-space: nowrap !important;
@@ -315,7 +314,9 @@ $popup-delay: 0s;
 .glimpse-ajax-text {
     &[data-glimpse-type="uri"],
     &[data-glimpse-type="status"] {
-        flex-grow: 1;
+        flex-grow: 1 !important;
+        white-space: nowrap !important;
+        text-overflow: ellipsis !important;
     }
 
     &[data-glimpse-type="status"] {
@@ -377,15 +378,11 @@ $popup-delay: 0s;
         padding-bottom: 5px !important;
         padding-top: 2px !important;
         opacity: 0.5 !important;
+
         span {
-            font-size: 10px !important;
-            white-space: nowrap !important;
-            padding-right: 5px !important;
-            float: left !important;
-            padding-top: 1px !important;
-        }
-        div {
-            clear: both !important;
+            font-size: type-scale(-2) !important;
+            line-height: type-scale(-1) !important;
+            display: block !important;
         }
     }
     > .glimpse-hud-field {
@@ -417,6 +414,7 @@ $popup-delay: 0s;
     display: inline-block !important;
     height: type-scale(-1) !important;
     margin-right: 2px !important;
+    vertical-align: middle !important;
 }
 
 .glimpse-logs {
@@ -447,11 +445,16 @@ $popup-delay: 0s;
 #glimpse-ajax-popup-rows {
     height: 150px !important;
     max-height: 150px !important;
+    width: 220px !important;
     overflow-y: auto !important;
 }
 
-$expandHoverColor: #3c3c3c;
-$collapseHoverColor: #353535;
+.glimpse-hud-field-listing {
+    .glimpse-status-icon {
+        height: type-scale(-2) !important;
+    }
+}
+
 .glimpse-expand-button,
 .glimpse-hud-popup-section--arrow {
     position: relative !important;

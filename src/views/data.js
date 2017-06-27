@@ -1,6 +1,7 @@
 const dom = require('../lib/dom');
 const summaryRepository = require('../repository/summary');
 const icons = require('../assets/icons').default;
+const statusIcon = require('../assets/icons').statusIcon;
 
 const supportedStatusCodes = [ '200', '400', '500' ];
 const supportedOperationCategories = [ 'Create', 'Read', 'Update', 'Delete', 'Other' ];
@@ -63,23 +64,25 @@ function updateValue(target, summary) {
     if (summary.total > 0) {
         dom.addClass(element, 'glimpse-time-ms');
 
-        content += ' / ' + summary.time;
+        content += ' &middot; ' + summary.time;
     }
     element.innerHTML = content;
 }
 function updateListingWebServices(target, statusCodes) {
-    updateCoreListing(target, Object.assign({}, statusCodes), supportedStatusCodes, 's');
+    updateCoreListing(target, Object.assign({}, statusCodes), supportedStatusCodes, true);
 }
 function updateListingDataStore(target, operationCategories) {
-    updateCoreListing(target, Object.assign({}, operationCategories), supportedOperationCategories, '');
+    updateCoreListing(target, Object.assign({}, operationCategories), supportedOperationCategories, false);
 }
-function updateCoreListing(target, data, supportedRecords, postfix) {
+function updateCoreListing(target, data, supportedRecords, isStatusCode) {
     // run through supported status codes so order is maintained
     let content = '';
     supportedRecords.forEach(function(record) {
         const recordLower = record.toLowerCase();
+        const prefix = isStatusCode ? statusIcon(record) : '';
+        const suffix = isStatusCode ? 's' : '';
         if (data[recordLower]) {
-            content += `<span>${data[recordLower]} ${record}${postfix}</span>`;
+            content += `<span>${data[recordLower]} &middot; ${prefix}${record}${suffix}</span>`;
             delete data[recordLower];
         }
     });
@@ -89,7 +92,7 @@ function updateCoreListing(target, data, supportedRecords, postfix) {
         .reduce((acc, key) => acc + data[key], 0);
 
     if (otherCount > 0) {
-        content += `<span>${otherCount} Others</span>`;
+        content += `<span>${otherCount} &middot; Others</span>`;
     }
 
     const targetElement = document.getElementById(target);
