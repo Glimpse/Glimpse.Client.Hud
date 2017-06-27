@@ -10,6 +10,8 @@ $type-scales: (
 );
 $border-height: 3px;
 $popup-delay: 0s;
+$expandHoverColor: #3c3c3c;
+$collapseHoverColor: #353535;
 
 @function type-scale($level) {
     @return map-get($type-scales, $level);
@@ -85,7 +87,7 @@ $popup-delay: 0s;
 
     &[data-glimpse-expanded="true"] {
         border-color: transparent !important;
-        transition-delay: 0s !important;        
+        transition-delay: 0s !important;
 
         > :not(.glimpse-hud-popup) {
             background-color: transparent !important;
@@ -304,7 +306,7 @@ $popup-delay: 0s;
     white-space: nowrap !important;
     text-overflow: ellipsis !important;
     overflow: hidden !important;
-    
+
     &:last-child {
         text-align: right !important;
     }
@@ -353,14 +355,18 @@ $popup-delay: 0s;
 
 .glimpse-hud-popup-section {
     padding: 10px !important;
+    padding-right: 15px !important;
 
     ~ * {
         border-left: 1px solid #999 !important;
-        margin-left: 5px !important;
     }
 
     &.-ajax {
         flex-grow: 1 !important;
+    }
+
+    &:last-of-type {
+        padding-right: 10px !important;
     }
 }
 
@@ -446,5 +452,43 @@ $popup-delay: 0s;
 .glimpse-hud-field-listing {
     .glimpse-status-icon {
         height: type-scale(-2) !important;
+    }
+}
+
+.glimpse-expand-button,
+.glimpse-hud-popup-section--arrow {
+    position: relative !important;
+    padding: 0 8px !important;
+
+    $iconSize: 8px;
+    .icon-arrow {
+        width: $iconSize !important;
+        height: $iconSize !important;
+        margin-left: -$iconSize/2 !important;
+        margin-top: -$iconSize/2 !important;
+        position: absolute !important;
+        top: 50% !important;
+        left: 50% !important;
+        display: block !important;
+        transform: rotate(180deg) !important;
+        fill: white !important;
+    }
+
+    &:hover {
+        background-color: $expandHoverColor !important;
+        cursor: pointer !important;
+    }
+}
+
+.glimpse-hud-popup-section--arrow {
+    background-color: $expandHoverColor !important;
+
+    .icon-arrow {
+        transform: rotate(0) !important;
+    }
+
+    &:hover {
+        background-color: $collapseHoverColor !important;
+        cursor: pointer !important;
     }
 }
