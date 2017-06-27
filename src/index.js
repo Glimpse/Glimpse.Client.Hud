@@ -12,6 +12,7 @@ var timingView = require('./views/timing');
 var ajaxView = require('./views/ajax');
 var dataView = require('./views/data');
 var logsView = require('./views/logs');
+var expandButtonView = require('./views/expand-button-view');
 var util = require('./lib/util');
 
 const state = {
@@ -23,11 +24,13 @@ function render(state) {
         <div class="glimpse-hud">
             <div class="glimpse-hud-data" data-glimpse-expanded="${state.expanded}">
                 ${versionView.render()}
+                ${expandButtonView.render()}
                 ${timingView.render()}
                 ${logsView.render()}
                 ${dataView.render()}
                 ${ajaxView.render()}
                 <div class="glimpse-hud-popup">
+                    ${expandButtonView.renderPopup()}
                     ${timingView.renderPopup()}
                     ${logsView.renderPopup()}
                     ${dataView.renderPopup()}
@@ -40,16 +43,21 @@ function render(state) {
 }
 
 function postRender(initPromise) {
-    ajaxView.postRender(initPromise);
-    logsView.postRender(initPromise)
-
     var hudData = document.querySelector('.glimpse-hud-data');
+    var expandButton = document.querySelector('#js-glimpse-expand-button');
+    var collapseButton = document.querySelector('#js-glimpse-collapse-button');
 
-    hudData.addEventListener('click', function() {
-        util.localSet(state, 'expanded', !state.expanded, function() {
-            hudData.setAttribute('data-glimpse-expanded', state.expanded);
-        });
-    });
+    ajaxView.postRender(initPromise);
+    logsView.postRender(initPromise);
+
+    var setOpenState = function(panelState) {
+      util.localSet(state, 'expanded', panelState, function() {
+          hudData.setAttribute('data-glimpse-expanded', panelState);
+      });
+    };
+
+    expandButton.addEventListener('click', function() { setOpenState(true); });
+    collapseButton.addEventListener('click', function() { setOpenState(false); });
 }
 
 function preInit(initPromise) {
