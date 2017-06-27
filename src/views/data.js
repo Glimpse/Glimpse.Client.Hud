@@ -72,7 +72,7 @@ function updateListingWebServices(target, statusCodes) {
     updateCoreListing(target, Object.assign({}, statusCodes), supportedStatusCodes, true);
 }
 function updateListingDataStore(target, operationCategories) {
-    updateCoreListing(target, Object.assign({}, operationCategories), supportedOperationCategories, '');
+    updateCoreListing(target, Object.assign({}, operationCategories), supportedOperationCategories, false);
 }
 function updateCoreListing(target, data, supportedRecords, isStatusCode) {
     // run through supported status codes so order is maintained
