@@ -79,11 +79,10 @@ function updateCoreListing(target, data, supportedRecords, isStatusCode) {
     let content = '';
     supportedRecords.forEach(function(record) {
         const recordLower = record.toLowerCase();
-        const suffix = isStatusCode
-            ? `s ${statusIcon(record)}`
-            : '';
+        const prefix = isStatusCode ? statusIcon(record) : '';
+        const suffix = isStatusCode ? 's' : '';
         if (data[recordLower]) {
-            content += `<span>${data[recordLower]} &middot; ${record}${suffix}</span>`;
+            content += `<span>${data[recordLower]} &middot; ${prefix}${record}${suffix}</span>`;
             delete data[recordLower];
         }
     });
