@@ -15,7 +15,7 @@ const state = {
         timeout: undefined,
         stack: [],
         template: rowTemplate,
-        length: -1
+        length: -2
     },
     popup: {
         countId: 'glimpse-ajax-popup-count',
