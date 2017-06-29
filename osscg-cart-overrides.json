@@ -1,0 +1,23 @@
+{
+  "components": [
+    {
+      "component": {
+        "npmjs.org": {
+          "name": "jquery"
+        }
+      },
+      "ms.transmitted": true,
+      "ms.modified": false
+    },
+    {
+      "component": {
+        "npmjs.org": {
+          "name": "uri-templates"
+        }
+      },
+      "ms.transmitted": true,
+      "ms.modified": false,
+      "license": "PublicDomain"
+    }
+  ]
+}
