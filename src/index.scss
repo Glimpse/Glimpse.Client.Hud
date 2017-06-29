@@ -286,7 +286,7 @@ $collapseHoverColor: #353535;
         text-align: right !important;
     }
 
-    &--duration {
+    &[data-glimpse-type="duration"] {
       text-overflow: none !important;
       overflow: visible !important;
     }
