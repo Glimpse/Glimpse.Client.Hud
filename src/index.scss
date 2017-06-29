@@ -287,11 +287,27 @@ $collapseHoverColor: #353535;
     }
 }
 .glimpse-ajax-text {
+    &--uri {
+      width: 100%;
+      display: inline-block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      box-sizing: border-box;
+      padding-right: 1.2rem;
+      vertical-align: bottom;
+    }
+
     &[data-glimpse-type="uri"],
     &[data-glimpse-type="status"] {
         flex-grow: 1 !important;
         white-space: nowrap !important;
         text-overflow: ellipsis !important;
+    }
+
+    &[data-glimpse-type="uri"] {
+      width: 50%;
+      display: inline-block;
     }
 
     &[data-glimpse-type="status"] {
