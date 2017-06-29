@@ -45,7 +45,7 @@ function rowTemplate(request) {
             <td class="glimpse-ajax-cell glimpse-ajax-uri" title="${request.uri}">
                 <a class="glimpse-anchor" href="${url}" target="_glimpse" title="Open '${request.uri}' in Glimpse">${arrowIcon}</a> ${request.uri}
             </td>
-            <td class="glimpse-ajax-cell" data-glimpse-type="duration">
+            <td class="glimpse-ajax-cell glimpse-ajax-cell--duration" data-glimpse-type="duration">
                 <span class="glimpse-time-ms">${request.duration}</span>
             </td>
         </tr>

@@ -285,6 +285,11 @@ $collapseHoverColor: #353535;
     &:last-child {
         text-align: right !important;
     }
+
+    &--duration {
+      text-overflow: none !important;
+      overflow: visible !important;
+    }
 }
 .glimpse-ajax-text {
     &--uri {
