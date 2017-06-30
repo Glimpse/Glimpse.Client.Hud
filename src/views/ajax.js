@@ -58,7 +58,10 @@ function rowPopupTemplate(request) {
         <div class="glimpse-ajax-row">
             <div class="glimpse-ajax-row-line">
                 <span class="glimpse-ajax-text" data-glimpse-type="uri" title="${request.uri}">
-                    <a class="glimpse-anchor" href="${url}" target="_glimpse" title="Open '${request.uri}' in Glimpse">${arrowIcon}</a> ${request.uri}
+                    <a class="glimpse-anchor" href="${url}" target="_glimpse" title="Open '${request.uri}' in Glimpse">${arrowIcon}</a>
+                    <span class="glimpse-ajax-text glimpse-ajax-text--uri" title="${request.uri}">
+                        ${request.uri}
+                    </span>
                 </span>
                 <span class="glimpse-ajax-text" data-glimpse-type="time">
                     ${request.time

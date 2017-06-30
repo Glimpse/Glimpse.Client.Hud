@@ -62,7 +62,7 @@ $collapseHoverColor: #353535;
     transition:
         transform .3s ease-out,
         z-index 0s step-end,
-        opacity 0s .3s step-end  !important;
+        opacity 0s .3s step-end !important;
     z-index: 0;
 
     > * {
@@ -285,13 +285,34 @@ $collapseHoverColor: #353535;
     &:last-child {
         text-align: right !important;
     }
+
+    &[data-glimpse-type="duration"] {
+      text-overflow: none !important;
+      overflow: visible !important;
+    }
 }
 .glimpse-ajax-text {
+    &--uri {
+      width: 100% !important;
+      display: inline-block !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+      box-sizing: border-box !important;
+      padding-right: 1.2rem !important;
+      vertical-align: bottom !important;
+    }
+
     &[data-glimpse-type="uri"],
     &[data-glimpse-type="status"] {
         flex-grow: 1 !important;
         white-space: nowrap !important;
         text-overflow: ellipsis !important;
+    }
+
+    &[data-glimpse-type="uri"] {
+      width: 50% !important;
+      display: inline-block !important;
     }
 
     &[data-glimpse-type="status"] {
