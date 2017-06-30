@@ -7,8 +7,8 @@ const getPromise = new Promise(function(resolve, reject) {
         resolve(JSON.parse(this.responseText));
     }
     
-    request.onerror = function() {
-        reject();
+    request.onerror = function(err) {
+        reject(err);
     }
 
     request.open('get', util.resolveContextSummaryUrl(util.currentRequestId()), true);
