@@ -55,6 +55,7 @@
     "webpack": "2.2.1"
   },
   "dependencies": {
-    "uri-templates": "^0.2.0"
+    "uri-templates": "^0.2.0",
+    "whatwg-fetch": "^2.0.3"
   }
 }
