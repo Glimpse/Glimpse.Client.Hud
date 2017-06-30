@@ -37,6 +37,7 @@ $collapseHoverColor: #353535;
     font-size: type-scale(0) !important;
     font-family: 'Selawik', sans-serif !important;
     font-weight: 300 !important;
+    -webkit-font-smoothing: subpixel-antialiased;
 
     > * + * {
         border-left: 1px solid $color-border !important;
