@@ -1,4 +1,5 @@
 const util = require('../lib/util');
+require('whatwg-fetch');
 
 const getPromise = fetch(util.resolveContextSummaryUrl(util.currentRequestId()))
     .then(
