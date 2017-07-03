@@ -11,7 +11,7 @@ const statusIcon = require('../assets/icons').statusIcon;
  * @param {String} url URL to remove the origin from.
  * @param {String} origin Origin to remove from URL.
  */
-const removeOrigin = (url, origin) => {
+const removeOrigin = (url = '', origin = window.location.origin) => {
   if (url.substr(0, origin.length) === origin) {
       url = url.substr(origin.length, url.length);
   }
@@ -26,7 +26,7 @@ const removeOrigin = (url, origin) => {
  * @param {String} url URL to remove the origin from.
  * @param {String} origin Origin to remove from URL.
  */
-const removeOriginFromUrl = (url, origin) => {
+const removeOriginFromUrl = (url = '', origin = window.location.origin) => {
   url = url.trim();
 
   url = removeOrigin(url, origin.replace(/^http\:\/\//, 'https://'));
