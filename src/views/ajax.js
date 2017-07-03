@@ -5,6 +5,36 @@ const arrowIcon = require('./open').arrowIcon;
 const icons = require('../assets/icons').default;
 const statusIcon = require('../assets/icons').statusIcon;
 
+/**
+ * removeOrigin - function to remove origin from a URL.
+ *
+ * @param {String} url URL to remove the origin from.
+ * @param {String} origin Origin to remove from URL.
+ */
+const removeOrigin = (url, origin) => {
+  if (url.substr(0, origin.length) === origin) {
+      url = url.substr(origin.length, url.length);
+  }
+
+  return url;
+};
+
+/**
+ * removeOriginFromUrl - function to remove origin from a URL
+ *                       reguarding `http` and `https`.
+ *
+ * @param {String} url URL to remove the origin from.
+ * @param {String} origin Origin to remove from URL.
+ */
+const removeOriginFromUrl = (url, origin) => {
+  url = url.trim();
+
+  url = removeOrigin(url, origin.replace(/^http\:\/\//, 'https://'));
+  url = removeOrigin(url, origin.replace(/^https\:\/\//, 'http://'));
+
+  return url;
+};
+
 const state = {
     count: 0,
     ready: false,
@@ -36,6 +66,7 @@ function processSize(size) {
 
 function rowTemplate(request) {
     const url = util.resolveClientUrl(request.requestId, false);
+    const uri = removeOriginFromUrl(request.uri, window.location.origin);
 
     return `
         <tr class="glimpse-ajax-row">
@@ -43,7 +74,7 @@ function rowTemplate(request) {
                 ${request.method}
             </td>
             <td class="glimpse-ajax-cell glimpse-ajax-uri" title="${request.uri}">
-                <a class="glimpse-anchor" href="${url}" target="_glimpse" title="Open '${request.uri}' in Glimpse">${arrowIcon}</a> ${request.uri}
+                <a class="glimpse-anchor" href="${url}" target="_glimpse" title="Open '${request.uri}' in Glimpse">${arrowIcon}</a> ${uri}
             </td>
             <td class="glimpse-ajax-cell" data-glimpse-type="duration">
                 <span class="glimpse-time-ms">${request.duration}</span>
@@ -53,6 +84,7 @@ function rowTemplate(request) {
 }
 function rowPopupTemplate(request) {
     const url = util.resolveClientUrl(request.requestId, false);
+    const uri = removeOriginFromUrl(request.uri, window.location.origin);
 
     return `
         <div class="glimpse-ajax-row">
@@ -60,7 +92,7 @@ function rowPopupTemplate(request) {
                 <span class="glimpse-ajax-text" data-glimpse-type="uri" title="${request.uri}">
                     <a class="glimpse-anchor" href="${url}" target="_glimpse" title="Open '${request.uri}' in Glimpse">${arrowIcon}</a>
                     <span class="glimpse-ajax-text glimpse-ajax-text--uri" title="${request.uri}">
-                        ${request.uri}
+                        ${uri}
                     </span>
                 </span>
                 <span class="glimpse-ajax-text" data-glimpse-type="time">
