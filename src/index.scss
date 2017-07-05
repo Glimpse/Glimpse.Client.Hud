@@ -265,7 +265,10 @@ $collapseHoverColor: #353535;
 .glimpse-ajax-row {
     white-space: nowrap !important;
     position: relative !important;
-    animation: glimpse-ajax-row-enter .3s ease-out;
+    animation: glimpse-ajax-row-enter .3s ease-out !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
 }
 .glimpse-ajax-row-line {
     white-space: nowrap !important;
@@ -282,6 +285,9 @@ $collapseHoverColor: #353535;
     white-space: nowrap !important;
     text-overflow: ellipsis !important;
     overflow: hidden !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: inherit !important;
 
     &:last-child {
         text-align: right !important;
