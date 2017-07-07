@@ -99,6 +99,11 @@ function update(request) {
 }
 function updateCounter(details, count) {
     var counter = document.getElementById(details.countId);
+    if (!counter) {
+        // element does not exist yet
+        return;
+    }
+    
     counter.innerText = count;
     dom.addClass(counter, 'glimpse-section-value--update');
     if (details.timeout) {

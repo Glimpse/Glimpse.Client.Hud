@@ -60,6 +60,11 @@ function update(model) {
 function updateValue(target, summary) {
     const element = document.getElementById(target);
 
+    if (!element) {
+        // element does not exist yet
+        return;
+    }
+
     let content = summary.total;
     if (summary.total > 0) {
         dom.addClass(element, 'glimpse-time-ms');
@@ -96,6 +101,11 @@ function updateCoreListing(target, data, supportedRecords, isStatusCode) {
     }
 
     const targetElement = document.getElementById(target);
+    if (!targetElement) {
+        // element does not exist yet
+        return;
+    }
+
     if (content.length > 0) {
         targetElement.innerHTML = `${content}<div></div>`;
     }
