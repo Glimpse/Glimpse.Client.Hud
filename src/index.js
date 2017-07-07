@@ -47,6 +47,11 @@ function postRender(initPromise) {
     var expandButton = document.querySelector('#js-glimpse-expand-button');
     var collapseButton = document.querySelector('#js-glimpse-collapse-button');
 
+    if (!hudData) {
+        // element does not exist yet
+        return;
+    }
+
     ajaxView.postRender(initPromise);
     logsView.postRender(initPromise);
 
