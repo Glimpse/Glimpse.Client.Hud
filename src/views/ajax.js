@@ -27,26 +27,26 @@ const removeOrigin = (url = '', origin = window.location.origin) => {
  * @param {String} origin Origin to remove from URL.
  */
 const removeOriginFromUrl = (url = '', origin = window.location.origin) => {
-  url = url.trim();
+    url = url.trim();
 
-  // the first call of the `removeOrigin` makes sure that we stip off the
-  // origin in case the `url` has it the same but different(`https`) protocol
-  // if the protocol is already `https` we use it
-  url = removeOrigin(url, origin.replace(/^http\:\/\//, 'https://'));
-  // same as above but for `http` protocol case. these two calls cover
-  // 4 cases, making sure that we strip the origin regardless
-  // of the protocol differences:
-  // |--------------------------------|
-  // | url protocol | origin protocol |
-  // |--------------------------------|
-  // | http         | http            |
-  // | http         | https           |
-  // | https        | http            |
-  // | https        | https           |
-  // |--------------------------------|
-  url = removeOrigin(url, origin.replace(/^https\:\/\//, 'http://'));
+    // the first call of the `removeOrigin` makes sure that we stip off the
+    // origin in case the `url` has it the same but different(`https`) protocol
+    // if the protocol is already `https` we use it
+    url = removeOrigin(url, origin.replace(/^http\:\/\//, 'https://'));
+    // same as above but for `http` protocol case. these two calls cover
+    // 4 cases, making sure that we strip the origin regardless
+    // of the protocol differences:
+    // |--------------------------------|
+    // | url protocol | origin protocol |
+    // |--------------------------------|
+    // | http         | http            |
+    // | http         | https           |
+    // | https        | http            |
+    // | https        | https           |
+    // |--------------------------------|
+    url = removeOrigin(url, origin.replace(/^https\:\/\//, 'http://'));
 
-  return url;
+    return url;
 };
 
 const state = {
