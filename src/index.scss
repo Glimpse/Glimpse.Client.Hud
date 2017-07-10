@@ -12,6 +12,7 @@ $border-height: 3px;
 $popup-delay: 0s;
 $expandHoverColor: #3c3c3c;
 $collapseHoverColor: #353535;
+$greenColor: #69A648;
 
 @function type-scale($level) {
     @return map-get($type-scales, $level);
@@ -345,7 +346,7 @@ $collapseHoverColor: #353535;
     &__icon {
       width: $iconSize !important;
       height: $iconSize !important;
-      fill: #69A648 !important;
+      fill: $greenColor !important;
       display: inline-block !important;
       position: relative !important;
       bottom: -1px !important;
