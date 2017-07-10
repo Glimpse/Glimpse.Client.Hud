@@ -42,6 +42,18 @@ $collapseHoverColor: #353535;
     > * + * {
         border-left: 1px solid $color-border !important;
     }
+
+    ::-webkit-scrollbar {
+        width: 0.5rem !important;
+        height: 0.5rem !important;
+    }
+    ::-webkit-scrollbar *,
+    ::-webkit-scrollbar-corner {
+        background: transparent !important;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: rgba(70, 70, 70, 0.5) !important;
+    }
 }
 .glimpse-hud-popup,
 .glimpse-link,
@@ -239,6 +251,9 @@ $collapseHoverColor: #353535;
     .glimpse-hud-field-value {
         font-size: type-scale(1) !important;
     }
+    .glimpse-ajax-row:nth-child(3) {
+        animation-name: glimpse-ajax-row-leave !important;
+    }
 }
 .glimpse-hud-popup-section {
     .glimpse-hud-field + * {
@@ -262,10 +277,22 @@ $collapseHoverColor: #353535;
         transform: translateY(0);
     }
 }
+@keyframes glimpse-ajax-row-leave {
+    from {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(-100%);
+    }
+    to {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(0);
+    }
+}
 .glimpse-ajax-row {
     white-space: nowrap !important;
     position: relative !important;
-    animation: glimpse-ajax-row-enter .3s ease-out !important;
+    animation: glimpse-ajax-row-enter .3s ease-out both !important;
     border: none !important;
     padding: 0 !important;
     margin: 0 !important;
