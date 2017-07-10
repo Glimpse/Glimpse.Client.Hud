@@ -29,25 +29,22 @@ const removeOrigin = (url = '', origin = window.location.origin) => {
 const removeOriginFromUrl = (url = '', origin = window.location.origin) => {
     url = url.trim();
     url = removeOrigin(url, origin);
-
-    // temporary commented out, will be uncommented when we will have `lock icon`
-    // to convey the URL's protocol, issue that tracks that: https://github.com/Glimpse/Glimpse.Client.Hud/issues/167
-    // // the first call of the `removeOrigin` makes sure that we stip off the
-    // // origin in case the `url` has it the same but different(`https`) protocol
-    // // if the protocol is already `https` we use it
-    // url = removeOrigin(url, origin.replace(/^http\:\/\//, 'https://'));
-    // // same as above but for `http` protocol case. these two calls cover
-    // // 4 cases, making sure that we strip the origin regardless
-    // // of the protocol differences:
-    // // |--------------------------------|
-    // // | url protocol | origin protocol |
-    // // |--------------------------------|
-    // // | http         | http            |
-    // // | http         | https           |
-    // // | https        | http            |
-    // // | https        | https           |
-    // // |--------------------------------|
-    // url = removeOrigin(url, origin.replace(/^https\:\/\//, 'http://'));
+    // the first call of the `removeOrigin` makes sure that we stip off the
+    // origin in case the `url` has it the same but different(`https`) protocol
+    // if the protocol is already `https` we use it
+    url = removeOrigin(url, origin.replace(/^http\:\/\//, 'https://'));
+    // same as above but for `http` protocol case. these two calls cover
+    // 4 cases, making sure that we strip the origin regardless
+    // of the protocol differences:
+    // |--------------------------------|
+    // | url protocol | origin protocol |
+    // |--------------------------------|
+    // | http         | http            |
+    // | http         | https           |
+    // | https        | http            |
+    // | https        | https           |
+    // |--------------------------------|
+    url = removeOrigin(url, origin.replace(/^https\:\/\//, 'http://'));
 
     return url;
 };
@@ -81,6 +78,18 @@ function processSize(size) {
     return size ? (Math.round((size / 1024) * 10) / 10) : '--';
 }
 
+/**
+ * getProtocolIcon - function to get icon regarding `URL` protocol.
+ *
+ * @param  {String} url: URL to get the icon for.
+ * @return {String} Icon markup string.
+ */
+function getProtocolIcon(url: string) {
+    return (/https\:\/\//).test(url)
+        ? `<span class="glimpse-ajax-uri__icon">${icons.lockIcon}</span>`
+        : '';
+}
+
 function rowTemplate(request) {
     const url = util.resolveClientUrl(request.requestId, false);
     const uri = removeOriginFromUrl(request.uri);
@@ -91,7 +100,8 @@ function rowTemplate(request) {
                 ${request.method}
             </td>
             <td class="glimpse-ajax-cell glimpse-ajax-uri" title="${request.uri}">
-                <a class="glimpse-anchor" href="${url}" target="_glimpse" title="Open '${request.uri}' in Glimpse">${arrowIcon}</a> ${uri}
+                <a class="glimpse-anchor" href="${url}" target="_glimpse" title="Open '${request.uri}' in Glimpse">${arrowIcon}</a>
+                ${getProtocolIcon(request.uri)} ${uri}
             </td>
             <td class="glimpse-ajax-cell" data-glimpse-type="duration">
                 <span class="glimpse-time-ms">${request.duration}</span>
@@ -101,7 +111,7 @@ function rowTemplate(request) {
 }
 function rowPopupTemplate(request) {
     const url = util.resolveClientUrl(request.requestId, false);
-    const uri = removeOriginFromUrl(request.uri, window.location.origin);
+    const uri = removeOriginFromUrl(request.uri);
 
     return `
         <div class="glimpse-ajax-row">
@@ -109,7 +119,7 @@ function rowPopupTemplate(request) {
                 <span class="glimpse-ajax-text" data-glimpse-type="uri" title="${request.uri}">
                     <a class="glimpse-anchor" href="${url}" target="_glimpse" title="Open '${request.uri}' in Glimpse">${arrowIcon}</a>
                     <span class="glimpse-ajax-text glimpse-ajax-text--uri" title="${request.uri}">
-                        ${uri}
+                        ${getProtocolIcon(request.uri)} ${uri}
                     </span>
                 </span>
                 <span class="glimpse-ajax-text" data-glimpse-type="time">
