@@ -12,11 +12,11 @@ const statusIcon = require('../assets/icons').statusIcon;
  * @param {String} origin Origin to remove from URL.
  */
 const removeOrigin = (url = '', origin = window.location.origin) => {
-  if (url.substr(0, origin.length) === origin) {
-      url = url.substr(origin.length, url.length);
-  }
+    if (url.substr(0, origin.length) === origin) {
+        url = url.substr(origin.length, url.length);
+    }
 
-  return url;
+    return url;
 };
 
 /**
