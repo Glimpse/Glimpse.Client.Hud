@@ -343,16 +343,16 @@ $collapseHoverColor: #353535;
 
     $iconSize: 10px;
     &__icon {
-      width: $iconSize;
-      height: $iconSize;
-      fill: #69A648;
-      display: inline-block;
-      position: relative;
-      bottom: -1px;
+      width: $iconSize !important;
+      height: $iconSize !important;
+      fill: #69A648 !important;
+      display: inline-block !important;
+      position: relative !important;
+      bottom: -1px !important;
 
       .icon {
-         width: 100%;
-         height: 100%;
+         width: 100% !important;
+         height: 100% !important;
       }
     }
 }
