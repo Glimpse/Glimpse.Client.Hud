@@ -12,6 +12,7 @@ $border-height: 3px;
 $popup-delay: 0s;
 $expandHoverColor: #3c3c3c;
 $collapseHoverColor: #353535;
+$greenColor: #69A648;
 
 @function type-scale($level) {
     @return map-get($type-scales, $level);
@@ -345,6 +346,22 @@ $collapseHoverColor: #353535;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
     width: 100px !important;
+    vertical-align: top;
+
+    $iconSize: 10px;
+    &__icon {
+      width: $iconSize !important;
+      height: $iconSize !important;
+      fill: $greenColor !important;
+      display: inline-block !important;
+      position: relative !important;
+      bottom: -1px !important;
+
+      .icon {
+         width: 100% !important;
+         height: 100% !important;
+      }
+    }
 }
 
 .glimpse-hud-popup {
@@ -494,4 +511,8 @@ $collapseHoverColor: #353535;
         background-color: $collapseHoverColor !important;
         cursor: pointer !important;
     }
+}
+
+.icon {
+  fill: inherit;
 }
