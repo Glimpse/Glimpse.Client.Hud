@@ -69,7 +69,15 @@ function preInit(initPromise) {
     dataView.preInit(initPromise);
 }
 
-function init(promise, resolve, reject) {
+function init() {
+    // setup init promise
+    let resolve;
+    let reject;
+    const promise = new Promise(function(res, rej) {
+        resolve = res;
+        reject = rej;
+    });
+
     // allow components hook before any other hud logic running
     preInit(promise);
 
@@ -97,12 +105,4 @@ function init(promise, resolve, reject) {
     setTimeout(onTimeout);
 }
 
-// setup init promise
-let initPromiseResolve;
-let initPromiseReject;
-const initPromise = new Promise(function(resolve, reject) {
-    initPromiseResolve = resolve;
-    initPromiseReject = reject;
-});
-
-init(initPromise, initPromiseResolve, initPromiseReject);
+init();
