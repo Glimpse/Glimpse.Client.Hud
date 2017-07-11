@@ -42,7 +42,7 @@ function render(state) {
     `;
 }
 
-function postRender(initPromise) {
+function postRender() {
     var hudData = document.querySelector('.glimpse-hud-data');
     var expandButton = document.querySelector('#js-glimpse-expand-button');
     var collapseButton = document.querySelector('#js-glimpse-collapse-button');
@@ -52,8 +52,8 @@ function postRender(initPromise) {
         return;
     }
 
-    ajaxView.postRender(initPromise);
-    logsView.postRender(initPromise);
+    ajaxView.postRender();
+    logsView.postRender();
 
     var setOpenState = function(panelState) {
       util.localSet(state, 'expanded', panelState, function() {
@@ -71,38 +71,33 @@ function preInit(initPromise) {
 
 function init() {
     // setup init promise
-    let resolve;
-    let reject;
-    const promise = new Promise(function(res, rej) {
-        resolve = res;
-        reject = rej;
+    const promise = new Promise(function(resolve, reject) {
+        let timeout = 1;
+        const onTimeout = function() {
+            if (document.readyState === 'complete') {
+                // allow components to provide content which they want to be shown in initial render
+                const content = render(state);
+
+                const container = document.createElement('div');
+                container.innerHTML = content;
+                document.body.appendChild(container);
+
+                // allow components hook post HUD being inserted into the dom
+                postRender();
+
+                // resolves the promise and pass through the container for future usage
+                resolve(container);
+            }
+            else {
+                setTimeout(onTimeout, timeout *= 2);
+            }
+        }
+
+        setTimeout(onTimeout);
     });
 
     // allow components hook before any other hud logic running
     preInit(promise);
-
-    let timeout = 1;
-    const onTimeout = function() {
-        if (document.readyState === 'complete') {
-            // allow components to provide content which they want to be shown in initial render
-            const content = render(state);
-
-            const container = document.createElement('div');
-            container.innerHTML = content;
-            document.body.appendChild(container);
-
-            // allow components hook post HUD being inserted into the dom
-            postRender(promise);
-
-            // resolves the promise and pass through the container for future usage
-            resolve(container);
-        }
-        else {
-            setTimeout(onTimeout, timeout *= 2);
-        }
-    }
-
-    setTimeout(onTimeout);
 }
 
 init();
