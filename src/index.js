@@ -69,9 +69,9 @@ function preInit(initPromise) {
     dataView.preInit(initPromise);
 }
 
-const init = new Promise(function(resolve, reject) {
+function init(promise, resolve, reject) {
     // allow components hook before any other hud logic running
-    preInit(init);
+    preInit(promise);
 
     let timeout = 1;
     const onTimeout = function() {
@@ -84,7 +84,7 @@ const init = new Promise(function(resolve, reject) {
             document.body.appendChild(container);
 
             // allow components hook post HUD being inserted into the dom
-            postRender(init);
+            postRender(promise);
 
             // resolves the promise and pass through the container for future usage
             resolve(container);
@@ -95,4 +95,14 @@ const init = new Promise(function(resolve, reject) {
     }
 
     setTimeout(onTimeout);
+}
+
+// setup init promise
+let initPromiseResolve;
+let initPromiseReject;
+const initPromise = new Promise(function(resolve, reject) {
+    initPromiseResolve = resolve;
+    initPromiseReject = reject;
 });
+
+init(initPromise, initPromiseResolve, initPromiseReject);

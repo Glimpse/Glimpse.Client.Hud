@@ -6,13 +6,13 @@ const getPromise = new Promise(function(resolve, reject) {
     request.onload = function() {
         resolve(JSON.parse(this.responseText));
     }
-    
+
     request.onerror = function(err) {
         reject(err);
     }
 
     request.open('get', util.resolveContextSummaryUrl(util.currentRequestId()), true);
-    request.send(); 
+    request.send();
 });
 
 module.exports = {
