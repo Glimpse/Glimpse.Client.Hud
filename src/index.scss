@@ -12,6 +12,7 @@ $border-height: 3px;
 $popup-delay: 0s;
 $expandHoverColor: #3c3c3c;
 $collapseHoverColor: #353535;
+$greenColor: #69A648;
 
 @function type-scale($level) {
     @return map-get($type-scales, $level);
@@ -37,9 +38,22 @@ $collapseHoverColor: #353535;
     font-size: type-scale(0) !important;
     font-family: 'Selawik', sans-serif !important;
     font-weight: 300 !important;
+    -webkit-font-smoothing: subpixel-antialiased;
 
     > * + * {
         border-left: 1px solid $color-border !important;
+    }
+
+    ::-webkit-scrollbar {
+        width: 0.5rem !important;
+        height: 0.5rem !important;
+    }
+    ::-webkit-scrollbar *,
+    ::-webkit-scrollbar-corner {
+        background: transparent !important;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: rgba(70, 70, 70, 0.5) !important;
     }
 }
 .glimpse-hud-popup,
@@ -62,7 +76,7 @@ $collapseHoverColor: #353535;
     transition:
         transform .3s ease-out,
         z-index 0s step-end,
-        opacity 0s .3s step-end  !important;
+        opacity 0s .3s step-end !important;
     z-index: 0;
 
     > * {
@@ -238,6 +252,9 @@ $collapseHoverColor: #353535;
     .glimpse-hud-field-value {
         font-size: type-scale(1) !important;
     }
+    .glimpse-ajax-row:nth-child(3) {
+        animation-name: glimpse-ajax-row-leave !important;
+    }
 }
 .glimpse-hud-popup-section {
     .glimpse-hud-field + * {
@@ -261,10 +278,25 @@ $collapseHoverColor: #353535;
         transform: translateY(0);
     }
 }
+@keyframes glimpse-ajax-row-leave {
+    from {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(-100%);
+    }
+    to {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(0);
+    }
+}
 .glimpse-ajax-row {
     white-space: nowrap !important;
     position: relative !important;
-    animation: glimpse-ajax-row-enter .3s ease-out;
+    animation: glimpse-ajax-row-enter .3s ease-out both !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
 }
 .glimpse-ajax-row-line {
     white-space: nowrap !important;
@@ -281,17 +313,41 @@ $collapseHoverColor: #353535;
     white-space: nowrap !important;
     text-overflow: ellipsis !important;
     overflow: hidden !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: inherit !important;
 
     &:last-child {
         text-align: right !important;
     }
+
+    &[data-glimpse-type="duration"] {
+      text-overflow: none !important;
+      overflow: visible !important;
+    }
 }
 .glimpse-ajax-text {
+    &--uri {
+      width: 100% !important;
+      display: inline-block !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+      box-sizing: border-box !important;
+      padding-right: 1.2rem !important;
+      vertical-align: bottom !important;
+    }
+
     &[data-glimpse-type="uri"],
     &[data-glimpse-type="status"] {
         flex-grow: 1 !important;
         white-space: nowrap !important;
         text-overflow: ellipsis !important;
+    }
+
+    &[data-glimpse-type="uri"] {
+      width: 50% !important;
+      display: inline-block !important;
     }
 
     &[data-glimpse-type="status"] {
@@ -317,6 +373,22 @@ $collapseHoverColor: #353535;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
     width: 100px !important;
+    vertical-align: top;
+
+    $iconSize: 10px;
+    &__icon {
+      width: $iconSize !important;
+      height: $iconSize !important;
+      fill: $greenColor !important;
+      display: inline-block !important;
+      position: relative !important;
+      bottom: -1px !important;
+
+      .icon {
+         width: 100% !important;
+         height: 100% !important;
+      }
+    }
 }
 
 .glimpse-hud-popup {
@@ -466,4 +538,8 @@ $collapseHoverColor: #353535;
         background-color: $collapseHoverColor !important;
         cursor: pointer !important;
     }
+}
+
+.icon {
+  fill: inherit;
 }
