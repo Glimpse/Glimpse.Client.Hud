@@ -10,7 +10,8 @@ function getLatestVersion() {
     try {
         const updateInfo = JSON.parse(localStorage.getItem('glimpseLatestVersion'));
 
-        if (updateInfo.latestVersion && updateInfo.latestVersion !== updateInfo.atTimeOfCheckVersion) {
+        if (updateInfo.latestVersion
+            && updateInfo.latestVersion !== GLIMPSE_VERSION) {
             return updateInfo.latestVersion;
         }
     } catch (e) {
