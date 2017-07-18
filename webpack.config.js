@@ -53,7 +53,8 @@ module.exports = {
     plugins: [
         new webpack.DefinePlugin({
             DIAGNOSTICS: false,
-            FAKE_SERVER: false
+            FAKE_SERVER: false,
+            GLIMPSE_VERSION: JSON.stringify(require('./package.json').version)
         })
     ],
     stats: "normal"
