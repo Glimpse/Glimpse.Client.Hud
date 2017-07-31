@@ -1,28 +1,33 @@
 const chance = require('./fake-chance').instance;
 
-// proxy event listener to make testing easier
-const oldFetch = window.fetch;
-window.fetch = (path, options) => {
-    if (path.indexOf('/glimpse/context-summary') > -1) {
-        return new Promise(resolve => fetchContextSummary(resolve));
+const path = '/glimpse/context-summary';
+
+const oldSend = XMLHttpRequest.prototype.send;
+XMLHttpRequest.prototype.send = function() {
+    if (this._url && this._url.indexOf(path) > -1) {
+        setTimeout(() => {
+            const result = createSummary();
+
+            this.fakeResponseText = JSON.stringify(result);
+            this.onload()
+        }, chance.integerRange(100, 500));
+
+        return;
     }
-
-    return oldFetch(path, options);
-};
-
-function fetchContextSummary(resolve) {
-    setTimeout(() => {
-        const result = createSummary();
-
-        var response = {
-            'ok' : true,
-            'json': () => new Promise(resolve => resolve(result))
-        };
-
-        resolve(response);
-    }, chance.integerRange(100, 500));
+    oldSend.apply(this, arguments);
 }
 
+const oldOpen = XMLHttpRequest.prototype.send;
+XMLHttpRequest.prototype.open = function(method, url) {
+    if (path.indexOf(path) > -1) {
+        this._url = url;
+
+        return;
+    }
+    oldOpen.apply(this, arguments);
+}
+
+// proxy event listener to make testing easier
 function createSummary() {
     return {
         summary: {
