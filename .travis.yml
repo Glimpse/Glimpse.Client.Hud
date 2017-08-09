@@ -12,6 +12,7 @@ script:
 - gulp archive
 deploy:
   provider: releases
+  skip_cleanup: true
   api_key:
     secure: G8FGj5OKTeieZEV1Pod1FXYq2lgEN75pHtxP9KW8C/LFzPPXJt0VJFFjKo+y+eKs5DF1+PypVAqYsGQN2cOq/ywCN34KZBLDagZ01BAvTEQKb0/JRhku3Fr7qQ+eI+HGpO2ke6AiI1tiMZc3glV96sZ4o/seZs+N6a2SceeldL3iw+lDGrUNsQlfz/yZGCLtSbiZHhDYwEwniLzd7rAYmeXZmib3kua+knEiYtJ0Sm7ylnUu3iCLRosjBfz6n0s/RrQmqZka4AONXt2ApJ4iB3bJoSvSmu+v3r1ymFwjta7x7RcfvAV4h01RfjocGblWjvwqBmKpjPB0Zt0RXDs+RwjDgxJ+bTzLUKP9pBBeATS866wjt1HBybKI8eUIJNS5tq/ALHTnh8eQ/YGAgZoeozR4g6PFIuVXlRJFL+fTpbBxSgbS/+WdCbmum/9Jgu1rWgTauOXAV1dZgswFENtqzjIKGqgnPeLivUya8cot7ug1RG2cyBg4gs76h3iG4XqZZLeN9XX9e3THxT0eJ/mGnuhtENgljkwhL63l51o3aVm/up5Ph4FwWhE+cGyUnUceN6LTgiJWh/m8frzOVykElyFfgbF22BfDoyD8Whkgh2h8BTe/rNXlLcAmiN3BCdN2GlfydRrWNlRZgi5OaSZo24XIjlRb84m5uAUt3NbDlGY=
   file: 
