@@ -10,7 +10,6 @@ script:
 - gulp build-dev
 - gulp build-prod
 - gulp archive
-- ls -la .archive/hud.zip
 deploy:
   provider: releases
   skip_cleanup: true
